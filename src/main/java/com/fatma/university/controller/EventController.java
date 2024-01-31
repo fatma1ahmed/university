@@ -3,8 +3,10 @@ package com.fatma.university.controller;
 import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
 import com.fatma.university.model.entity.Event;
+import com.fatma.university.model.entity.Source;
 import com.fatma.university.service.EventCategorySourceService;
 import com.fatma.university.service.EventService;
+import com.fatma.university.service.SourceService;
 import com.fatma.university.service.impl.EventServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +42,5 @@ public class EventController {
     public ResponseEntity<?> deleteById(@PathVariable long id) {
        return eventService.deleteById(id);
     }
+
 }

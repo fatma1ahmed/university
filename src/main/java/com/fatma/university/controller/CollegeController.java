@@ -3,8 +3,11 @@ package com.fatma.university.controller;
 import com.fatma.university.model.dto.CollegeRequest;
 import com.fatma.university.model.dto.CollegeResponse;
 import com.fatma.university.model.entity.College;
+import com.fatma.university.model.entity.Department;
 import com.fatma.university.service.CollegeService;
+import com.fatma.university.service.DepartmentCollegeService;
 import com.fatma.university.service.impl.CollegeServiceImpl;
+import com.fatma.university.service.impl.DepartmentCollegeServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ import java.util.List;
 public class CollegeController {
     @Autowired
     private CollegeService collegeService;
+    @Autowired
+    private DepartmentCollegeService departmentCollegeService;
     @PostMapping("/add-collage")
     public CollegeResponse add(@RequestBody @Valid CollegeRequest collegeRequest) throws IOException {
         return collegeService.add(collegeRequest);
@@ -36,5 +41,10 @@ public class CollegeController {
     @DeleteMapping("/deleteCollegeById/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return collegeService.deleteById(id);
+    }
+    @GetMapping("/getAllDepartmentsByCollegeId/{collegeId}")
+    public List<Department> getDepartmentsByCollegeId(@PathVariable  long collegeId) {
+        return departmentCollegeService.getDepartmentsByCollegeId(collegeId);
+
     }
 }

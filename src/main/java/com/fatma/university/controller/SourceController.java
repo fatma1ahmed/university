@@ -2,6 +2,7 @@ package com.fatma.university.controller;
 
 import com.fatma.university.model.dto.SourceRequest;
 import com.fatma.university.model.dto.SourceResponse;
+import com.fatma.university.model.entity.Event;
 import com.fatma.university.model.entity.Source;
 import com.fatma.university.service.SourceDepartmentService;
 import com.fatma.university.service.SourceService;
@@ -18,6 +19,8 @@ import java.util.List;
 public class SourceController {
     @Autowired
     private SourceService sourceService;
+    @Autowired
+    private SourceDepartmentService sourceDepartmentService;
     @PostMapping("/add-source")
     public SourceResponse assignSourceToDepartment(@RequestBody @Valid SourceRequest sourceRequest) throws IOException {
         return sourceService.add(sourceRequest);
@@ -37,6 +40,14 @@ public class SourceController {
     @DeleteMapping("/deleteSourceById/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return sourceService.deleteById(id);
+    }
+    @GetMapping("/getAllEventsBySourceId/{sourceId}")
+    public List<Event> getEventsBySourceId(long sourceId) {
+        return sourceService.getEventsBySourceId(sourceId);
+    }
+    @GetMapping("/getAllSourcesByDepartmentId/{departmentId}")
+    public  List<Source> getSourcesByDepartmentId(long departmentId){
+        return sourceDepartmentService.getSourcesByDepartmentId(departmentId);
     }
 
 }

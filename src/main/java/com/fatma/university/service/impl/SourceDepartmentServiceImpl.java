@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class SourceDepartmentServiceImpl implements SourceDepartmentService {
@@ -32,5 +33,13 @@ public class SourceDepartmentServiceImpl implements SourceDepartmentService {
         Department exsistDepartment=departmentService.getById(departmentId);
         source.setDepartment(exsistDepartment);
 
+    }
+
+    @Override
+    public List<Source> getSourcesByDepartmentId(long departmentId) {
+        Department exisitDepartment=departmentService.getById(departmentId);
+        List<Source> sources=exisitDepartment.getSources();
+        exisitDepartment.setSources(sources);
+        return sources;
     }
 }

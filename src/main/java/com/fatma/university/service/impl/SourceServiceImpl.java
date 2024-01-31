@@ -5,6 +5,7 @@ import com.fatma.university.mapper.SourceMapper;
 import com.fatma.university.model.dto.SourceRequest;
 import com.fatma.university.model.dto.SourceResponse;
 import com.fatma.university.model.entity.Department;
+import com.fatma.university.model.entity.Event;
 import com.fatma.university.model.entity.Source;
 import com.fatma.university.reposity.SourceRepo;
 import com.fatma.university.service.SourceDepartmentService;
@@ -98,5 +99,13 @@ public class SourceServiceImpl implements SourceService {
     public void checkThisIsFoundORThrowException(long id) {
         getById(id);
 
+    }
+
+    @Override
+    public List<Event> getEventsBySourceId(long sourceId) {
+        Source exisitSource=getById(sourceId);
+        List<Event> events=exisitSource.getEvents();
+        exisitSource.setEvents(events);
+        return events;
     }
 }

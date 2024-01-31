@@ -106,4 +106,5 @@ public class EventServiceImpl implements EventService {
         getById(id);
 
     }
+
 }

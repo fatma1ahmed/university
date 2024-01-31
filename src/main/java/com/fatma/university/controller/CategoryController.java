@@ -3,6 +3,7 @@ package com.fatma.university.controller;
 import com.fatma.university.model.dto.CategoryRequest;
 import com.fatma.university.model.dto.CategoryResponse;
 import com.fatma.university.model.entity.Category;
+import com.fatma.university.model.entity.Event;
 import com.fatma.university.service.CategoryService;
 import com.fatma.university.service.impl.CategoryServiceImpl;
 import jakarta.validation.Valid;
@@ -37,6 +38,10 @@ public class CategoryController {
     @DeleteMapping("/deleteCategoryById/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
        return categoryService.deleteById(id);
+    }
+    @GetMapping("/getAllEventsByCategoryId/{categoryId}")
+    public List<Event> getAllEventsByCategoryId(long categoryId){
+       return categoryService.getAllEventsByCategoryId(categoryId);
     }
 
 }

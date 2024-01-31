@@ -5,8 +5,10 @@ import com.fatma.university.mapper.CategoryMapper;
 import com.fatma.university.model.dto.CategoryRequest;
 import com.fatma.university.model.dto.CategoryResponse;
 import com.fatma.university.model.entity.Category;
+import com.fatma.university.model.entity.Event;
 import com.fatma.university.reposity.CategoryRepo;
 import com.fatma.university.service.CategoryService;
+import com.fatma.university.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,4 +65,11 @@ private CategoryMapper categoryMapper;
         getById(id);
     }
 
+    @Override
+    public List<Event> getAllEventsByCategoryId(long categoryId) {
+        Category exisitCategory=getById(categoryId);
+        List<Event> events=exisitCategory.getEvents();
+        exisitCategory.setEvents(events);
+        return events;
+    }
 }
