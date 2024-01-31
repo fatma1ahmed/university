@@ -2,9 +2,11 @@ package com.fatma.university.service.impl;
 
 import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.mapper.DepartmentMapper;
+import com.fatma.university.model.dto.DepartmentRequest;
 import com.fatma.university.model.dto.DepartmentResponse;
 import com.fatma.university.model.entity.Department;
 import com.fatma.university.reposity.DepartmentRepo;
+import com.fatma.university.service.DepartmentCollegeService;
 import com.fatma.university.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,20 +21,33 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentRepo departmentRepo;
     @Autowired
     private DepartmentMapper departmentMapper;
-
+    @Autowired
+    private DepartmentCollegeService departmentCollegeService;
     @Override
-    public DepartmentResponse add(Department department) {
-        Department savedDepartment=departmentRepo.save(department);
-        DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(savedDepartment);
-
-        return  departmentResponse;
+    public DepartmentResponse add(DepartmentRequest departmentRequest) {
+        long collegeId=departmentRequest.getCollegeId();
+        Department department =departmentMapper.toEntity(departmentRequest);
+        departmentCollegeService.assignDepartmentToCollege(department,collegeId);
+        DepartmentResponse departmentResponse=new DepartmentResponse();
+        departmentResponse.setCollegeName(department.getCollege().getCollegeName());
+        departmentResponse.setDepartmentName(department.getDepartmentName());
+        departmentResponse.setDetails(department.getDetails());
+         departmentRepo.save(department);
+         return departmentResponse;
 
     }
     @Override
-    public DepartmentResponse update(Department department,long id){
+    public DepartmentResponse update(DepartmentRequest departmentRequest,long id){
         checkThisIsFoundORThrowException(id);
-        Department updateDepartment=departmentRepo.save(department);
-        DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(updateDepartment);
+        long collegeId=departmentRequest.getCollegeId();
+        Department department=departmentMapper.toEntity(departmentRequest);
+        department.setId(id);
+        departmentCollegeService.updateDepartment(department,collegeId);
+        departmentRepo.save(department);
+        DepartmentResponse departmentResponse=new DepartmentResponse();
+        departmentResponse.setCollegeName(department.getCollege().getCollegeName());
+        departmentResponse.setDepartmentName(department.getDepartmentName());
+        departmentResponse.setDetails(department.getDetails());
         return departmentResponse;
     }
 
@@ -49,7 +64,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<DepartmentResponse> getAll() {
         return departmentRepo.findAll().stream()
-                .map(department -> departmentMapper.fromEntityToResponseDto(department))
+                .map(department ->{DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
+                    departmentResponse.setCollegeName(department.getCollege().getCollegeName());
+                    return departmentResponse;
+                })
                 .toList();
     }
 

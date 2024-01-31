@@ -23,18 +23,15 @@ private CategoryMapper categoryMapper;
 
     @Override
     public CategoryResponse add(CategoryRequest categoryRequest) {
-        Category category=categoryMapper.toEntity(categoryRequest);
-        Category savedCategory=categoryRepo.save(category);
-        return categoryMapper.fromEntityToResponseDto(savedCategory);
+        return categoryMapper.fromEntityToResponseDto(categoryRepo.save(categoryMapper.toEntity(categoryRequest)));
     }
 
     @Override
     public CategoryResponse update(CategoryRequest categoryRequest,long id) {
-        Category existCategory=getById(id);
+        checkThisIsFoundORThrowException(id);
         Category category=categoryMapper.toEntity(categoryRequest);
         category.setId(id);
-        Category updatedCategory=categoryRepo.save(category);
-        return categoryMapper.fromEntityToResponseDto(updatedCategory);
+        return categoryMapper.fromEntityToResponseDto(categoryRepo.save(category));
     }
 
     @Override

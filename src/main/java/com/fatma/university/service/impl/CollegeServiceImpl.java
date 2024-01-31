@@ -22,18 +22,15 @@ public class CollegeServiceImpl  implements CollegeService {
     private CollegeMapper collegeMapper;
     @Override
     public CollegeResponse add(CollegeRequest collegeRequest) {
-        College college=collegeMapper.toEntity(collegeRequest);
-        College savedCollege=collegeRepo.save(college);
-        return collegeMapper.fromEntityToResponseDto(savedCollege);
+        return collegeMapper.fromEntityToResponseDto(collegeRepo.save(collegeMapper.toEntity(collegeRequest)));
     }
 
     @Override
     public CollegeResponse update(CollegeRequest collegeRequest,long id) {
-        College existCollege=getById(id);
+       checkThisIsFoundORThrowException(id);
        College college=collegeMapper.toEntity(collegeRequest);
        college.setId(id);
-       College updateCollege=collegeRepo.save(college);
-        return collegeMapper.fromEntityToResponseDto(updateCollege);
+        return collegeMapper.fromEntityToResponseDto(collegeRepo.save(college));
     }
 
 

@@ -2,11 +2,13 @@ package com.fatma.university.service.impl;
 
 import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.mapper.EventMapper;
+import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Event;
 import com.fatma.university.model.entity.Source;
 import com.fatma.university.reposity.EventRepo;
+import com.fatma.university.service.EventCategorySourceService;
 import com.fatma.university.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,19 +26,51 @@ public class EventServiceImpl implements EventService {
     private EventMapper eventMapper;
     @Autowired
     private ImageServiceImpl imageService;
+    @Autowired
+    private EventCategorySourceService eventCategorySourceService;
     @Override
-    public EventResponse add(Event event) throws IOException {
-        byte[] imageBytes=imageService.decodeBase64(event.getImagePath());
-        event.setImagePath(imageService.saveImage(imageBytes));
-        Event savedEvent=eventRepo.save(event);
-        return eventMapper.fromEntityToResponseDto(savedEvent);
+    public EventResponse add(EventRequest eventRequest) throws IOException {
+        long categoryId=eventRequest.getCategoryId();
+        long sourceId=eventRequest.getSourceId();
+        Event event=eventMapper.toEntity(eventRequest);
+        if(event.getImagePath()!=null &&!event.getImagePath().isEmpty() && event.getImagePath()!="string") {
+            byte[] imageBytes = imageService.decodeBase64(event.getImagePath());
+            event.setImagePath(imageService.saveImage(imageBytes));
+        }
+        eventCategorySourceService.assignEventToCategoryAndSource(event,categoryId,sourceId);
+        EventResponse eventResponse=new EventResponse();
+        eventResponse.setCategoryName(event.getCategory().getCategoryName());
+        eventResponse.setSourceName(event.getSource().getFullName());
+        eventResponse.setAddress(event.getAddress());
+        eventResponse.setPlace(event.getPlace());
+        eventResponse.setDate(event.getDate());
+        eventResponse.setTime(event.getTime());
+        eventResponse.setIsBroadcast(event.getIsBroadcast());
+
+       eventRepo.save(event);
+        return eventResponse;
     }
 
     @Override
-    public EventResponse update(Event event, long id) throws IOException {
+    public EventResponse update(EventRequest eventRequest, long id) throws IOException {
         checkThisIsFoundORThrowException(id);
-        Event updatedEvent=eventRepo.save(event);
-        return eventMapper.fromEntityToResponseDto(updatedEvent);
+        long categoryId=eventRequest.getCategoryId();
+        long sourceId=eventRequest.getSourceId();
+        Event event=eventMapper.toEntity(eventRequest);
+        eventCategorySourceService.updateEvent(event,categoryId,sourceId);
+        event.setId(id);
+        eventRepo.save(event);
+        EventResponse eventResponse=new EventResponse();
+        eventResponse.setCategoryName(event.getCategory().getCategoryName());
+        eventResponse.setSourceName(event.getSource().getFullName());
+        eventResponse.setAddress(event.getAddress());
+        eventResponse.setPlace(event.getPlace());
+        eventResponse.setDate(event.getDate());
+        eventResponse.setTime(event.getTime());
+        eventResponse.setIsBroadcast(event.getIsBroadcast());
+
+
+        return eventResponse;
     }
 
     @Override
@@ -51,10 +85,8 @@ public class EventServiceImpl implements EventService {
     public List<EventResponse> getAll() {
        return eventRepo.findAll().stream()
                .map(event ->{EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
-                   Category category=event.getCategory();
-                   Source source=event.getSource();
-                   eventResponse.setCategoryName(category.getCategoryName());
-                   eventResponse.setSourceName(source.getFullName());
+                   eventResponse.setCategoryName(event.getCategory().getCategoryName());
+                   eventResponse.setSourceName(event.getSource().getFullName());
                    return eventResponse;
 
                })
