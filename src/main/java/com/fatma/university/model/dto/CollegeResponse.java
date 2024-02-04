@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CollegeResponse {
-
+    private long id;
     @JsonProperty("college_name")
-    private String collegeName;
+    private String name;
 }

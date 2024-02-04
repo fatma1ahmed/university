@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventResponse {
+    private long id;
     private String address;
     private String place;
     private String date;

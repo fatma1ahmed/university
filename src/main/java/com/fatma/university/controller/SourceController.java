@@ -16,16 +16,17 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/source")
 public class SourceController {
     @Autowired
     private SourceService sourceService;
     @Autowired
     private SourceDepartmentService sourceDepartmentService;
-    @PostMapping("/add-source")
+    @PostMapping("/addSource")
     public SourceResponse assignSourceToDepartment(@RequestBody @Valid SourceRequest sourceRequest) throws IOException {
         return sourceService.add(sourceRequest);
     }
-    @PutMapping("/update-source/{id}")
+    @PutMapping("/updateSource/{id}")
     public SourceResponse updateSource(@RequestBody @Valid SourceRequest sourceRequest,@PathVariable long id) throws IOException {
         return sourceService.update(sourceRequest,id);
     }

@@ -22,12 +22,16 @@ public class CollegeServiceImpl  implements CollegeService {
     private CollegeMapper collegeMapper;
     @Override
     public CollegeResponse add(CollegeRequest collegeRequest) {
-        return collegeMapper.fromEntityToResponseDto(collegeRepo.save(collegeMapper.toEntity(collegeRequest)));
+        College college=collegeMapper.toEntity(collegeRequest);
+        collegeRepo.save(college);
+        CollegeResponse collegeResponse=collegeMapper.fromEntityToResponseDto(college);
+        collegeResponse.setId(college.getId());
+        return collegeResponse;
     }
 
     @Override
     public CollegeResponse update(CollegeRequest collegeRequest,long id) {
-       checkThisIsFoundORThrowException(id);
+       getById(id);
        College college=collegeMapper.toEntity(collegeRequest);
        college.setId(id);
         return collegeMapper.fromEntityToResponseDto(collegeRepo.save(college));
@@ -53,14 +57,10 @@ public class CollegeServiceImpl  implements CollegeService {
 
     @Override
     public ResponseEntity<?> deleteById(long id) {
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         collegeRepo.deleteById(id);
         return new ResponseEntity<>("college with " + id  +" is deleted",HttpStatus.ACCEPTED);
     }
 
-    @Override
-    public void checkThisIsFoundORThrowException(long id) {
-        getById(id);
 
-    }
 }

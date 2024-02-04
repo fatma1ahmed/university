@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class DepartmentRequest {
 
     @NotNull(message = "please,Enter departmentName")
-    private String departmentName;
+    private String name;
     @Size(min = 5, max = 25, message = "enter your details between 5 and 25 character")
     private String details;
     @ManyToOne

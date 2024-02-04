@@ -28,26 +28,25 @@ public class DepartmentServiceImpl implements DepartmentService {
         long collegeId=departmentRequest.getCollegeId();
         Department department =departmentMapper.toEntity(departmentRequest);
         departmentCollegeService.assignDepartmentToCollege(department,collegeId);
-        DepartmentResponse departmentResponse=new DepartmentResponse();
-        departmentResponse.setCollegeName(department.getCollege().getCollegeName());
-        departmentResponse.setDepartmentName(department.getDepartmentName());
-        departmentResponse.setDetails(department.getDetails());
-         departmentRepo.save(department);
-         return departmentResponse;
+        departmentRepo.save(department);
+        DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
+        departmentResponse.setCollegeName(department.getCollege().getName());
+        departmentResponse.setId(department.getId());
+
+         return  departmentResponse ;
 
     }
     @Override
     public DepartmentResponse update(DepartmentRequest departmentRequest,long id){
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         long collegeId=departmentRequest.getCollegeId();
         Department department=departmentMapper.toEntity(departmentRequest);
-        department.setId(id);
         departmentCollegeService.updateDepartment(department,collegeId);
+       department.setId(id);
         departmentRepo.save(department);
-        DepartmentResponse departmentResponse=new DepartmentResponse();
-        departmentResponse.setCollegeName(department.getCollege().getCollegeName());
-        departmentResponse.setDepartmentName(department.getDepartmentName());
-        departmentResponse.setDetails(department.getDetails());
+        DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
+        departmentResponse.setCollegeName(department.getCollege().getName());
+        departmentResponse.setId(id);
         return departmentResponse;
     }
 
@@ -65,7 +64,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<DepartmentResponse> getAll() {
         return departmentRepo.findAll().stream()
                 .map(department ->{DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
-                    departmentResponse.setCollegeName(department.getCollege().getCollegeName());
+                    departmentResponse.setCollegeName(department.getCollege().getName());
                     return departmentResponse;
                 })
                 .toList();
@@ -73,16 +72,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public ResponseEntity<?> deleteById(long id) {
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         departmentRepo.deleteById(id);
         return new ResponseEntity<>("Department with " + id  +" is deleted",HttpStatus.ACCEPTED);
     }
 
-    @Override
-    public void checkThisIsFoundORThrowException(long id) {
-        getById(id);
 
-    }
 
 
 }

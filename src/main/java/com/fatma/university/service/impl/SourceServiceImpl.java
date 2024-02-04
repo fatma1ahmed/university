@@ -38,26 +38,29 @@ public class SourceServiceImpl implements SourceService {
             source.setImagePath(imageService.saveImage(imageBytes));
         }
         sourceDepartmentService.assignSourceToDepartment(source,departmentId);
+        sourceRepo.save(source);
         SourceResponse sourceResponse=new SourceResponse();
+        sourceResponse.setId(source.getId());
         sourceResponse.setFullName(source.getFullName());
         sourceResponse.setEmail(source.getEmail());
-        sourceResponse.setDepartmentName(source.getDepartment().getDepartmentName());
+        sourceResponse.setDepartmentName(source.getDepartment().getName());
 
-       sourceRepo.save(source);
+
 
           return sourceResponse;
     }
 
     @Override
     public SourceResponse update(SourceRequest sourceRequest,long id) throws IOException {
-      checkThisIsFoundORThrowException(id);
+      getById(id);
         long departmentId=sourceRequest.getDepartmentId();
       Source source=sourceMapper.toEntity(sourceRequest);
       sourceDepartmentService.updateSource(source,departmentId);
       source.setId(id);
         sourceRepo.save(source);
         SourceResponse sourceResponse=new SourceResponse();
-        sourceResponse.setDepartmentName(source.getDepartment().getDepartmentName());
+        sourceResponse.setId(source.getId());
+        sourceResponse.setDepartmentName(source.getDepartment().getName());
         sourceResponse.setFullName(source.getFullName());
         sourceResponse.setEmail(source.getEmail());
 
@@ -79,7 +82,7 @@ public class SourceServiceImpl implements SourceService {
         return sourceRepo.findAll().stream()
                 .map(source ->{ SourceResponse sourceResponse=sourceMapper.fromEntityToResponseDto(source);
                     if (source.getDepartment() != null) {
-                        sourceResponse.setDepartmentName(source.getDepartment().getDepartmentName());
+                        sourceResponse.setDepartmentName(source.getDepartment().getName());
                     }
                     return sourceResponse;
                 })
@@ -89,17 +92,12 @@ public class SourceServiceImpl implements SourceService {
 
     @Override
     public ResponseEntity<?> deleteById(long id) {
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         sourceRepo.deleteById(id);
         return new ResponseEntity<>("Source with " + id  +" is deleted",HttpStatus.ACCEPTED);
 
     }
 
-    @Override
-    public void checkThisIsFoundORThrowException(long id) {
-        getById(id);
-
-    }
 
     @Override
     public List<Event> getEventsBySourceId(long sourceId) {

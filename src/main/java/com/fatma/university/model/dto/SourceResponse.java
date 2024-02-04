@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SourceResponse {
+    private long id;
     @JsonProperty("full-name")
     private String fullName;
     private  String email;

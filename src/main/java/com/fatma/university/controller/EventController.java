@@ -17,15 +17,16 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/event")
 public class EventController {
     @Autowired
     private EventService eventService;
 
-    @PostMapping("/add-event")
+    @PostMapping("/addEvent")
     public EventResponse add(@RequestBody @Valid EventRequest eventRequest) throws IOException {
         return eventService.add(eventRequest);
     }
-    @PutMapping("/update-event/{id}")
+    @PutMapping("/updateEvent/{id}")
     public EventResponse updateEvent(@RequestBody @Valid EventRequest eventRequest, @PathVariable long id) throws IOException {
         return eventService.update(eventRequest,id);
     }

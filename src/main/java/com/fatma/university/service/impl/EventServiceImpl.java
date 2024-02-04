@@ -38,38 +38,28 @@ public class EventServiceImpl implements EventService {
             event.setImagePath(imageService.saveImage(imageBytes));
         }
         eventCategorySourceService.assignEventToCategoryAndSource(event,categoryId,sourceId);
-        EventResponse eventResponse=new EventResponse();
-        eventResponse.setCategoryName(event.getCategory().getCategoryName());
+        eventRepo.save(event);
+        EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
+        eventResponse.setCategoryName(event.getCategory().getName());
         eventResponse.setSourceName(event.getSource().getFullName());
-        eventResponse.setAddress(event.getAddress());
-        eventResponse.setPlace(event.getPlace());
-        eventResponse.setDate(event.getDate());
-        eventResponse.setTime(event.getTime());
-        eventResponse.setIsBroadcast(event.getIsBroadcast());
+        eventResponse.setId(event.getId());
 
-       eventRepo.save(event);
         return eventResponse;
     }
 
     @Override
     public EventResponse update(EventRequest eventRequest, long id) throws IOException {
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         long categoryId=eventRequest.getCategoryId();
         long sourceId=eventRequest.getSourceId();
         Event event=eventMapper.toEntity(eventRequest);
         eventCategorySourceService.updateEvent(event,categoryId,sourceId);
         event.setId(id);
         eventRepo.save(event);
-        EventResponse eventResponse=new EventResponse();
-        eventResponse.setCategoryName(event.getCategory().getCategoryName());
+        EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
+        eventResponse.setCategoryName(event.getCategory().getName());
         eventResponse.setSourceName(event.getSource().getFullName());
-        eventResponse.setAddress(event.getAddress());
-        eventResponse.setPlace(event.getPlace());
-        eventResponse.setDate(event.getDate());
-        eventResponse.setTime(event.getTime());
-        eventResponse.setIsBroadcast(event.getIsBroadcast());
-
-
+        eventResponse.setId(event.getId());
         return eventResponse;
     }
 
@@ -85,7 +75,7 @@ public class EventServiceImpl implements EventService {
     public List<EventResponse> getAll() {
        return eventRepo.findAll().stream()
                .map(event ->{EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
-                   eventResponse.setCategoryName(event.getCategory().getCategoryName());
+                   eventResponse.setCategoryName(event.getCategory().getName());
                    eventResponse.setSourceName(event.getSource().getFullName());
                    return eventResponse;
 
@@ -96,15 +86,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public ResponseEntity<?> deleteById(long id) {
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         eventRepo.deleteById(id);
         return new ResponseEntity<>("Event with " + id  +" is deleted",HttpStatus.ACCEPTED);
     }
 
-    @Override
-    public void checkThisIsFoundORThrowException(long id) {
-        getById(id);
-
-    }
 
 }

@@ -25,12 +25,16 @@ private CategoryMapper categoryMapper;
 
     @Override
     public CategoryResponse add(CategoryRequest categoryRequest) {
-        return categoryMapper.fromEntityToResponseDto(categoryRepo.save(categoryMapper.toEntity(categoryRequest)));
+        Category category=categoryMapper.toEntity(categoryRequest);
+        categoryRepo.save(category);
+        CategoryResponse categoryResponse=categoryMapper.fromEntityToResponseDto(category);
+        categoryResponse.setId(category.getId());
+        return categoryResponse;
     }
 
     @Override
     public CategoryResponse update(CategoryRequest categoryRequest,long id) {
-        checkThisIsFoundORThrowException(id);
+        getById(id);
         Category category=categoryMapper.toEntity(categoryRequest);
         category.setId(id);
         return categoryMapper.fromEntityToResponseDto(categoryRepo.save(category));
@@ -60,10 +64,6 @@ private CategoryMapper categoryMapper;
       return new ResponseEntity<>("Category with " + id  +" is deleted",HttpStatus.ACCEPTED);
     }
 
-    @Override
-    public void checkThisIsFoundORThrowException(long id) {
-        getById(id);
-    }
 
     @Override
     public List<Event> getAllEventsByCategoryId(long categoryId) {

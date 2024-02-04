@@ -17,7 +17,7 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String departmentName;
+    private String name;
     private String details;
     @ManyToOne
     private College college;

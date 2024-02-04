@@ -17,16 +17,17 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/college")
 public class CollegeController {
     @Autowired
     private CollegeService collegeService;
     @Autowired
     private DepartmentCollegeService departmentCollegeService;
-    @PostMapping("/add-collage")
+    @PostMapping("/addCollage")
     public CollegeResponse add(@RequestBody @Valid CollegeRequest collegeRequest) throws IOException {
         return collegeService.add(collegeRequest);
     }
-    @PutMapping("update-college/{id}")
+    @PutMapping("updateCollege/{id}")
     public CollegeResponse update(@RequestBody @Valid CollegeRequest collegeRequest,@PathVariable long id) throws IOException {
         return collegeService.update(collegeRequest,id);
     }

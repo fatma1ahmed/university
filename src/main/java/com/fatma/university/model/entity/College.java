@@ -17,7 +17,8 @@ public class College {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String collegeName;
+    private String name;
+    private String icon;
     @OneToMany(mappedBy = "college",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Department> departments;

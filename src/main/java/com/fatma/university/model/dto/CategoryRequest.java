@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryRequest {
     @NotNull(message = "please,Enter categoryName")
-    private String categoryName;
+    private String name;
     @Size(min = 5, max = 25, message = "enter your description between 5 and 25 character")
     private String description;
 }

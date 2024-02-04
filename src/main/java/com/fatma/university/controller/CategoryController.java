@@ -15,15 +15,16 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/category")
 
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-   @PostMapping("/add-category")
+   @PostMapping("/addCategory")
     public CategoryResponse add(@RequestBody @Valid CategoryRequest categoryRequest) throws IOException {
         return categoryService.add(categoryRequest);
     }
-    @PutMapping("/update-category/{id}")
+    @PutMapping("/updateCategory/{id}")
     public CategoryResponse update(@RequestBody @Valid CategoryRequest categoryRequest,@PathVariable long id) throws IOException {
        return categoryService.update(categoryRequest,id);
     }

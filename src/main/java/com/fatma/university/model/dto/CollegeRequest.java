@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CollegeRequest {
     @NotNull(message = "please,Enter collegeName")
-    private String collegeName;
+    private String name;
+    private String icon;
 }

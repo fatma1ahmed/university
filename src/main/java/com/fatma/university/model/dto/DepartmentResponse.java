@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentResponse {
-    private String departmentName;
+    private long id;
+    private String name;
     private String details;
     @JsonProperty("college_name")
     private String collegeName;
