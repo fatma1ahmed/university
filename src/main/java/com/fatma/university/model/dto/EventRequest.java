@@ -29,9 +29,5 @@ public class EventRequest {
     @ManyToOne
     @JsonIgnore
     private Category category;
-    @ManyToOne
-    @JsonIgnore
-    private Source source;
     private long categoryId;
-    private long sourceId;
 }

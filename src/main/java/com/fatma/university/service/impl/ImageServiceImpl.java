@@ -1,5 +1,6 @@
 package com.fatma.university.service.impl;
 
+import com.fatma.university.service.ImagesService;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
@@ -8,7 +9,7 @@ import java.util.Base64;
 import java.util.UUID;
 
 @Service
-public class ImageServiceImpl {
+public class ImageServiceImpl implements ImagesService {
     public byte[] decodeBase64(String base64Image)  {
         return Base64.getDecoder().decode(base64Image);
     }

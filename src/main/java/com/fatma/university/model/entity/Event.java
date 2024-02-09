@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table
 @Data
@@ -24,6 +26,6 @@ public class Event {
     private String imagePath;
     @ManyToOne
     private Category category;
-    @ManyToOne
-    private Source source;
+    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    private List<StudentComment> studentComments;
 }

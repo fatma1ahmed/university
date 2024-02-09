@@ -23,11 +23,6 @@ public class EventResponse {
     @ManyToOne
     @JsonIgnore
     private Category category;
-    @ManyToOne
-    @JsonIgnore
-    private Source source;
     @JsonProperty("category-name")
     private String categoryName;
-    @JsonProperty("source-name")
-    private String sourceName;
 }

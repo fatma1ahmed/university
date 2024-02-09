@@ -5,15 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@MappedSuperclass
 public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String fullName;
     private  String email;
     private  String password;

@@ -22,5 +22,11 @@ public class Category {
     @OneToMany(mappedBy ="category",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Event> events;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Video> videos;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Post> posts;
 
 }

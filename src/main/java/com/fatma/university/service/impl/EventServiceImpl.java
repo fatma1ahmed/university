@@ -4,11 +4,9 @@ import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.mapper.EventMapper;
 import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
-import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Event;
-import com.fatma.university.model.entity.Source;
 import com.fatma.university.reposity.EventRepo;
-import com.fatma.university.service.EventCategorySourceService;
+import com.fatma.university.service.EventCategoryService;
 import com.fatma.university.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,21 +25,19 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private ImageServiceImpl imageService;
     @Autowired
-    private EventCategorySourceService eventCategorySourceService;
+    private EventCategoryService eventCategoryService;
     @Override
     public EventResponse add(EventRequest eventRequest) throws IOException {
         long categoryId=eventRequest.getCategoryId();
-        long sourceId=eventRequest.getSourceId();
         Event event=eventMapper.toEntity(eventRequest);
         if(event.getImagePath()!=null &&!event.getImagePath().isEmpty() && event.getImagePath()!="string") {
             byte[] imageBytes = imageService.decodeBase64(event.getImagePath());
             event.setImagePath(imageService.saveImage(imageBytes));
         }
-        eventCategorySourceService.assignEventToCategoryAndSource(event,categoryId,sourceId);
+        eventCategoryService.assignEventToCategory(event,categoryId);
         eventRepo.save(event);
         EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
         eventResponse.setCategoryName(event.getCategory().getName());
-        eventResponse.setSourceName(event.getSource().getFullName());
         eventResponse.setId(event.getId());
 
         return eventResponse;
@@ -51,14 +47,12 @@ public class EventServiceImpl implements EventService {
     public EventResponse update(EventRequest eventRequest, long id) throws IOException {
         getById(id);
         long categoryId=eventRequest.getCategoryId();
-        long sourceId=eventRequest.getSourceId();
         Event event=eventMapper.toEntity(eventRequest);
-        eventCategorySourceService.updateEvent(event,categoryId,sourceId);
+        eventCategoryService.updateEvent(event,categoryId);
         event.setId(id);
         eventRepo.save(event);
         EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
         eventResponse.setCategoryName(event.getCategory().getName());
-        eventResponse.setSourceName(event.getSource().getFullName());
         eventResponse.setId(event.getId());
         return eventResponse;
     }
@@ -76,7 +70,6 @@ public class EventServiceImpl implements EventService {
        return eventRepo.findAll().stream()
                .map(event ->{EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
                    eventResponse.setCategoryName(event.getCategory().getName());
-                   eventResponse.setSourceName(event.getSource().getFullName());
                    return eventResponse;
 
                })

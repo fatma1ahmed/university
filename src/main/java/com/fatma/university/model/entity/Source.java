@@ -14,9 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Source extends Person {
-    @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Event> events;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @ManyToOne
     private Department department;
+    @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Video> videos;
+    @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Post> posts;
+    @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Article> articles;
 }

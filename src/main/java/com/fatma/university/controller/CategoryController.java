@@ -4,6 +4,8 @@ import com.fatma.university.model.dto.CategoryRequest;
 import com.fatma.university.model.dto.CategoryResponse;
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Event;
+import com.fatma.university.model.entity.Post;
+import com.fatma.university.model.entity.Video;
 import com.fatma.university.service.CategoryService;
 import com.fatma.university.service.impl.CategoryServiceImpl;
 import jakarta.validation.Valid;
@@ -44,5 +46,12 @@ public class CategoryController {
     public List<Event> getAllEventsByCategoryId(long categoryId){
        return categoryService.getAllEventsByCategoryId(categoryId);
     }
-
+    @GetMapping("/getAllPostsByCategoryId/{categoryId}")
+    public List<Post> getAllPostsByCategoryId(@PathVariable long categoryId){
+        return categoryService.getAllPostsByCategoryId(categoryId);
+    }
+    @GetMapping("/getAllVideosByCategoryId/{categoryId}")
+    public List<Video> getAllVideosByCategoryId(@PathVariable long categoryId){
+        return categoryService.getAllVideosByCategoryId(categoryId);
+    }
 }

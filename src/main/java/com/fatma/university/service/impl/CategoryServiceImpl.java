@@ -6,9 +6,10 @@ import com.fatma.university.model.dto.CategoryRequest;
 import com.fatma.university.model.dto.CategoryResponse;
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Event;
+import com.fatma.university.model.entity.Post;
+import com.fatma.university.model.entity.Video;
 import com.fatma.university.reposity.CategoryRepo;
 import com.fatma.university.service.CategoryService;
-import com.fatma.university.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,5 +72,21 @@ private CategoryMapper categoryMapper;
         List<Event> events=exisitCategory.getEvents();
         exisitCategory.setEvents(events);
         return events;
+    }
+
+    @Override
+    public List<Post> getAllPostsByCategoryId(long categoryId) {
+        Category exisitCategory=getById(categoryId);
+        List<Post> posts=exisitCategory.getPosts();
+        exisitCategory.setPosts(posts);
+        return posts;
+    }
+
+    @Override
+    public List<Video> getAllVideosByCategoryId(long categoryId) {
+        Category exisitCategory=getById(categoryId);
+        List<Video> videos=exisitCategory.getVideos();
+        exisitCategory.setVideos(videos);
+        return videos;
     }
 }

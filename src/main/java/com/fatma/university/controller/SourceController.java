@@ -2,8 +2,7 @@ package com.fatma.university.controller;
 
 import com.fatma.university.model.dto.SourceRequest;
 import com.fatma.university.model.dto.SourceResponse;
-import com.fatma.university.model.entity.Event;
-import com.fatma.university.model.entity.Source;
+import com.fatma.university.model.entity.*;
 import com.fatma.university.service.SourceDepartmentService;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.impl.SourceServiceImpl;
@@ -42,13 +41,22 @@ public class SourceController {
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return sourceService.deleteById(id);
     }
-    @GetMapping("/getAllEventsBySourceId/{sourceId}")
-    public List<Event> getEventsBySourceId(long sourceId) {
-        return sourceService.getEventsBySourceId(sourceId);
-    }
+
     @GetMapping("/getAllSourcesByDepartmentId/{departmentId}")
-    public  List<Source> getSourcesByDepartmentId(long departmentId){
+    public  List<Source> getSourcesByDepartmentId(@PathVariable long departmentId){
         return sourceDepartmentService.getSourcesByDepartmentId(departmentId);
+    }
+    @GetMapping("/getAllPostsBySourceId/{sourceId}")
+    public List<Post> getAllPostsBySourceId(@PathVariable long sourceId){
+        return sourceService.getAllPostsBySourceId(sourceId);
+    }
+    @GetMapping("/getAllVideosBySourceId/{sourceId}")
+    public List<Video> getAllVideosBySourceId(@PathVariable long sourceId){
+        return sourceService.getAllVideosBySourceId(sourceId);
+    }
+    @GetMapping("/getAllArticleBySourceId/{sourceId}")
+    public List<Article> getAllArticleBySourceId(@PathVariable long sourceId){
+        return sourceService.getAllArticleBySourceId(sourceId);
     }
 
 }

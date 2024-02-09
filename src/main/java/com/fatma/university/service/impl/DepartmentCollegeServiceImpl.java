@@ -1,7 +1,5 @@
 package com.fatma.university.service.impl;
 
-import com.fatma.university.mapper.DepartmentMapper;
-import com.fatma.university.model.dto.DepartmentResponse;
 import com.fatma.university.model.entity.College;
 import com.fatma.university.model.entity.Department;
 import com.fatma.university.service.CollegeService;

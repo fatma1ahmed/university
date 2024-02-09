@@ -4,9 +4,7 @@ import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.mapper.SourceMapper;
 import com.fatma.university.model.dto.SourceRequest;
 import com.fatma.university.model.dto.SourceResponse;
-import com.fatma.university.model.entity.Department;
-import com.fatma.university.model.entity.Event;
-import com.fatma.university.model.entity.Source;
+import com.fatma.university.model.entity.*;
 import com.fatma.university.reposity.SourceRepo;
 import com.fatma.university.service.SourceDepartmentService;
 import com.fatma.university.service.SourceService;
@@ -39,7 +37,7 @@ public class SourceServiceImpl implements SourceService {
         }
         sourceDepartmentService.assignSourceToDepartment(source,departmentId);
         sourceRepo.save(source);
-        SourceResponse sourceResponse=new SourceResponse();
+        SourceResponse sourceResponse=sourceMapper.fromEntityToResponseDto(source);
         sourceResponse.setId(source.getId());
         sourceResponse.setFullName(source.getFullName());
         sourceResponse.setEmail(source.getEmail());
@@ -58,7 +56,7 @@ public class SourceServiceImpl implements SourceService {
       sourceDepartmentService.updateSource(source,departmentId);
       source.setId(id);
         sourceRepo.save(source);
-        SourceResponse sourceResponse=new SourceResponse();
+        SourceResponse sourceResponse=sourceMapper.fromEntityToResponseDto(source);
         sourceResponse.setId(source.getId());
         sourceResponse.setDepartmentName(source.getDepartment().getName());
         sourceResponse.setFullName(source.getFullName());
@@ -100,10 +98,26 @@ public class SourceServiceImpl implements SourceService {
 
 
     @Override
-    public List<Event> getEventsBySourceId(long sourceId) {
+    public List<Post> getAllPostsBySourceId(long sourceId) {
         Source exisitSource=getById(sourceId);
-        List<Event> events=exisitSource.getEvents();
-        exisitSource.setEvents(events);
-        return events;
+        List<Post> posts=exisitSource.getPosts();
+        exisitSource.setPosts(posts);
+        return posts;
+    }
+
+    @Override
+    public List<Video> getAllVideosBySourceId(long sourceId) {
+        Source exisitSource=getById(sourceId);
+        List<Video> videos=exisitSource.getVideos();
+        exisitSource.setVideos(videos);
+        return videos;
+    }
+
+    @Override
+    public List<Article> getAllArticleBySourceId(long sourceId) {
+        Source exisitSource=getById(sourceId);
+        List<Article> articles=exisitSource.getArticles();
+        exisitSource.setArticles(articles);
+        return articles;
     }
 }
