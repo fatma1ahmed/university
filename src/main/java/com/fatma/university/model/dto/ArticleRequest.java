@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArticleRequest {
 
-
+//
     @JsonProperty("article_address")
     private String address;
     @JsonProperty("article_image_path")
