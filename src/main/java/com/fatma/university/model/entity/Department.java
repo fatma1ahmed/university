@@ -14,14 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String name;
+
     private String details;
+
     @ManyToOne
     private College college;
+
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Source> sources;
 }

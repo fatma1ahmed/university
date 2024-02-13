@@ -13,30 +13,32 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
 public class StudentController {
     @Autowired
     private StudentService studentService;
-    @PostMapping("/addStudent")
+
+    @PostMapping
     public StudentResponse add(@RequestBody StudentRequest studentRequest) throws IOException {
-       return studentService.add(studentRequest);
-    }
-    @PutMapping("/updateStudent/{id}")
-    public StudentResponse update(@RequestBody StudentRequest studentRequest,@PathVariable long id) throws IOException {
-        return studentService.update(studentRequest,id);
+        return studentService.add(studentRequest);
     }
 
-    @GetMapping("/getStudentById/{id}")
+    @PutMapping("/{id}")
+    public StudentResponse update(@RequestBody StudentRequest studentRequest, @PathVariable long id) throws IOException {
+        return studentService.update(studentRequest, id);
+    }
+
+    @GetMapping("/{id}")
     public Student getById(@PathVariable long id) {
         return studentService.getById(id);
     }
-    @GetMapping("/getAllSources")
 
+    @GetMapping
     public List<StudentResponse> getAll() {
-       return studentService.getAll();
+        return studentService.getAll();
     }
 
-    @DeleteMapping("/deleteSourceById/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return studentService.deleteById(id);
     }

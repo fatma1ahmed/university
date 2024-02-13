@@ -23,50 +23,41 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentMapper departmentMapper;
     @Autowired
     private DepartmentCollegeService departmentCollegeService;
+
     @Override
     public DepartmentResponse add(DepartmentRequest departmentRequest) {
-        long collegeId=departmentRequest.getCollegeId();
-        Department department =departmentMapper.toEntity(departmentRequest);
-        departmentCollegeService.assignDepartmentToCollege(department,collegeId);
-        departmentRepo.save(department);
-        DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
-        departmentResponse.setCollegeName(department.getCollege().getName());
-        departmentResponse.setId(department.getId());
+        long collegeId = departmentRequest.getCollegeId();
+        Department department = departmentMapper.toEntity(departmentRequest);
+        departmentCollegeService.assignDepartmentToCollege(department, collegeId);
 
-         return  departmentResponse ;
+        return departmentMapper.toResponse(departmentRepo.save(department));
 
     }
+
     @Override
-    public DepartmentResponse update(DepartmentRequest departmentRequest,long id){
+    public DepartmentResponse update(DepartmentRequest departmentRequest, long id) {
         getById(id);
-        long collegeId=departmentRequest.getCollegeId();
-        Department department=departmentMapper.toEntity(departmentRequest);
-        departmentCollegeService.updateDepartment(department,collegeId);
-       department.setId(id);
-        departmentRepo.save(department);
-        DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
-        departmentResponse.setCollegeName(department.getCollege().getName());
-        departmentResponse.setId(id);
-        return departmentResponse;
+        long collegeId = departmentRequest.getCollegeId();
+        Department department = departmentMapper.toEntity(departmentRequest);
+        departmentCollegeService.updateDepartment(department, collegeId);
+        department.setId(id);
+
+        return departmentMapper.toResponse(departmentRepo.save(department));
     }
 
 
     @Override
     public Department getById(long id) {
-        Department department=departmentRepo.findById(id).orElseThrow(
-                ()->new RecordNotFoundException("Department with " + id  +" not found")
-        );
 
-        return department;
+        return departmentRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("Department with " + id + " not found")
+        );
     }
 
     @Override
     public List<DepartmentResponse> getAll() {
         return departmentRepo.findAll().stream()
-                .map(department ->{DepartmentResponse departmentResponse=departmentMapper.fromEntityToResponseDto(department);
-                    departmentResponse.setCollegeName(department.getCollege().getName());
-                    return departmentResponse;
-                })
+                .map(departmentMapper::toResponse)
                 .toList();
     }
 
@@ -74,10 +65,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     public ResponseEntity<?> deleteById(long id) {
         getById(id);
         departmentRepo.deleteById(id);
-        return new ResponseEntity<>("Department with " + id  +" is deleted",HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Department with " + id + " is deleted", HttpStatus.ACCEPTED);
     }
-
-
 
 
 }

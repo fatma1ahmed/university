@@ -15,29 +15,32 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/addPost")
+    @PostMapping
     public PostResponse add(@RequestBody @Valid PostRequest postRequest) throws IOException {
         return postService.add(postRequest);
     }
-    @PutMapping("/updatePost/{id}")
+
+    @PutMapping("/{id}")
     public PostResponse updateEvent(@RequestBody @Valid PostRequest postRequest, @PathVariable long id) throws IOException {
-        return postService.update(postRequest,id);
+        return postService.update(postRequest, id);
     }
 
-    @GetMapping("/getPostById/{id}")
+    @GetMapping("/{id}")
     public Post getById(@PathVariable long id) {
         return postService.getById(id);
     }
-    @GetMapping("/getAllPosts")
+
+    @GetMapping
     public List<PostResponse> getAll() {
         return postService.getAll();
     }
-    @DeleteMapping("/deletePostById/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return postService.deleteById(id);
     }

@@ -19,42 +19,42 @@ import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-@Autowired
-private CategoryRepo categoryRepo;
-@Autowired
-private CategoryMapper categoryMapper;
+    @Autowired
+    private CategoryRepo categoryRepo;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Override
     public CategoryResponse add(CategoryRequest categoryRequest) {
-        Category category=categoryMapper.toEntity(categoryRequest);
-        categoryRepo.save(category);
-        CategoryResponse categoryResponse=categoryMapper.fromEntityToResponseDto(category);
-        categoryResponse.setId(category.getId());
-        return categoryResponse;
+
+        return categoryMapper.toResponse(categoryRepo.save(categoryMapper.toEntity(categoryRequest)));
+//        Category category=categoryMapper.toEntity(categoryRequest);
+//        categoryRepo.save(category);
+//        CategoryResponse categoryResponse=categoryMapper.fromEntityToResponseDto(category);
+//        categoryResponse.setId(category.getId());
+//        return categoryResponse;
     }
 
     @Override
-    public CategoryResponse update(CategoryRequest categoryRequest,long id) {
+    public CategoryResponse update(CategoryRequest categoryRequest, long id) {
         getById(id);
-        Category category=categoryMapper.toEntity(categoryRequest);
+        Category category = categoryMapper.toEntity(categoryRequest);
         category.setId(id);
-        return categoryMapper.fromEntityToResponseDto(categoryRepo.save(category));
+        return categoryMapper.toResponse(categoryRepo.save(category));
     }
 
     @Override
     public Category getById(long id) {
-        Category category=categoryRepo.findById(id).orElseThrow(
-                ()->new RecordNotCorrectException("Category with " + id  +" not found")
+        return categoryRepo.findById(id).orElseThrow(
+                () -> new RecordNotCorrectException("Category with " + id + " not found")
         );
-        return category;
     }
 
 
-
     @Override
-    public List<CategoryResponse> getAll(){
+    public List<CategoryResponse> getAll() {
         return categoryRepo.findAll().stream()
-                .map(category -> categoryMapper.fromEntityToResponseDto(category))
+                .map(category -> categoryMapper.toResponse(category))
                 .toList();
 
     }
@@ -62,30 +62,30 @@ private CategoryMapper categoryMapper;
     @Override
     public ResponseEntity<?> deleteById(long id) {
         categoryRepo.deleteById(id);
-      return new ResponseEntity<>("Category with " + id  +" is deleted",HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Category with " + id + " is deleted", HttpStatus.ACCEPTED);
     }
 
 
     @Override
     public List<Event> getAllEventsByCategoryId(long categoryId) {
-        Category exisitCategory=getById(categoryId);
-        List<Event> events=exisitCategory.getEvents();
+        Category exisitCategory = getById(categoryId);
+        List<Event> events = exisitCategory.getEvents();
         exisitCategory.setEvents(events);
         return events;
     }
 
     @Override
     public List<Post> getAllPostsByCategoryId(long categoryId) {
-        Category exisitCategory=getById(categoryId);
-        List<Post> posts=exisitCategory.getPosts();
+        Category exisitCategory = getById(categoryId);
+        List<Post> posts = exisitCategory.getPosts();
         exisitCategory.setPosts(posts);
         return posts;
     }
 
     @Override
     public List<Video> getAllVideosByCategoryId(long categoryId) {
-        Category exisitCategory=getById(categoryId);
-        List<Video> videos=exisitCategory.getVideos();
+        Category exisitCategory = getById(categoryId);
+        List<Video> videos = exisitCategory.getVideos();
         exisitCategory.setVideos(videos);
         return videos;
     }

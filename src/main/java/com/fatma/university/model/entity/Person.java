@@ -1,5 +1,7 @@
 package com.fatma.university.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @MappedSuperclass
 public class Person {
+
+    @JsonProperty("full_name")
     private String fullName;
-    private  String email;
-    private  String password;
-    private  String phone;
-    private  String imagePath;
+
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("password")
+    private String password;
+
+    @JsonProperty("phone")
+    private String phone;
+
+    @JsonProperty("image_path")
+    private String imagePath;
 }

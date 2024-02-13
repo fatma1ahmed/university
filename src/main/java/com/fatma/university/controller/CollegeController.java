@@ -17,34 +17,40 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/college")
+@RequestMapping("/colleges")
 public class CollegeController {
     @Autowired
     private CollegeService collegeService;
     @Autowired
     private DepartmentCollegeService departmentCollegeService;
-    @PostMapping("/addCollage")
+
+    @PostMapping
     public CollegeResponse add(@RequestBody @Valid CollegeRequest collegeRequest) throws IOException {
         return collegeService.add(collegeRequest);
     }
-    @PutMapping("updateCollege/{id}")
-    public CollegeResponse update(@RequestBody @Valid CollegeRequest collegeRequest,@PathVariable long id) throws IOException {
-        return collegeService.update(collegeRequest,id);
+
+    @PutMapping("/{id}")
+    public CollegeResponse update(@RequestBody @Valid CollegeRequest collegeRequest, @PathVariable long id) throws IOException {
+        return collegeService.update(collegeRequest, id);
     }
-    @GetMapping("/getCollegeById/{id}")
+
+    @GetMapping("/{id}")
     public College getById(@PathVariable long id) {
         return collegeService.getById(id);
     }
-    @GetMapping("/getAllColleges")
+
+    @GetMapping
     public List<CollegeResponse> getAll() {
         return collegeService.getAll();
     }
-    @DeleteMapping("/deleteCollegeById/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return collegeService.deleteById(id);
     }
-    @GetMapping("/getAllDepartmentsByCollegeId/{collegeId}")
-    public List<Department> getDepartmentsByCollegeId(@PathVariable  long collegeId) {
+
+    @GetMapping("/getAllDepartments/{collegeId}")
+    public List<Department> getDepartmentsByCollegeId(@PathVariable long collegeId) {
         return departmentCollegeService.getDepartmentsByCollegeId(collegeId);
 
     }

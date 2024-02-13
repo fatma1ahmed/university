@@ -15,43 +15,43 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CollegeServiceImpl  implements CollegeService {
+public class CollegeServiceImpl implements CollegeService {
     @Autowired
     private CollegeRepo collegeRepo;
     @Autowired
     private CollegeMapper collegeMapper;
+
     @Override
     public CollegeResponse add(CollegeRequest collegeRequest) {
-        College college=collegeMapper.toEntity(collegeRequest);
-        collegeRepo.save(college);
-        CollegeResponse collegeResponse=collegeMapper.fromEntityToResponseDto(college);
-        collegeResponse.setId(college.getId());
-        return collegeResponse;
+//        College college=collegeMapper.toEntity(collegeRequest);
+//        collegeRepo.save(college);
+//        CollegeResponse collegeResponse=collegeMapper.fromEntityToResponseDto(college);
+//        collegeResponse.setId(college.getId());
+        return collegeMapper.toResponse(collegeRepo.save(collegeMapper.toEntity(collegeRequest)));
     }
 
     @Override
-    public CollegeResponse update(CollegeRequest collegeRequest,long id) {
-       getById(id);
-       College college=collegeMapper.toEntity(collegeRequest);
-       college.setId(id);
-        return collegeMapper.fromEntityToResponseDto(collegeRepo.save(college));
+    public CollegeResponse update(CollegeRequest collegeRequest, long id) {
+        getById(id);
+        College college = collegeMapper.toEntity(collegeRequest);
+        college.setId(id);
+        return collegeMapper.toResponse(collegeRepo.save(college));
     }
 
 
     @Override
     public College getById(long id) {
-        College college=collegeRepo.findById(id).orElseThrow(
-                ()->new RecordNotFoundException("College with " + id  +" not found")
-        );
 
-        return college;
+        return collegeRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("College with " + id + " not found")
+        );
     }
 
 
     @Override
     public List<CollegeResponse> getAll() {
         return collegeRepo.findAll().stream()
-                .map(college -> collegeMapper.fromEntityToResponseDto(college))
+                .map(collegeMapper::toResponse)
                 .toList();
     }
 
@@ -59,9 +59,8 @@ public class CollegeServiceImpl  implements CollegeService {
     public ResponseEntity<?> deleteById(long id) {
         getById(id);
         collegeRepo.deleteById(id);
-        return new ResponseEntity<>("college with " + id  +" is deleted",HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("college with " + id + " is deleted", HttpStatus.ACCEPTED);
     }
-
 
 
 }

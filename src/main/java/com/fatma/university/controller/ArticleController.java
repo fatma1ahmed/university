@@ -13,27 +13,27 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/articles")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-    @PostMapping("/addArticle")
+    @PostMapping
     public ArticleResponse add(@RequestBody  ArticleRequest articleRequest) throws IOException {
         return articleService.add(articleRequest);
     }
-    @PutMapping("/updateArticle/{id}")
+    @PutMapping("/{id}")
     public ArticleResponse update(@RequestBody ArticleRequest articleRequest, @PathVariable long id) throws IOException {
         return articleService.update(articleRequest,id);
     }
-    @GetMapping("/getArticleById/{id}")
+    @GetMapping("/{id}")
     public Article getById(@PathVariable long id) {
         return articleService.getById(id);
     }
-    @GetMapping("/getAllArticles")
+    @GetMapping
     public List<ArticleResponse> getAll() {
         return articleService.getAll();
     }
-    @DeleteMapping("/deleteArticleById/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return articleService.deleteById(id);
     }

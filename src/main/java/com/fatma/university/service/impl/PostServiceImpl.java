@@ -26,61 +26,47 @@ public class PostServiceImpl implements PostService {
     private ImageServiceImpl imageService;
     @Autowired
     private PostCategorySourceService postCategorySourceService;
+
     @Override
     public PostResponse add(PostRequest postRequest) throws IOException {
-        long categoryId=postRequest.getCategoryId();
-        long sourceId=postRequest.getSourceId();
-        Post post=postMapper.toEntity(postRequest);
-        if(post.getImagePath()!=null &&!post.getImagePath().isEmpty() && post.getImagePath()!="string") {
-            byte[] imageBytes = imageService.decodeBase64(post.getImagePath());
-            post.setImagePath(imageService.saveImage(imageBytes));
-        }
-        postCategorySourceService.assignPostToCategoryAndSource(post,categoryId,sourceId);
-        postRepo.save(post);
-        PostResponse postResponse=postMapper.fromEntityToResponseDto(post);
-        postResponse.setId(post.getId());
-        postResponse.setCategoryName(post.getCategory().getName());
-        postResponse.setSourceName(post.getSource().getFullName());
+        long categoryId = postRequest.getCategoryId();
+        long sourceId = postRequest.getSourceId();
+        Post post = postMapper.toEntity(postRequest);
+//        if (post.getImagePath() != null && !post.getImagePath().isEmpty() && post.getImagePath() != "string") {
+//            byte[] imageBytes = imageService.decodeBase64(post.getImagePath());
+//            post.setImagePath(imageService.saveImage(imageBytes));
+//        }
+        postCategorySourceService.assignPostToCategoryAndSource(post, categoryId, sourceId);
 
-        return postResponse;
+
+        return postMapper.toResponse(postRepo.save(post));
     }
 
     @Override
     public PostResponse update(PostRequest postRequest, long id) throws IOException {
-       Post exisitPost=getById(id);
-        long categoryId=postRequest.getCategoryId();
-        long sourceId=postRequest.getSourceId();
-        Post post=postMapper.toEntity(postRequest);
-        postCategorySourceService.updatePost(post,categoryId,sourceId);
+        Post exisitPost = getById(id);
+        long categoryId = postRequest.getCategoryId();
+        long sourceId = postRequest.getSourceId();
+        Post post = postMapper.toEntity(postRequest);
+        postCategorySourceService.updatePost(post, categoryId, sourceId);
         post.setId(id);
         post.setCreateDate(exisitPost.getCreateDate());
-        postRepo.save(post);
-        PostResponse postResponse=postMapper.fromEntityToResponseDto(post);
-        postResponse.setCategoryName(post.getCategory().getName());
-        postResponse.setSourceName(post.getSource().getFullName());
-        postResponse.setId(post.getId());
-        postResponse.setCreateDate(exisitPost.getCreateDate());
-        postResponse.setUpdateDate(exisitPost.getUpdateDate());
-        return postResponse;
+
+
+        return postMapper.toResponse(postRepo.save(post));
     }
 
     @Override
     public Post getById(long id) {
-        Post post=postRepo.findById(id).orElseThrow(
-                ()->new RecordNotFoundException("this Post with " + id + " not found")
+        return postRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this Post with " + id + " not found")
         );
-        return post;
     }
 
     @Override
     public List<PostResponse> getAll() {
         return postRepo.findAll().stream()
-                .map(post -> {PostResponse postResponse=postMapper.fromEntityToResponseDto(post);
-                    postResponse.setSourceName(post.getSource().getFullName());
-                    postResponse.setCategoryName(post.getCategory().getName());
-                    postResponse.setId(post.getId());
-                    return postResponse;
-                })
+                .map(postMapper::toResponse)
                 .toList();
     }
 
@@ -88,6 +74,6 @@ public class PostServiceImpl implements PostService {
     public ResponseEntity<?> deleteById(long id) {
         getById(id);
         postRepo.deleteById(id);
-        return new ResponseEntity<>("Post with " + id  +" is deleted", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Post with " + id + " is deleted", HttpStatus.ACCEPTED);
     }
 }

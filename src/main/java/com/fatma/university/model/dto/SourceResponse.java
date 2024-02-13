@@ -3,6 +3,7 @@ package com.fatma.university.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fatma.university.model.entity.Department;
+import com.fatma.university.model.entity.Person;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,15 +12,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SourceResponse {
+public class SourceResponse extends Person {
+
     private long id;
-    @JsonProperty("full-name")
-    private String fullName;
-    private  String email;
-    @ManyToOne
-    @JsonIgnore
-    private Department department;
-    @JsonProperty("department-name")
-    private String departmentName;
+
+    @JsonProperty("department_id")
+    private long departmentId;
+
 
 }

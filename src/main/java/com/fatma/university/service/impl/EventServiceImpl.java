@@ -26,62 +26,51 @@ public class EventServiceImpl implements EventService {
     private ImageServiceImpl imageService;
     @Autowired
     private EventCategoryService eventCategoryService;
+
     @Override
     public EventResponse add(EventRequest eventRequest) throws IOException {
-        long categoryId=eventRequest.getCategoryId();
-        Event event=eventMapper.toEntity(eventRequest);
-        if(event.getImagePath()!=null &&!event.getImagePath().isEmpty() && event.getImagePath()!="string") {
-            byte[] imageBytes = imageService.decodeBase64(event.getImagePath());
-            event.setImagePath(imageService.saveImage(imageBytes));
-        }
-        eventCategoryService.assignEventToCategory(event,categoryId);
-        eventRepo.save(event);
-        EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
-        eventResponse.setCategoryName(event.getCategory().getName());
-        eventResponse.setId(event.getId());
+        long categoryId = eventRequest.getCategoryId();
+        Event event = eventMapper.toEntity(eventRequest);
+//        if (event.getImagePath() != null && !event.getImagePath().isEmpty() && event.getImagePath() != "string") {
+//            byte[] imageBytes = imageService.decodeBase64(event.getImagePath());
+//            event.setImagePath(imageService.saveImage(imageBytes));
+//        }
+        eventCategoryService.assignEventToCategory(event, categoryId);
 
-        return eventResponse;
+
+        return eventMapper.toResponse(eventRepo.save(event));
     }
 
     @Override
     public EventResponse update(EventRequest eventRequest, long id) throws IOException {
         getById(id);
-        long categoryId=eventRequest.getCategoryId();
-        Event event=eventMapper.toEntity(eventRequest);
-        eventCategoryService.updateEvent(event,categoryId);
+        long categoryId = eventRequest.getCategoryId();
+        Event event = eventMapper.toEntity(eventRequest);
+        eventCategoryService.updateEvent(event, categoryId);
         event.setId(id);
-        eventRepo.save(event);
-        EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
-        eventResponse.setCategoryName(event.getCategory().getName());
-        eventResponse.setId(event.getId());
-        return eventResponse;
+
+        return eventMapper.toResponse(eventRepo.save(event));
     }
 
     @Override
     public Event getById(long id) {
-        Event event=eventRepo.findById(id).orElseThrow(
-                ()->new RecordNotFoundException("this Event with " + id + " not found")
+        return eventRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this Event with " + id + " not found")
         );
-        return event;
     }
 
     @Override
     public List<EventResponse> getAll() {
-       return eventRepo.findAll().stream()
-               .map(event ->{EventResponse eventResponse=eventMapper.fromEntityToResponseDto(event);
-                   eventResponse.setCategoryName(event.getCategory().getName());
-                   return eventResponse;
-
-               })
-
-               .toList();
+        return eventRepo.findAll().stream()
+                .map(eventMapper::toResponse)
+                .toList();
     }
 
     @Override
     public ResponseEntity<?> deleteById(long id) {
         getById(id);
         eventRepo.deleteById(id);
-        return new ResponseEntity<>("Event with " + id  +" is deleted",HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Event with " + id + " is deleted", HttpStatus.ACCEPTED);
     }
 
 

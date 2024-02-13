@@ -14,27 +14,30 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/departments")
 public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
 
-    @PostMapping("/addDepartment")
+    @PostMapping
     public DepartmentResponse add(@RequestBody @Valid DepartmentRequest departmentRequest) throws IOException {
         return departmentService.add(departmentRequest);
     }
 
-    @PutMapping("/updateDepartment/{id}")
+    @PutMapping("/{id}")
     public DepartmentResponse updateDepartment(@RequestBody @Valid DepartmentRequest departmentRequest, @PathVariable long id) throws IOException {
-        return  departmentService.update(departmentRequest,id);
-    }@GetMapping("/getAllDepartment")
+        return departmentService.update(departmentRequest, id);
+    }
+
+    @GetMapping
     public List<DepartmentResponse> getAll() {
         return departmentService.getAll();
     }
-    @DeleteMapping("/deleteDepartmentById/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
-       return departmentService.deleteById(id);
+        return departmentService.deleteById(id);
 
     }
 

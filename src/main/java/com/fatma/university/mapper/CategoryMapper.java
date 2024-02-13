@@ -4,11 +4,10 @@ import com.fatma.university.model.dto.CategoryRequest;
 import com.fatma.university.model.dto.CategoryResponse;
 import com.fatma.university.model.entity.Category;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
     Category toEntity(CategoryRequest categoryRequest);
 
-    CategoryResponse fromEntityToResponseDto(Category entity);
+    CategoryResponse toResponse(Category entity);
 }

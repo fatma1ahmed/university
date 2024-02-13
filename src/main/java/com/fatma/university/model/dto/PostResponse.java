@@ -1,6 +1,7 @@
 package com.fatma.university.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Source;
 import jakarta.persistence.ManyToOne;
@@ -11,23 +12,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostResponse {
+    @JsonProperty("post_id")
     private long id;
+    @JsonProperty("post_content")
     private String content;
-    @CreationTimestamp
-    private LocalDateTime createDate;
-    @UpdateTimestamp
-    private LocalDateTime updateDate;
+    @JsonProperty("post_image_path")
     private String imagePath;
-    @ManyToOne
-    @JsonIgnore
-    private Category category;
-    @ManyToOne
-    @JsonIgnore
-    private Source source;
-    private String categoryName;
-    private String sourceName;
+    @JsonProperty("category_id")
+    private long categoryId;
+    @JsonProperty("source_id")
+    private long sourceId;
 }

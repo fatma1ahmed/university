@@ -13,29 +13,29 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/events")
 public class EventController {
     @Autowired
     private EventService eventService;
 
-    @PostMapping("/addEvent")
+    @PostMapping
     public EventResponse add(@RequestBody @Valid EventRequest eventRequest) throws IOException {
         return eventService.add(eventRequest);
     }
-    @PutMapping("/updateEvent/{id}")
+    @PutMapping("/{id}")
     public EventResponse updateEvent(@RequestBody @Valid EventRequest eventRequest, @PathVariable long id) throws IOException {
         return eventService.update(eventRequest,id);
     }
 
-    @GetMapping("/getEventById/{id}")
+    @GetMapping("/{id}")
     public Event getById(@PathVariable long id) {
         return eventService.getById(id);
     }
-    @GetMapping("/getAllEvents")
+    @GetMapping
     public List<EventResponse> getAll() {
        return eventService.getAll();
     }
-    @DeleteMapping("/deleteEventById/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
        return eventService.deleteById(id);
     }

@@ -19,7 +19,7 @@ public class College {
     private long id;
     private String name;
     private String icon;
-    @OneToMany(mappedBy = "college",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "college", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Department> departments;
 }

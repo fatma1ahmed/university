@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface EventMapper {
     Event toEntity(EventRequest eventRequest);
-    EventResponse fromEntityToResponseDto(Event entity);
+    EventResponse toResponse(Event entity);
 }

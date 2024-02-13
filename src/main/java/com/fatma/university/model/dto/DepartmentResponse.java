@@ -12,12 +12,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentResponse {
+
+    @JsonProperty("department_id")
     private long id;
+
+    @JsonProperty("department_name")
     private String name;
+
+    @JsonProperty("department_details")
     private String details;
-    @JsonProperty("college_name")
-    private String collegeName;
-    @ManyToOne
-    @JsonIgnore
-    private College college;
+
+    @JsonProperty("college_id")
+    private long collegeId;
 }

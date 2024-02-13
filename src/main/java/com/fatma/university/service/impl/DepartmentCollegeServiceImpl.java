@@ -15,21 +15,21 @@ public class DepartmentCollegeServiceImpl implements DepartmentCollegeService {
     private CollegeService collegeService;
 
     @Override
-    public void assignDepartmentToCollege(Department department,long CollegeId) {
-        College exisitCollege=collegeService.getById(CollegeId);
+    public void assignDepartmentToCollege(Department department, long CollegeId) {
+        College exisitCollege = collegeService.getById(CollegeId);
         department.setCollege(exisitCollege);
     }
 
     @Override
     public void updateDepartment(Department department, long collegeId) {
-        College exsistCollege=collegeService.getById(collegeId);
+        College exsistCollege = collegeService.getById(collegeId);
         department.setCollege(exsistCollege);
     }
 
     @Override
     public List<Department> getDepartmentsByCollegeId(long collegeId) {
-        College exsistCollege=collegeService.getById(collegeId);
-        List<Department> departments=exsistCollege.getDepartments();
+        College exsistCollege = collegeService.getById(collegeId);
+        List<Department> departments = exsistCollege.getDepartments();
         exsistCollege.setDepartments(departments);
         return departments;
     }
