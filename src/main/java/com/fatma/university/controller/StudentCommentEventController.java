@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/studentCommentEvent")
+@CrossOrigin("*")
 public class StudentCommentEventController {
     @Autowired
     private StudentCommentEventService studentCommentEventService;

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/studentLikePost")
+@CrossOrigin("*")
 public class StudentLikePostController {
     @Autowired
     private StudentLikePostService studentLikePostService;

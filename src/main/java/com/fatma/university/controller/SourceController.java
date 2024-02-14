@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sources")
+@CrossOrigin("*")
 public class SourceController {
     @Autowired
     private SourceService sourceService;

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/studentCommentPost")
+@CrossOrigin("*")
 public class StudentCommentPostController {
     @Autowired
     private StudentCommentPostService studentCommentPostService;

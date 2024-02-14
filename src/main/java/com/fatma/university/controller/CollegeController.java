@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/colleges")
+@CrossOrigin("*")
 public class CollegeController {
     @Autowired
     private CollegeService collegeService;
