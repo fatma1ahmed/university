@@ -1,10 +1,6 @@
 package com.fatma.university.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fatma.university.model.entity.Event;
-import com.fatma.university.model.entity.Post;
-import com.fatma.university.model.entity.Student;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentLikeEventResponse {
-    private long id;
+
+    @JsonProperty("is_like")
     private boolean isLike;
-    @ManyToOne
-    @JsonIgnore
-    private Student student;
-    @ManyToOne
-    @JsonIgnore
-    private Event event;
-    private String studentName;
-    private String eventAddress;
+    @JsonProperty("student_id")
+    private long studentId;
+    @JsonProperty("event_id")
+    private long eventId;
+    @JsonProperty("post_id")
+    private long  postId;
 }

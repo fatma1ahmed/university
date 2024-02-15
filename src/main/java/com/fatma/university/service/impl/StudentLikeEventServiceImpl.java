@@ -1,5 +1,6 @@
 package com.fatma.university.service.impl;
 
+import com.fatma.university.controller.StudentLikeEventController;
 import com.fatma.university.mapper.StudentLikeEventMapper;
 import com.fatma.university.mapper.StudentLikePostMapper;
 import com.fatma.university.model.dto.StudentLikeEventResponse;
@@ -33,41 +34,25 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
     public StudentLikeEventResponse putLikeToEvent(long studentId, long eventId) {
         Student student = studentService.getById(studentId);
         Event event = eventService.getById(eventId);
-        Optional<StudentLike> studentLike=findLikeByStudentIdAndEventId(studentId,eventId);
-        if(studentLike.isPresent()){
-            return updateLikeToEvent(studentId,eventId);
-        }else {
-            StudentLikeEventResponse createLike=new StudentLikeEventResponse();
-            createLike.setLike(true);
-            createLike.setStudent(student);
-            createLike.setEvent(event);
-            createLike.setEventAddress(event.getAddress());
-            createLike.setStudentName(student.getFullName());
-            StudentLike savedLike=studentLikeRepo.save(studentLikeEventMapper.toEntity(createLike));
-            createLike.setId(savedLike.getId());
-            return createLike;
+        Optional<StudentLike> optionalStudentLike = findLikeByStudentIdAndEventId(studentId, eventId);
+        if (optionalStudentLike.isPresent()) {
+            return convertLikeAndSaveIt(optionalStudentLike.get());
+        } else {
+            StudentLike studentLike = new StudentLike();
+            studentLike.setLike(true);
+            studentLike.setStudent(student);
+            studentLike.setEvent(event);
+            return studentLikeEventMapper.fromEntityToResponseDto(studentLikeRepo.save(studentLike));
         }
     }
 
-    @Override
-    public StudentLikeEventResponse updateLikeToEvent(long studentId, long eventId) {
-        Student student = studentService.getById(studentId);
-        Event event = eventService.getById(eventId);
-        Optional<StudentLike> studentLike=findLikeByStudentIdAndEventId(studentId,eventId);
-        StudentLikeEventResponse existLike=studentLikeEventMapper.fromEntityToResponseDto(studentLike.get());
-        if(studentLike.isPresent()){
-            boolean currentLike=existLike.isLike();
-            existLike.setLike(!currentLike);
-            existLike.setEventAddress(event.getAddress());
-            existLike.setStudentName(student.getFullName());
-            studentLikeRepo.save(studentLikeEventMapper.toEntity(existLike));
-        }
-
-        return existLike;
+    private StudentLikeEventResponse convertLikeAndSaveIt(StudentLike studentLike) {
+        studentLike.setLike(!studentLike.isLike());
+        return studentLikeEventMapper.
+                fromEntityToResponseDto(studentLikeRepo.save(studentLike));
     }
 
-    @Override
-    public Optional<StudentLike> findLikeByStudentIdAndEventId(long studentId, long eventId) {
-        return studentLikeRepo.findIsLikeByStudentIdAndEventId(studentId,eventId);
+    private Optional<StudentLike> findLikeByStudentIdAndEventId(long studentId, long eventId) {
+        return studentLikeRepo.findIsLikeByStudentIdAndEventId(studentId, eventId);
     }
 }
