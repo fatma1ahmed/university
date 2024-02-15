@@ -27,22 +27,23 @@ public class StudentCommentEventServiceImpl implements StudentCommentEventServic
 
     @Override
     public StudentCommentEventResponse putCommentToEvent(long studentId, long eventId, String comment) {
-        Student student=studentService.getById(studentId);
+        Student student = studentService.getById(studentId);
         Event event = eventService.getById(eventId);
-        Optional<StudentComment> studentComment=findCommentByStudentIdAndEventId(studentId,eventId);
-        if(studentComment.isPresent()){
+        Optional<StudentComment> studentComment = findCommentByStudentIdAndEventId(studentId, eventId);
+        if (studentComment.isPresent()) {
             return updateCommentToEvent(studentId, eventId, comment);
 
-        }else {
-            StudentCommentEventResponse createComment=new StudentCommentEventResponse();
-            createComment.setStudentName(student.getFullName());
-            createComment.setEventAddress(event.getAddress());
+        } else {
+            StudentCommentEventResponse createComment = new StudentCommentEventResponse();
+
+
+            createComment.setStudentId(student.getId());
+            createComment.setEventId(event.getId());
             createComment.setComment(comment);
-            createComment.setEvent(event);
-            createComment.setStudent(student);
+
             StudentComment savedComment = studentCommentRepo.save(studentCommentEventMapper.toEntity(createComment));
             createComment.setId(savedComment.getId());
-            return createComment ;
+            return createComment;
 
         }
 
@@ -50,23 +51,31 @@ public class StudentCommentEventServiceImpl implements StudentCommentEventServic
 
     @Override
     public StudentCommentEventResponse updateCommentToEvent(long studentId, long eventId, String comment) {
-        Student student = studentService.getById(studentId);
-        Event event = eventService.getById(eventId);
-        Optional<StudentComment> studentComment = findCommentByStudentIdAndEventId(studentId, eventId);
-        StudentCommentEventResponse existStudentComment = studentCommentEventMapper.fromEntityToResponseDto(studentComment.get());
-        if (studentComment.isPresent()) {
-            existStudentComment.setComment(comment);
-            existStudentComment.setEventAddress(event.getAddress());
-            existStudentComment.setStudentName(student.getFullName());
-            studentCommentRepo.save(studentCommentEventMapper.toEntity(existStudentComment));
-        }
-        return existStudentComment;
+//        Student student = studentService.getById(studentId);
+//        Event event = eventService.getById(eventId);
+//        Optional<StudentComment> studentComment = findCommentByStudentIdAndEventId(studentId, eventId);
+//
+//        StudentCommentEventResponse existStudentComment = studentCommentEventMapper.fromEntityToResponseDto(studentComment.get());
+//        if (studentComment.isPresent()) {
+//            existStudentComment.setComment(comment);
+//
+//        StudentCommentEventResponse existStudentComment = studentCommentEventMapper.toResponse(studentComment.get());
+//        if (studentComment.isPresent()) {
+//            existStudentComment.setComment(comment);
+//            existStudentComment.setEventId(event.getId());
+//            existStudentComment.setStudentId(student.getId());
+//
+//            studentCommentRepo.save(studentCommentEventMapper.toEntity(existStudentComment));
+//        }
+//        return existStudentComment;
+        return null;
     }
 
-    @Override
-    public Optional<StudentComment> findCommentByStudentIdAndEventId(long studentId, long eventId) {
-        return studentCommentRepo.findCommentByStudentIdAndEventId(studentId,eventId);
-    }
+
+@Override
+public Optional<StudentComment> findCommentByStudentIdAndEventId(long studentId, long eventId) {
+    return studentCommentRepo.findCommentByStudentIdAndEventId(studentId, eventId);
+}
 
 
 }

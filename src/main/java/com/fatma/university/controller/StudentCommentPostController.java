@@ -10,10 +10,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/studentCommentPost")
+@CrossOrigin("*")
 public class StudentCommentPostController {
     @Autowired
     private StudentCommentPostService studentCommentPostService;
-    @PostMapping("/putCommentToPost/{studentId}/{postId}")
+    @PostMapping("/{studentId}/{postId}")
     public StudentCommentPostResponse putCommentToPost(@PathVariable long studentId, @PathVariable long postId,@RequestParam String comment) {
         return studentCommentPostService.putCommentToPost(studentId, postId, comment);
     }

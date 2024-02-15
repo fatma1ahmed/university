@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/studentCommentEvent")
+@CrossOrigin("*")
 public class StudentCommentEventController {
     @Autowired
     private StudentCommentEventService studentCommentEventService;
-    @PostMapping("/putCommentToEvent/{studentId}/{eventId}")
+
+
+    @PostMapping("/{studentId}/{eventId}")
+
     public StudentCommentEventResponse putCommentToEvent(@PathVariable long studentId, @PathVariable long eventId, @RequestParam String comment) {
         return studentCommentEventService.putCommentToEvent(studentId, eventId, comment);
     }
+
 }

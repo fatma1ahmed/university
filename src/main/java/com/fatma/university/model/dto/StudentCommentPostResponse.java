@@ -1,6 +1,9 @@
 package com.fatma.university.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fatma.university.model.entity.Post;
 import com.fatma.university.model.entity.Student;
 import jakarta.persistence.ManyToOne;
@@ -12,14 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentCommentPostResponse {
+
+
+
+    @JsonProperty("studentComment_id")
     private long id;
+    @JsonProperty("student_comment")
     private String comment;
-    @ManyToOne
-    @JsonIgnore
-    private Student student;
-    @ManyToOne
-    @JsonIgnore
-    private Post post;
-    private String studentName;
-    private String postContent;
+    @JsonProperty("student_id")
+    private long studentId;
+    @JsonProperty("post_id")
+    private long postId;
+
 }

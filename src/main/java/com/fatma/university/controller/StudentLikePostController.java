@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/studentLikePost")
+@CrossOrigin("*")
 public class StudentLikePostController {
     @Autowired
     private StudentLikePostService studentLikePostService;
@@ -19,4 +20,6 @@ public class StudentLikePostController {
     public StudentLikePostResponse updateLikeToPost(@PathVariable long studentId,@PathVariable long postId){
         return studentLikePostService.updateLikeToPost(studentId,postId);
     }
+
+
 }

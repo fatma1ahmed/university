@@ -9,8 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentResponse {
+
+
+
+
+    @JsonProperty("student_id")
     private long id;
-    @JsonProperty("full-name")
+    @JsonProperty("student_full_name")
     private String fullName;
+    @JsonProperty("student_email")
     private  String email;
 }

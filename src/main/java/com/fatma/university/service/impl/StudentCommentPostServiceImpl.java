@@ -1,6 +1,5 @@
 package com.fatma.university.service.impl;
 
-import com.fatma.university.exception.RecordNotCorrectException;
 import com.fatma.university.mapper.StudentCommentPostMapper;
 import com.fatma.university.model.dto.StudentCommentPostResponse;
 import com.fatma.university.model.entity.Post;
@@ -35,11 +34,12 @@ public class StudentCommentPostServiceImpl implements StudentCommentPostService 
 
         }else {
             StudentCommentPostResponse createComment=new StudentCommentPostResponse();
-            createComment.setStudentName(student.getFullName());
-            createComment.setPostContent(post.getContent());
+
+
+            createComment.setStudentId(student.getId());
+            createComment.setPostId(post.getId());
             createComment.setComment(comment);
-            createComment.setPost(post);
-            createComment.setStudent(student);
+
             StudentComment savedComment = studentCommentRepo.save(studentCommentPostMapper.toEntity(createComment));
             createComment.setId(savedComment.getId());
             return createComment ;
@@ -49,17 +49,25 @@ public class StudentCommentPostServiceImpl implements StudentCommentPostService 
     }
     @Override
     public StudentCommentPostResponse updateCommentToPost(long studentId, long postId,String comment) {
-        Student student = studentService.getById(studentId);
-        Post post = postService.getById(postId);
-        Optional<StudentComment> studentComment = findCommentByStudentIdAndPostId(studentId, postId);
-        StudentCommentPostResponse existStudentComment = studentCommentPostMapper.fromEntityToResponseDto(studentComment.get());
-        if (studentComment.isPresent()) {
-            existStudentComment.setComment(comment);
-            existStudentComment.setPostContent(post.getContent());
-            existStudentComment.setStudentName(student.getFullName());
-            studentCommentRepo.save(studentCommentPostMapper.toEntity(existStudentComment));
-        }
-            return existStudentComment;
+//        Student student = studentService.getById(studentId);
+//        Post post = postService.getById(postId);
+//        Optional<StudentComment> studentComment = findCommentByStudentIdAndPostId(studentId, postId);
+//
+//        StudentCommentPostResponse existStudentComment = studentCommentPostMapper.toResponse(studentComment.get());
+//        if (studentComment.isPresent()) {
+//            existStudentComment.setComment(comment);
+//
+//            StudentCommentPostResponse existStudentComment = studentCommentPostMapper.toResponse(studentComment.get());
+//            if (studentComment.isPresent()) {
+//                existStudentComment.setComment(comment);
+//                existStudentComment.setPostId(post.getId());
+//                existStudentComment.setStudentId(student.getId());
+//
+//                studentCommentRepo.save(studentCommentPostMapper.toEntity(existStudentComment));
+//            }
+//            return existStudentComment;
+//        }
+        return null;
     }
 
 

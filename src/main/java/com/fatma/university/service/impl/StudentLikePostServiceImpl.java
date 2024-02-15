@@ -26,39 +26,53 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
     private StudentLikePostMapper studentLikePostMapper;
     @Override
     public StudentLikePostResponse putLikeToPost(long studentId, long postId) {
-        Student student = studentService.getById(studentId);
-        Post post = postService.getById(postId);
-        Optional<StudentLike> studentLike=findLikeByStudentIdAndPostId(studentId,postId);
-        if(studentLike.isPresent()) {
-            return updateLikeToPost(studentId, postId);
-        }
-      else  {
-            StudentLikePostResponse createLike=new StudentLikePostResponse();
-            createLike.setLike(true);
-            createLike.setStudent(student);
-            createLike.setPost(post);
-            createLike.setPostContent(post.getContent());
-            createLike.setStudentName(student.getFullName());
-         StudentLike savedLike=studentLikeRepo.save(studentLikePostMapper.toEntity(createLike));
-         createLike.setId(savedLike.getId());
-            return createLike;
-        }
+//        Student student = studentService.getById(studentId);
+//        Post post = postService.getById(postId);
+//        Optional<StudentLike> studentLike=findLikeByStudentIdAndPostId(studentId,postId);
+//        if(studentLike.isPresent()) {
+//            return updateLikeToPost(studentId, postId);
+//        }
+//      else  {
+//            StudentLikePostResponse createLike=new StudentLikePostResponse();
+//            createLike.setLike(true);
+//
+//            createLike.setStudent(student);
+//            createLike.setPost(post);
+//            createLike.setPostContent(post.getContent());
+//
+//            createLike.setPostId(post.getId());
+//            createLike.setStudentId(student.getId());
+//
+//         StudentLike savedLike=studentLikeRepo.save(studentLikePostMapper.toEntity(createLike));
+//         createLike.setId(savedLike.getId());
+//            return createLike;
+//        }
+        return null;
     }
 
     @Override
     public StudentLikePostResponse updateLikeToPost(long studentId, long postId) {
-        Student student = studentService.getById(studentId);
-        Post post = postService.getById(postId);
-        Optional<StudentLike> studentLike = findLikeByStudentIdAndPostId(studentId, postId);
-        StudentLikePostResponse existLike = studentLikePostMapper.fromEntityToResponseDto(studentLike.get());
-        if (studentLike.isPresent()) {
-            boolean currentLike=existLike.isLike();
-            existLike.setLike(!currentLike);
-            existLike.setPostContent(post.getContent());
-            existLike.setStudentName(student.getFullName());
-            studentLikeRepo.save(studentLikePostMapper.toEntity(existLike));
-        }
-        return existLike;
+//        Student student = studentService.getById(studentId);
+//        Post post = postService.getById(postId);
+//        Optional<StudentLike> studentLike = findLikeByStudentIdAndPostId(studentId, postId);
+//
+//        StudentLikePostResponse existLike = studentLikePostMapper.fromEntityToResponseDto(studentLike.get());
+//        if (studentLike.isPresent()) {
+//            boolean currentLike=existLike.isLike();
+//            existLike.setLike(!currentLike);
+//
+//
+//        StudentLikePostResponse existLike = studentLikePostMapper.toResponse(studentLike.get());
+//        if (studentLike.isPresent()) {
+//            boolean currentLike=existLike.isLike();
+//            existLike.setLike(!currentLike);
+//            existLike.setPostId(post.getId());
+//            existLike.setStudentId(student.getId());
+//
+//            studentLikeRepo.save(studentLikePostMapper.toEntity(existLike));
+//        }
+//        return existLike;
+        return null;
     }
     @Override
     public Optional<StudentLike> findLikeByStudentIdAndPostId(long studentId, long postId) {

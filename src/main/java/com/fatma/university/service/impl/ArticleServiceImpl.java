@@ -32,10 +32,17 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleResponse add(ArticleRequest articleRequest) throws IOException {
         Article article = articleMapper.toEntity(articleRequest);
         long sourceId = articleRequest.getSourceId();
+
         if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
             byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());
             article.setImagePath(imagesService.saveImage(imageBytes));
         }
+
+//        if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
+//            byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());
+//            article.setImagePath(imagesService.saveImage(imageBytes));
+//        }
+
         articleSourceService.assignArticleToSource(article, sourceId);
 
         return articleMapper.toResponse(articleRepo.save(article));

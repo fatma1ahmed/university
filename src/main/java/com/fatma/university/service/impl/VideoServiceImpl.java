@@ -33,13 +33,9 @@ public class VideoServiceImpl implements VideoService {
         long sourceId=videoRequest.getSourceId();
         Video video=videoMapper.toEntity(videoRequest);
         videoCategorySourceService.assignVideoToCategoryAndSource(video,categoryId,sourceId);
-        videoRepo.save(video);
-        VideoResponse videoResponse=videoMapper.fromEntityToResponseDto(video);
-        videoResponse.setId(video.getId());
-        videoResponse.setCategoryName(video.getCategory().getName());
-        videoResponse.setSourceName(video.getSource().getFullName());
 
-        return null;
+        return videoMapper.toResponse(videoRepo.save(video));
+
     }
 
     @Override
@@ -51,34 +47,24 @@ public class VideoServiceImpl implements VideoService {
         videoCategorySourceService.updateVideo(video,categoryId,sourceId);
         video.setId(id);
         video.setCreateDate(exisitVideo.getCreateDate());
-        videoRepo.save(video);
-        VideoResponse videoResponse=videoMapper.fromEntityToResponseDto(video);
-        videoResponse.setCategoryName(video.getCategory().getName());
-        videoResponse.setSourceName(video.getSource().getFullName());
-        videoResponse.setId(video.getId());
-        videoResponse.setCreateDate(exisitVideo.getCreateDate());
-        videoResponse.setUpdateDate(exisitVideo.getUpdateDate());
-        return videoResponse;
+
+
+
+        return videoMapper.toResponse(videoRepo.save(video));
     }
 
     @Override
     public Video getById(long id) {
-        Video video=videoRepo.findById(id).orElseThrow(
+        return videoRepo.findById(id).orElseThrow(
                 ()->new RecordNotFoundException("this Video with " + id + " not found")
         );
-        return video;
+
     }
 
     @Override
     public List<VideoResponse> getAll() {
         return videoRepo.findAll().stream()
-                .map(video -> {
-                    VideoResponse videoResponse=videoMapper.fromEntityToResponseDto(video);
-                    videoResponse.setSourceName(video.getSource().getFullName());
-                    videoResponse.setCategoryName(video.getCategory().getName());
-                    videoResponse.setId(video.getId());
-                    return videoResponse;
-                })
+                .map(videoMapper::toResponse)
                 .toList();
     }
 

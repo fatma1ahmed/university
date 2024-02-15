@@ -24,42 +24,51 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
     @Autowired
     private ImagesService imagesService;
+
     @Override
     public StudentResponse add(StudentRequest studentRequest) throws IOException {
-        Student student=studentMapper.toEntity(studentRequest);
-        if(student.getImagePath()!=null &&!student.getImagePath().isEmpty() && student.getImagePath()!="string") {
+        Student student = studentMapper.toEntity(studentRequest);
+
+        if (student.getImagePath() != null && !student.getImagePath().isEmpty() && student.getImagePath() != "string") {
             byte[] imageBytes = imagesService.decodeBase64(student.getImagePath());
             student.setImagePath(imagesService.saveImage(imageBytes));
         }
-        studentRepo.save(student);
-        StudentResponse studentResponse=studentMapper.fromEntityToResponseDto(student);
-        studentResponse.setId(student.getId());
-        return studentResponse;
+
+
+//        if(student.getImagePath()!=null &&!student.getImagePath().isEmpty() && student.getImagePath()!="string") {
+//            byte[] imageBytes = imagesService.decodeBase64(student.getImagePath());
+//            student.setImagePath(imagesService.saveImage(imageBytes));
+//        }
+
+        return studentMapper.toResponse(studentRepo.save(student));
+
     }
 
     @Override
     public StudentResponse update(StudentRequest studentRequest, long id) throws IOException {
         getById(id);
-        Student student=studentMapper.toEntity(studentRequest);
+        Student student = studentMapper.toEntity(studentRequest);
         student.setId(id);
-        studentRepo.save(student);
-        StudentResponse studentResponse=studentMapper.fromEntityToResponseDto(student);
-        studentResponse.setId(student.getId());
-        return studentResponse;
+
+        return studentMapper.toResponse(studentRepo.save(student));
+
     }
 
     @Override
     public Student getById(long id) {
-        Student student = studentRepo.findById(id).orElseThrow(
+
+        return studentRepo.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("this student with " + id + " not found")
         );
-        return student;
+
     }
 
     @Override
     public List<StudentResponse> getAll() {
         return studentRepo.findAll().stream()
-                .map(student ->studentMapper.fromEntityToResponseDto(student))
+
+                .map(studentMapper::toResponse)
+
                 .toList();
     }
 
@@ -67,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
     public ResponseEntity<?> deleteById(long id) {
         getById(id);
         studentRepo.deleteById(id);
-        return new ResponseEntity<>("Source with " + id  +" is deleted", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Source with " + id + " is deleted", HttpStatus.ACCEPTED);
 
     }
 }

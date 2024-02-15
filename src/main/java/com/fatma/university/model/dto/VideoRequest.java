@@ -1,5 +1,7 @@
 package com.fatma.university.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Source;
 import jakarta.persistence.ManyToOne;
@@ -15,11 +17,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VideoRequest {
+
+
+    @JsonProperty("video_byte")
     private byte[] videoByte;
+    @JsonProperty("category_id")
     private long categoryId;
+    @JsonProperty("source_id")
     private long sourceId;
-    @ManyToOne
-    private Category category;
-    @ManyToOne
-    private Source source;
+
 }

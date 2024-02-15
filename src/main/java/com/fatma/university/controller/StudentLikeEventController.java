@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/studentLikeEvent")
+@CrossOrigin("*")
+
 public class StudentLikeEventController {
     @Autowired
     private StudentLikeEventService studentLikeEventService;
