@@ -11,8 +11,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface StudentCommentEventMapper {
     StudentComment toEntity(StudentCommentEventResponse studentCommentPostResponse);
-
-
     @Mapping(target = "studentId",source = "studentComment.student.id")
     @Mapping(target = "eventId",source = "studentComment.event.id")
     StudentCommentEventResponse toResponse(StudentComment studentComment);

@@ -1,5 +1,6 @@
 package com.fatma.university.controller;
 
+import com.fatma.university.model.dto.CollegeResponse;
 import com.fatma.university.model.dto.DepartmentRequest;
 import com.fatma.university.model.dto.DepartmentResponse;
 import com.fatma.university.service.DepartmentService;
@@ -31,6 +32,10 @@ public class DepartmentController {
     @PutMapping("/{id}")
     public DepartmentResponse updateDepartment(@RequestBody @Valid DepartmentRequest departmentRequest, @PathVariable long id) throws IOException {
         return departmentService.update(departmentRequest, id);
+    }
+    @GetMapping("/{id}")
+    public DepartmentResponse getEntityById(@PathVariable long id) {
+        return departmentService.getEntityById(id);
     }
 
     @GetMapping

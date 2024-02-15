@@ -34,8 +34,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public Post getById(@PathVariable long id) {
-        return postService.getById(id);
+    public PostResponse getEntityById(@PathVariable long id) {
+        return postService.getEntityById(id);
     }
 
     @GetMapping

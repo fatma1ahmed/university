@@ -10,6 +10,5 @@ import java.util.Optional;
 @Service
 public interface StudentCommentEventService {
     public StudentCommentEventResponse putCommentToEvent(long studentId, long eventId, String comment);
-    public StudentCommentEventResponse updateCommentToEvent(long studentId, long eventId, String comment);
-    Optional<StudentComment> findCommentByStudentIdAndEventId(long studentId,long eventId);
+
 }

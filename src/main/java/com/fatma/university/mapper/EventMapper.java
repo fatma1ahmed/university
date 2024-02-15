@@ -4,9 +4,11 @@ import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
 import com.fatma.university.model.entity.Event;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface EventMapper {
     Event toEntity(EventRequest eventRequest);
-    EventResponse toResponse(Event entity);
+    @Mapping(target = "categoryId" , source = "event.category.id")
+    EventResponse toResponse(Event event);
 }

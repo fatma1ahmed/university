@@ -62,6 +62,14 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public VideoResponse getEntityById(long id) {
+    Video video=videoRepo.findById(id).orElseThrow(
+                ()->new RecordNotFoundException("this Video with " + id + " not found")
+        );
+    return videoMapper.toResponse(video);
+    }
+
+    @Override
     public List<VideoResponse> getAll() {
         return videoRepo.findAll().stream()
                 .map(videoMapper::toResponse)

@@ -32,8 +32,5 @@ public class StudentLikeEventResponse {
     @JsonProperty("event_id")
     private long eventId;
 
-    @JsonProperty("post_id")
-    private long  postId;
-
 
 }

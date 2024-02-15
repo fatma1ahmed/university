@@ -64,6 +64,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public PostResponse getEntityById(long id) {
+      Post post=postRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this Post with " + id + " not found")
+        );
+      return postMapper.toResponse(post);
+    }
+
+    @Override
     public List<PostResponse> getAll() {
         return postRepo.findAll().stream()
                 .map(postMapper::toResponse)

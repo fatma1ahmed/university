@@ -30,49 +30,21 @@ public class StudentCommentPostServiceImpl implements StudentCommentPostService 
         Post post=postService.getById(postId);
         Optional<StudentComment> studentComment=findCommentByStudentIdAndPostId(studentId,postId);
         if(studentComment.isPresent()){
-            return updateCommentToPost(studentId, postId, comment);
+            return updateCommentToPost(studentComment.get(),comment);
 
         }else {
-            StudentCommentPostResponse createComment=new StudentCommentPostResponse();
-
-
-            createComment.setStudentId(student.getId());
-            createComment.setPostId(post.getId());
+            StudentComment createComment=new StudentComment();
             createComment.setComment(comment);
-
-            StudentComment savedComment = studentCommentRepo.save(studentCommentPostMapper.toEntity(createComment));
-            createComment.setId(savedComment.getId());
-            return createComment ;
-
+            createComment.setStudent(student);
+            createComment.setPost(post);
+           return studentCommentPostMapper.toResponse(studentCommentRepo.save(createComment));
         }
-
     }
-    @Override
-    public StudentCommentPostResponse updateCommentToPost(long studentId, long postId,String comment) {
-//        Student student = studentService.getById(studentId);
-//        Post post = postService.getById(postId);
-//        Optional<StudentComment> studentComment = findCommentByStudentIdAndPostId(studentId, postId);
-//
-//        StudentCommentPostResponse existStudentComment = studentCommentPostMapper.toResponse(studentComment.get());
-//        if (studentComment.isPresent()) {
-//            existStudentComment.setComment(comment);
-//
-//            StudentCommentPostResponse existStudentComment = studentCommentPostMapper.toResponse(studentComment.get());
-//            if (studentComment.isPresent()) {
-//                existStudentComment.setComment(comment);
-//                existStudentComment.setPostId(post.getId());
-//                existStudentComment.setStudentId(student.getId());
-//
-//                studentCommentRepo.save(studentCommentPostMapper.toEntity(existStudentComment));
-//            }
-//            return existStudentComment;
-//        }
-        return null;
+    private StudentCommentPostResponse updateCommentToPost(StudentComment studentComment,String comment){
+        studentComment.setComment(comment);
+        return studentCommentPostMapper.toResponse(studentCommentRepo.save(studentComment));
     }
-
-
-    @Override
-    public Optional<StudentComment> findCommentByStudentIdAndPostId(long studentId, long postId) {
+    private Optional<StudentComment> findCommentByStudentIdAndPostId(long studentId, long postId) {
         return studentCommentRepo.findCommentByStudentIdAndPostId(studentId,postId);
     }
 }

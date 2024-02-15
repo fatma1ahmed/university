@@ -38,8 +38,8 @@ public class CollegeController {
     }
 
     @GetMapping("/{id}")
-    public College getById(@PathVariable long id) {
-        return collegeService.getById(id);
+    public CollegeResponse getEntityById(@PathVariable long id) {
+        return collegeService.getEntityById(id);
     }
 
     @GetMapping

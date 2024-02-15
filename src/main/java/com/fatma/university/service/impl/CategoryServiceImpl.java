@@ -50,6 +50,14 @@ public class CategoryServiceImpl implements CategoryService {
         );
     }
 
+    @Override
+    public CategoryResponse getEntityById(long id) {
+        Category category= categoryRepo.findById(id).orElseThrow(
+                () -> new RecordNotCorrectException("Category with " + id + " not found")
+        );
+        return categoryMapper.toResponse(category);
+    }
+
 
     @Override
     public List<CategoryResponse> getAll() {

@@ -48,10 +48,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getById(long id) {
-
         return departmentRepo.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("Department with " + id + " not found")
         );
+    }
+
+    @Override
+    public DepartmentResponse getEntityById(long id) {
+       Department department= departmentRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("Department with " + id + " not found")
+        );
+       return departmentMapper.toResponse(department);
     }
 
     @Override

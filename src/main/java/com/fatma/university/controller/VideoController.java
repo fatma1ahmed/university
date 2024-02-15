@@ -28,8 +28,8 @@ public class VideoController {
    return videoService.update(videoRequest,id);
     }
     @GetMapping("/{id}")
-    public Video getById(@PathVariable long id) {
-        return videoService.getById(id);
+    public VideoResponse getEntityById(@PathVariable long id) {
+        return videoService.getEntityById(id);
     }
 
   @GetMapping

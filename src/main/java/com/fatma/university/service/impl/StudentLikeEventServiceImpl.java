@@ -49,11 +49,7 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
                 fromEntityToResponseDto(studentLikeRepo.save(studentLike));
     }
 
-
-
-
-
-    public Optional<StudentLike> findLikeByStudentIdAndEventId(long studentId, long eventId) {
+    private Optional<StudentLike> findLikeByStudentIdAndEventId(long studentId, long eventId) {
         return studentLikeRepo.findIsLikeByStudentIdAndEventId(studentId,eventId);
 
     }

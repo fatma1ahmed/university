@@ -11,7 +11,6 @@ public interface StudentLikeEventMapper {
 
     StudentLike toEntity(StudentLikeEventResponse studentLikeEventResponse);
     @Mapping(target = "studentId" , source = "studentLike.student.id")
-    @Mapping(target = "postId" , source = "studentLike.post.id")
     @Mapping(target = "eventId" , source = "studentLike.event.id")
     StudentLikeEventResponse fromEntityToResponseDto(StudentLike studentLike);
 }

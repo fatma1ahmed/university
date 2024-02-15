@@ -33,8 +33,8 @@ public class SourceController {
         return sourceService.update(sourceRequest,id);
     }
     @GetMapping("/{id}")
-    public Source getById(@PathVariable long id) {
-        return sourceService.getById(id);
+    public SourceResponse getEntityById(@PathVariable long id) {
+        return sourceService.getEntityById(id);
     }
     @GetMapping
     public List<SourceResponse> getAll() {

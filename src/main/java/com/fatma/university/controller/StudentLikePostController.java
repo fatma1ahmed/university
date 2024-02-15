@@ -16,10 +16,4 @@ public class StudentLikePostController {
     public StudentLikePostResponse putLikeToPost(@PathVariable long studentId, @PathVariable long postId) {
         return studentLikePostService.putLikeToPost(studentId,postId);
     }
-    @PutMapping("/updateLikeToPost/{studentId}/{postId}")
-    public StudentLikePostResponse updateLikeToPost(@PathVariable long studentId,@PathVariable long postId){
-        return studentLikePostService.updateLikeToPost(studentId,postId);
-    }
-
-
 }

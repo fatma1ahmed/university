@@ -31,8 +31,8 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public Event getById(@PathVariable long id) {
-        return eventService.getById(id);
+    public EventResponse getEntityById(@PathVariable long id) {
+        return eventService.getEntityById(id);
     }
     @GetMapping
     public List<EventResponse> getAll() {

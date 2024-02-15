@@ -66,6 +66,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public ArticleResponse getEntityById(long id) {
+        Article article=articleRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this Article with " + id + " not found")
+        );
+
+        return articleMapper.toResponse(article);
+    }
+
+    @Override
     public List<ArticleResponse> getAll() {
         return articleRepo.findAll().stream()
                 .map(

@@ -64,6 +64,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentResponse getEntityById(long id) {
+     Student student=studentRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this student with " + id + " not found")
+        );
+     return studentMapper.toResponse(student);
+    }
+
+    @Override
     public List<StudentResponse> getAll() {
         return studentRepo.findAll().stream()
 

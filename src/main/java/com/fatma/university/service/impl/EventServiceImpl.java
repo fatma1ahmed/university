@@ -37,7 +37,6 @@ public class EventServiceImpl implements EventService {
 //        }
         eventCategoryService.assignEventToCategory(event, categoryId);
 
-
         return eventMapper.toResponse(eventRepo.save(event));
     }
 
@@ -57,6 +56,14 @@ public class EventServiceImpl implements EventService {
         return eventRepo.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("this Event with " + id + " not found")
         );
+    }
+
+    @Override
+    public EventResponse getEntityById(long id) {
+      Event event = eventRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this Event with " + id + " not found")
+        );
+      return eventMapper.toResponse(event);
     }
 
     @Override

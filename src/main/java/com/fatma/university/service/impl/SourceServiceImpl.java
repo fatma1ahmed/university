@@ -59,6 +59,14 @@ public class SourceServiceImpl implements SourceService {
     }
 
     @Override
+    public SourceResponse getEntityById(long id) {
+     Source source=sourceRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this source with " + id + " not found")
+        );
+     return sourceMapper.toResponse(source);
+    }
+
+    @Override
     public List<SourceResponse> getAll() {
 
         return sourceRepo.findAll().stream().map(sourceMapper::toResponse).toList();

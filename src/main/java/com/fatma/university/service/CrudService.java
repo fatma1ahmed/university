@@ -9,6 +9,7 @@ public interface CrudService<Entity,Request,Response> {
     public Response add(Request request) throws IOException;
     public Response update(Request request,long id) throws IOException;
     public Entity getById(long id);
+    public Response getEntityById(long id);
     public List<Response> getAll();
     public ResponseEntity<?> deleteById(long id);
 }

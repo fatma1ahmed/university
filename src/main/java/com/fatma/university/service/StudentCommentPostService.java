@@ -9,6 +9,4 @@ import java.util.Optional;
 @Service
 public interface StudentCommentPostService {
     public StudentCommentPostResponse putCommentToPost(long studentId, long postId,String comment);
-    public StudentCommentPostResponse updateCommentToPost(long studentId, long postId,String comment);
-    Optional<StudentComment> findCommentByStudentIdAndPostId(long studentId, long postId);
 }

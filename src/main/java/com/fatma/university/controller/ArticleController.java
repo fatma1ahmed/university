@@ -28,8 +28,8 @@ public class ArticleController {
         return articleService.update(articleRequest,id);
     }
     @GetMapping("/{id}")
-    public Article getById(@PathVariable long id) {
-        return articleService.getById(id);
+    public ArticleResponse getEntityById(@PathVariable long id) {
+        return articleService.getEntityById(id);
     }
     @GetMapping
     public List<ArticleResponse> getAll() {

@@ -36,8 +36,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category getById(@PathVariable long id) {
-        return categoryService.getById(id);
+    public CategoryResponse getEntityById(@PathVariable long id) {
+        return categoryService.getEntityById(id);
     }
 
     @GetMapping

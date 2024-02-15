@@ -47,6 +47,14 @@ public class CollegeServiceImpl implements CollegeService {
         );
     }
 
+    @Override
+    public CollegeResponse getEntityById(long id) {
+      College college=collegeRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("College with " + id + " not found")
+        );
+      return collegeMapper.toResponse(college);
+    }
+
 
     @Override
     public List<CollegeResponse> getAll() {
