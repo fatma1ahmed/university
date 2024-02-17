@@ -17,7 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 
->>>>>>> e5d21666238ee82756ef21225e3807c905afeded
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
