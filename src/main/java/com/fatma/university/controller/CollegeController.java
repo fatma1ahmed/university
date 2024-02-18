@@ -10,6 +10,7 @@ import com.fatma.university.service.impl.CollegeServiceImpl;
 import com.fatma.university.service.impl.DepartmentCollegeServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,23 +29,23 @@ public class CollegeController {
     private DepartmentCollegeService departmentCollegeService;
 
     @PostMapping
-    public CollegeResponse add(@RequestBody @Valid CollegeRequest collegeRequest) throws IOException {
-        return collegeService.add(collegeRequest);
+    public ResponseEntity<?> add(@RequestBody @Valid CollegeRequest collegeRequest) throws IOException {
+        return new ResponseEntity<>(collegeService.add(collegeRequest) , HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public CollegeResponse update(@RequestBody @Valid CollegeRequest collegeRequest, @PathVariable long id) throws IOException {
-        return collegeService.update(collegeRequest, id);
+    public ResponseEntity<?> update(@RequestBody @Valid CollegeRequest collegeRequest, @PathVariable long id) throws IOException {
+        return new ResponseEntity<>(collegeService.update(collegeRequest, id) , HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/{id}")
-    public CollegeResponse getEntityById(@PathVariable long id) {
-        return collegeService.getEntityById(id);
+    public ResponseEntity<?> getEntityById(@PathVariable long id) {
+        return new ResponseEntity<>(collegeService.getEntityById(id)  , HttpStatus.OK);
     }
 
     @GetMapping
-    public List<CollegeResponse> getAll() {
-        return collegeService.getAll();
+    public ResponseEntity getAll() {
+        return new ResponseEntity(collegeService.getAll() , HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -53,8 +54,8 @@ public class CollegeController {
     }
 
     @GetMapping("/getAllDepartments/{collegeId}")
-    public List<Department> getDepartmentsByCollegeId(@PathVariable long collegeId) {
-        return departmentCollegeService.getDepartmentsByCollegeId(collegeId);
+    public ResponseEntity<?> getDepartmentsByCollegeId(@PathVariable long collegeId) {
+        return new ResponseEntity<>(departmentCollegeService.getDepartmentsByCollegeId(collegeId) , HttpStatus.OK);
 
     }
 }

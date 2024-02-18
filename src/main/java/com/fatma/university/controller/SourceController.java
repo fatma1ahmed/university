@@ -2,12 +2,15 @@ package com.fatma.university.controller;
 
 import com.fatma.university.model.dto.SourceRequest;
 import com.fatma.university.model.dto.SourceResponse;
-import com.fatma.university.model.entity.*;
+import com.fatma.university.model.entity.Article;
+import com.fatma.university.model.entity.Post;
+import com.fatma.university.model.entity.Source;
+import com.fatma.university.model.entity.Video;
 import com.fatma.university.service.SourceDepartmentService;
 import com.fatma.university.service.SourceService;
-import com.fatma.university.service.impl.SourceServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,50 +19,65 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sources")
-
 @CrossOrigin("*")
-
 public class SourceController {
+
     @Autowired
     private SourceService sourceService;
+
     @Autowired
     private SourceDepartmentService sourceDepartmentService;
+
     @PostMapping
-    public SourceResponse assignSourceToDepartment(@RequestBody @Valid SourceRequest sourceRequest) throws IOException {
-        return sourceService.add(sourceRequest);
+    public ResponseEntity<?> assignSourceToDepartment(@RequestBody @Valid SourceRequest sourceRequest) throws IOException {
+        SourceResponse response = sourceService.add(sourceRequest);
+        return ResponseEntity.ok(response);
     }
+
     @PutMapping("/{id}")
-    public SourceResponse updateSource(@RequestBody @Valid SourceRequest sourceRequest,@PathVariable long id) throws IOException {
-        return sourceService.update(sourceRequest,id);
+    public ResponseEntity<?> updateSource(@RequestBody @Valid SourceRequest sourceRequest, @PathVariable long id) throws IOException {
+        SourceResponse response = sourceService.update(sourceRequest, id);
+        return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{id}")
-    public SourceResponse getEntityById(@PathVariable long id) {
-        return sourceService.getEntityById(id);
+    public ResponseEntity<?> getEntityById(@PathVariable long id) {
+        SourceResponse response = sourceService.getEntityById(id);
+        return ResponseEntity.ok(response);
     }
+
     @GetMapping
-    public List<SourceResponse> getAll() {
-        return sourceService.getAll();
+    public ResponseEntity<?> getAll() {
+        List<SourceResponse> response = sourceService.getAll();
+        return ResponseEntity.ok(response);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return sourceService.deleteById(id);
     }
 
     @GetMapping("/getAllSources/{departmentId}")
-    public  List<Source> getSourcesByDepartmentId(@PathVariable long departmentId){
-        return sourceDepartmentService.getSourcesByDepartmentId(departmentId);
-    }
-    @GetMapping("/getAllPosts/{sourceId}")
-    public List<Post> getAllPostsBySourceId(@PathVariable long sourceId){
-        return sourceService.getAllPostsBySourceId(sourceId);
-    }
-    @GetMapping("/getAllVideos/{sourceId}")
-    public List<Video> getAllVideosBySourceId(@PathVariable long sourceId){
-        return sourceService.getAllVideosBySourceId(sourceId);
-    }
-    @GetMapping("/getAllArticles/{sourceId}")
-    public List<Article> getAllArticleBySourceId(@PathVariable long sourceId){
-        return sourceService.getAllArticleBySourceId(sourceId);
+    public ResponseEntity<List<Source>> getSourcesByDepartmentId(@PathVariable long departmentId) {
+        List<Source> response = sourceDepartmentService.getSourcesByDepartmentId(departmentId);
+        return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/getAllPosts/{sourceId}")
+    public ResponseEntity<List<Post>> getAllPostsBySourceId(@PathVariable long sourceId) {
+        List<Post> response = sourceService.getAllPostsBySourceId(sourceId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getAllVideos/{sourceId}")
+    public ResponseEntity<List<Video>> getAllVideosBySourceId(@PathVariable long sourceId) {
+        List<Video> response = sourceService.getAllVideosBySourceId(sourceId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getAllArticles/{sourceId}")
+    public ResponseEntity<List<Article>> getAllArticleBySourceId(@PathVariable long sourceId) {
+        List<Article> response = sourceService.getAllArticleBySourceId(sourceId);
+        return ResponseEntity.ok(response);
+    }
 }

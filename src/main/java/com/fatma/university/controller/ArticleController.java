@@ -5,7 +5,9 @@ import com.fatma.university.model.dto.ArticleResponse;
 import com.fatma.university.model.entity.Article;
 import com.fatma.university.service.ArticleService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,22 +21,27 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+
     @PostMapping
-    public ArticleResponse add(@RequestBody  ArticleRequest articleRequest) throws IOException {
-        return articleService.add(articleRequest);
+    public ResponseEntity<?> add(@RequestBody ArticleRequest articleRequest) throws IOException {
+        return new ResponseEntity<>(articleService.add(articleRequest), HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}")
-    public ArticleResponse update(@RequestBody ArticleRequest articleRequest, @PathVariable long id) throws IOException {
-        return articleService.update(articleRequest,id);
+    public ResponseEntity<?> update(@RequestBody ArticleRequest articleRequest, @PathVariable long id) throws IOException {
+        return new ResponseEntity<>(articleService.update(articleRequest, id), HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/{id}")
-    public ArticleResponse getEntityById(@PathVariable long id) {
-        return articleService.getEntityById(id);
+    public ResponseEntity<?> getEntityById(@PathVariable long id) {
+        return new ResponseEntity<>(articleService.getEntityById(id), HttpStatus.OK);
     }
+
     @GetMapping
-    public List<ArticleResponse> getAll() {
-        return articleService.getAll();
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<>(articleService.getAll(), HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return articleService.deleteById(id);

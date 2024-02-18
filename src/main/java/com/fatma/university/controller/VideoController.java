@@ -17,28 +17,36 @@ import java.util.List;
 @RequestMapping("/videos")
 @CrossOrigin("*")
 public class VideoController {
+
     @Autowired
     private VideoService videoService;
+
     @PostMapping
-    public VideoResponse add(@RequestBody VideoRequest videoRequest) throws IOException {
-        return videoService.add(videoRequest);
-    }
-    @PutMapping("/{id}")
-    public VideoResponse update(@RequestBody VideoRequest videoRequest, @PathVariable long id) throws IOException {
-   return videoService.update(videoRequest,id);
-    }
-    @GetMapping("/{id}")
-    public VideoResponse getEntityById(@PathVariable long id) {
-        return videoService.getEntityById(id);
+    public ResponseEntity<VideoResponse> add(@RequestBody VideoRequest videoRequest) throws IOException {
+        VideoResponse response = videoService.add(videoRequest);
+        return ResponseEntity.ok(response);
     }
 
-  @GetMapping
-    public List<VideoResponse> getAll() {
-        return videoService.getAll();
+    @PutMapping("/{id}")
+    public ResponseEntity<VideoResponse> update(@RequestBody VideoRequest videoRequest, @PathVariable long id) throws IOException {
+        VideoResponse response = videoService.update(videoRequest, id);
+        return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VideoResponse> getEntityById(@PathVariable long id) {
+        VideoResponse response = videoService.getEntityById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<VideoResponse>> getAll() {
+        List<VideoResponse> response = videoService.getAll();
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return videoService.deleteById(id);
-
     }
 }

@@ -8,6 +8,7 @@ import com.fatma.university.service.impl.DepartmentCollegeServiceImpl;
 import com.fatma.university.service.impl.DepartmentServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,22 +26,22 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping
-    public DepartmentResponse add(@RequestBody @Valid DepartmentRequest departmentRequest) throws IOException {
-        return departmentService.add(departmentRequest);
+    public ResponseEntity<?> add(@RequestBody @Valid DepartmentRequest departmentRequest) throws IOException {
+        return new ResponseEntity<>(departmentService.add(departmentRequest) , HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public DepartmentResponse updateDepartment(@RequestBody @Valid DepartmentRequest departmentRequest, @PathVariable long id) throws IOException {
-        return departmentService.update(departmentRequest, id);
+    public ResponseEntity<?> updateDepartment(@RequestBody @Valid DepartmentRequest departmentRequest, @PathVariable long id) throws IOException {
+        return new ResponseEntity<>(departmentService.update(departmentRequest, id) , HttpStatus.ACCEPTED);
     }
     @GetMapping("/{id}")
-    public DepartmentResponse getEntityById(@PathVariable long id) {
-        return departmentService.getEntityById(id);
+    public ResponseEntity<?> getEntityById(@PathVariable long id) {
+        return new ResponseEntity<>(departmentService.getEntityById(id) , HttpStatus.OK);
     }
 
     @GetMapping
-    public List<DepartmentResponse> getAll() {
-        return departmentService.getAll();
+    public ResponseEntity<?> getAll() {
+        return  new ResponseEntity<>(departmentService.getAll()  , HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

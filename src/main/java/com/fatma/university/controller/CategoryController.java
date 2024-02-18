@@ -10,6 +10,7 @@ import com.fatma.university.service.CategoryService;
 import com.fatma.university.service.impl.CategoryServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,23 +27,23 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public CategoryResponse add(@RequestBody @Valid CategoryRequest categoryRequest) throws IOException {
-        return categoryService.add(categoryRequest);
+    public ResponseEntity<?> add(@RequestBody @Valid CategoryRequest categoryRequest) throws IOException {
+        return new ResponseEntity<>(categoryService.add(categoryRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public CategoryResponse update(@RequestBody @Valid CategoryRequest categoryRequest, @PathVariable long id) throws IOException {
-        return categoryService.update(categoryRequest, id);
+    public ResponseEntity<?> update(@RequestBody @Valid CategoryRequest categoryRequest, @PathVariable long id) throws IOException {
+        return new ResponseEntity<>(categoryService.update(categoryRequest, id), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/{id}")
-    public CategoryResponse getEntityById(@PathVariable long id) {
-        return categoryService.getEntityById(id);
+    public ResponseEntity<?> getEntityById(@PathVariable long id) {
+        return new ResponseEntity<>(categoryService.getEntityById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<CategoryResponse> getAll() {
-        return categoryService.getAll();
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -51,17 +52,17 @@ public class CategoryController {
     }
 
     @GetMapping("/getAllEvents/{categoryId}")
-    public List<Event> getAllEventsByCategoryId(long categoryId) {
-        return categoryService.getAllEventsByCategoryId(categoryId);
+    public ResponseEntity<?> getAllEventsByCategoryId(long categoryId) {
+        return new ResponseEntity<>(categoryService.getAllEventsByCategoryId(categoryId), HttpStatus.OK);
     }
 
     @GetMapping("/getAllPosts/{categoryId}")
-    public List<Post> getAllPostsByCategoryId(@PathVariable long categoryId) {
-        return categoryService.getAllPostsByCategoryId(categoryId);
+    public ResponseEntity<?> getAllPostsByCategoryId(@PathVariable long categoryId) {
+        return new ResponseEntity<>(categoryService.getAllPostsByCategoryId(categoryId), HttpStatus.OK);
     }
 
     @GetMapping("/getAllCategories/{categoryId}")
-    public List<Video> getAllVideosByCategoryId(@PathVariable long categoryId) {
-        return categoryService.getAllVideosByCategoryId(categoryId);
+    public ResponseEntity<?> getAllVideosByCategoryId(@PathVariable long categoryId) {
+        return new ResponseEntity<>(categoryService.getAllVideosByCategoryId(categoryId), HttpStatus.OK);
     }
 }
