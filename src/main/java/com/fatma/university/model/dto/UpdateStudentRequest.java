@@ -1,8 +1,6 @@
 package com.fatma.university.model.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -15,8 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentRequest {
-
+public class UpdateStudentRequest {
     @NotNull(message = "please,Enter address")
     @NotNull(message = "please,Enter Your FullName")
     @JsonProperty("student_full_name")
@@ -38,4 +35,10 @@ public class StudentRequest {
 
     @JsonProperty("student_image_path")
     private  String imagePath;
+    @JsonProperty("student_brand")
+    private String brand;
+    @JsonProperty("student_academic_category")
+    private String category;
+    private long collegeId;
+    private long departmentId;
 }

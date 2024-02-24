@@ -1,5 +1,6 @@
 package com.fatma.university.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatma.university.model.Enum.BroadCast;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,9 @@ public class Event {
     @ManyToOne
     private Category category;
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentComment> studentComments;
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentLike> studentLikes;
 }

@@ -3,7 +3,10 @@ package com.fatma.university.controller;
 import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.model.dto.StudentRequest;
 import com.fatma.university.model.dto.StudentResponse;
+import com.fatma.university.model.dto.UpdateStudentRequest;
+import com.fatma.university.model.dto.UpdateStudentResponse;
 import com.fatma.university.model.entity.Student;
+import com.fatma.university.service.StudentCollegeDepartmentService;
 import com.fatma.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,8 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private StudentCollegeDepartmentService service;
 
     @PostMapping
     public ResponseEntity<StudentResponse> add(@RequestBody StudentRequest studentRequest) throws IOException {
@@ -32,6 +37,12 @@ public class StudentController {
         StudentResponse response = studentService.update(studentRequest, id);
         return ResponseEntity.ok(response);
     }
+    @PutMapping("/{studentId}/{collegeId}/{departmentId}")
+    public ResponseEntity<UpdateStudentResponse> UpdateStudentData(@RequestBody UpdateStudentRequest updateStudentRequest, @PathVariable long studentId, @PathVariable long collegeId, @PathVariable long departmentId){
+        UpdateStudentResponse response=service.UpdateStudentData(updateStudentRequest,studentId,collegeId,departmentId);
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentResponse> getEntityById(@PathVariable long id) {

@@ -1,5 +1,6 @@
 package com.fatma.university.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,10 @@ public class Post {
     @ManyToOne
     private Source source;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentComment> studentComments;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentLike> studentLikes;
 
 
