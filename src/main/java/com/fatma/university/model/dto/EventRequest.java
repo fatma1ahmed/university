@@ -1,5 +1,6 @@
 package com.fatma.university.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fatma.university.model.Enum.BroadCast;
@@ -11,6 +12,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -26,8 +29,8 @@ public class EventRequest {
     private String place;
 
     @JsonProperty("event_date")
-    @Pattern(regexp = "\\d{2}/\\d{2}/\\d{4}", message = "Invalid date format. Please use dd-MM-yyyy format.")
-    private String date;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private LocalDateTime date;
 
     @JsonProperty("event_time")
     @Pattern(regexp = "\\d{2}:\\d{2}", message = "Time format should be HH:mm ")

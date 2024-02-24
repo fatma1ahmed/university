@@ -13,6 +13,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.event.EventListener;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,9 +27,9 @@ public class EventResponse {
     @JsonProperty("event_place")
 
     private String place;
-    @JsonProperty("event_date")
 
-    private String date;
+    @JsonProperty("event_date")
+    private LocalDateTime date;
     @JsonProperty("event_time")
     private String time;
 

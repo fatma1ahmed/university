@@ -31,6 +31,7 @@ public class UniversityApplication  implements CommandLineRunner {
     }
 
     public String convertToBase64(String imagePath) {
+        File file =  new File("test");
         try {
             Resource resource = new ClassPathResource(imagePath);
             byte[] imageData = StreamUtils.copyToByteArray(resource.getInputStream());

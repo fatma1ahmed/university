@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Event {
     private long id;
     private String address;
     private String place;
-    private String date;
+    private LocalDateTime date;
     private String time;
     private BroadCast isBroadcast;
     private String linkPath;
