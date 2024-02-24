@@ -28,4 +28,6 @@ public class Event {
     private Category category;
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
     private List<StudentComment> studentComments;
+    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    private List<StudentLike> studentLikes;
 }

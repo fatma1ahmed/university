@@ -15,17 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SourceRequest {
-
-    /*
-     * Removed
-     * @Column
-     * @JsonIgnore
-     * @Many.....
-     * JsonIgnore
-     * */
-
-
-    @NotNull(message = "please,Enter address")
     @NotNull(message = "please,Enter Your FullName")
     private String fullName;
     @NotNull(message = "please,Enter Your Email")

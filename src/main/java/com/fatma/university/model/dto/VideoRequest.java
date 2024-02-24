@@ -17,10 +17,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VideoRequest {
-
-
-    @JsonProperty("video_byte")
-    private byte[] videoByte;
+    @JsonProperty("video_path")
+    private String videoPath;
     @JsonProperty("category_id")
     private long categoryId;
     @JsonProperty("source_id")

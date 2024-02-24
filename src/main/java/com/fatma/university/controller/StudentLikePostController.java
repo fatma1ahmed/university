@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentLikePostController {
     @Autowired
     private StudentLikePostService studentLikePostService;
-    @PostMapping("/putLikeToPost/{studentId}/{postId}")
+    @PostMapping("/{studentId}/{postId}")
     public ResponseEntity<?> putLikeToPost(@PathVariable long studentId, @PathVariable long postId) {
         return new ResponseEntity<>(studentLikePostService.putLikeToPost(studentId,postId) , HttpStatus.OK);
     }

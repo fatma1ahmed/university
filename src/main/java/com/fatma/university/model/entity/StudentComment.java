@@ -21,5 +21,9 @@ public class StudentComment {
     private Post post;
     @ManyToOne
     private Event event;
+    @ManyToOne
+    private Video video;
+    @ManyToOne
+    private Article article;
 
 }

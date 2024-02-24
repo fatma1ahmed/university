@@ -19,12 +19,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class VideoResponse {
 
-
-
     @JsonProperty("video_id")
     private long id;
-    @JsonProperty("video_byte")
-    private byte[] videoByte;
+    @JsonProperty("video_path")
+    private String videoPath;
     @CreationTimestamp
     private LocalDateTime createDate;
     @UpdateTimestamp

@@ -9,5 +9,7 @@ import java.util.Optional;
 public interface StudentLikeRepo extends JpaRepository<StudentLike,Long> {
     Optional<StudentLike> findLikeByStudentIdAndPostId(long studentId, long postId);
     Optional<StudentLike> findIsLikeByStudentIdAndEventId(long studentId, long eventId);
+    Optional<StudentLike> findIsLikeByStudentIdAndArticleId(long studentId, long articleId);
+    Optional<StudentLike> findIsLikeByStudentIdAndVideoId(long studentId, long videoId);
 
 }

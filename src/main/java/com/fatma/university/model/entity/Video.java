@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -19,7 +20,8 @@ public class Video {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
-    private byte[] videoByte;
+    @Lob
+    private String videoPath;
     @CreationTimestamp
     private LocalDateTime createDate;
     @UpdateTimestamp
@@ -28,6 +30,10 @@ public class Video {
     private Category category;
     @ManyToOne
     private Source source;
+    @OneToMany(mappedBy = "video",cascade = CascadeType.ALL)
+    private List<StudentComment> studentComments;
+    @OneToMany(mappedBy = "video",cascade = CascadeType.ALL)
+    private List<StudentLike> studentLikes;
 
 
 }

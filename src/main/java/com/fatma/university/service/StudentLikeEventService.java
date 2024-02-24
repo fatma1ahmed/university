@@ -8,11 +8,6 @@ import java.util.Optional;
 
 @Service
 public interface StudentLikeEventService {
-
-
-
     public StudentLikeEventResponse putLikeToEvent(long studentId, long eventId);
-
-
 
 }

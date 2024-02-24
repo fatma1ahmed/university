@@ -33,10 +33,10 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleMapper.toEntity(articleRequest);
         long sourceId = articleRequest.getSourceId();
 
-        if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
-            byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());
-            article.setImagePath(imagesService.saveImage(imageBytes));
-        }
+//        if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
+//            byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());
+//            article.setImagePath(imagesService.saveImage(imageBytes));
+//        }
 
 //        if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
 //            byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());

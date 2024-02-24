@@ -31,5 +31,8 @@ public class Post {
     private Source source;
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<StudentComment> studentComments;
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<StudentLike> studentLikes;
+
 
 }

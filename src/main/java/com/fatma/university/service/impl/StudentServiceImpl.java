@@ -29,10 +29,10 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse add(StudentRequest studentRequest) throws IOException {
         Student student = studentMapper.toEntity(studentRequest);
 
-        if (student.getImagePath() != null && !student.getImagePath().isEmpty() && student.getImagePath() != "string") {
-            byte[] imageBytes = imagesService.decodeBase64(student.getImagePath());
-            student.setImagePath(imagesService.saveImage(imageBytes));
-        }
+//        if (student.getImagePath() != null && !student.getImagePath().isEmpty() && student.getImagePath() != "string") {
+//            byte[] imageBytes = imagesService.decodeBase64(student.getImagePath());
+//            student.setImagePath(imagesService.saveImage(imageBytes));
+//        }
 
 
 //        if(student.getImagePath()!=null &&!student.getImagePath().isEmpty() && student.getImagePath()!="string") {

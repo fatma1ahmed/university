@@ -29,6 +29,7 @@ public class StudentRequest {
 
     @NotNull(message = "please,Enter Your password")
     @Size(min = 8,max = 18,message = "should enter your password between 8 and 18")
+    @Column(unique = true)
     @JsonProperty("student_password")
     private  String password;
 

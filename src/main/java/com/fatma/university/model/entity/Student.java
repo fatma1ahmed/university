@@ -19,6 +19,8 @@ public class Student extends Person{
     private long id;
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     private List<StudentComment> studentComments;
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
+    private List<StudentLike> studentLikes;
 
 
 }

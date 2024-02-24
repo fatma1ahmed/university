@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table
 @Data
@@ -18,4 +20,8 @@ public class Article {
     private String imagePath;
     @ManyToOne
     private Source source;
+    @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
+    private List<StudentComment> studentComments;
+    @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
+    private List<StudentLike> studentLikes;
 }

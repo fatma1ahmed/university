@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface StudentCommentRepo extends JpaRepository<StudentComment,Long> {
     Optional<StudentComment> findCommentByStudentIdAndPostId(long studentId,long postId);
     Optional<StudentComment> findCommentByStudentIdAndEventId(long studentId,long eventId);
+    Optional<StudentComment> findCommentByStudentIdAndArticleId(long studentId,long articleId);
+    Optional<StudentComment> findCommentByStudentIdAndVideoId(long studentId,long videoId);
 }

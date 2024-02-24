@@ -23,10 +23,6 @@ public class CollegeServiceImpl implements CollegeService {
 
     @Override
     public CollegeResponse add(CollegeRequest collegeRequest) {
-//        College college=collegeMapper.toEntity(collegeRequest);
-//        collegeRepo.save(college);
-//        CollegeResponse collegeResponse=collegeMapper.fromEntityToResponseDto(college);
-//        collegeResponse.setId(college.getId());
         return collegeMapper.toResponse(collegeRepo.save(collegeMapper.toEntity(collegeRequest)));
     }
 
