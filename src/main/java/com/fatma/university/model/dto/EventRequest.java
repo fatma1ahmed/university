@@ -30,7 +30,7 @@ public class EventRequest {
     private String date;
 
     @JsonProperty("event_time")
-    @Pattern(regexp = "\\d{2}:\\d{2}", message = "Time format should be HH:mm AM/PM")
+    @Pattern(regexp = "\\d{2}:\\d{2}", message = "Time format should be HH:mm ")
     private String time;
 
     @JsonProperty("event_broadcast")
