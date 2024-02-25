@@ -15,7 +15,7 @@ public class StudentCommentArticleController {
     private StudentCommentArticleService commentArticleService;
     @PostMapping("/{studentId}/{articleId}")
     public ResponseEntity<?> putCommentToEvent(@PathVariable long studentId, @PathVariable long articleId, @RequestParam String comment){
-        return new ResponseEntity<>(commentArticleService.putCommentToEvent(studentId, articleId, comment) , HttpStatus.OK);
+        return new ResponseEntity<>(commentArticleService.putCommentToArticle(studentId, articleId, comment) , HttpStatus.OK);
 
     }
 }

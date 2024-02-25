@@ -1,11 +1,13 @@
 package com.fatma.university.service.impl;
 
+import com.fatma.university.mapper.StudentCommentPostMapper;
 import com.fatma.university.mapper.StudentCommentVideoMapper;
+import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentCommentVideoResponse;
-import com.fatma.university.model.entity.Student;
-import com.fatma.university.model.entity.StudentComment;
-import com.fatma.university.model.entity.Video;
+import com.fatma.university.model.entity.*;
+import com.fatma.university.reposity.NotificationRepo;
 import com.fatma.university.reposity.StudentCommentRepo;
+import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentCommentVideoService;
 import com.fatma.university.service.StudentService;
 import com.fatma.university.service.VideoService;
@@ -23,13 +25,21 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
     @Autowired
     private VideoService videoService;
     @Autowired
+    private SourceService sourceService;
+    @Autowired
+    private NotificationCommentServiceImpl notificationArticleService;
+    @Autowired
+    private NotificationRepo notificationRepo;
+    @Autowired
     private StudentCommentVideoMapper studentCommentVideoMapper;
+
 
 
     @Override
     public StudentCommentVideoResponse putCommentToVideo(long studentId, long videoId, String comment) {
         Student student = studentService.getById(studentId);
         Video video = videoService.getById(videoId);
+        Source source=sourceService.getById(video.getSource().getId());
         Optional<StudentComment> studentComment = findCommentByStudentIdAndVideoId(studentId, videoId);
         if (studentComment.isPresent()) {
             return updateCommentToVideo(studentComment.get(), comment);
@@ -38,11 +48,21 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
             createComment.setVideo(video);
             createComment.setStudent(student);
             createComment.setComment(comment);
+
+            Notification notification=new Notification();
+            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
+            notification.setSource(source);
+            notification.setPostId(videoId);
+            notification.setStudentId(studentId);
+            notification.setNotificationType(NotificationType.ARTICLE);
+            notificationRepo.save(notification);
+            createComment.setNotification(notification);
             return studentCommentVideoMapper.toResponse(studentCommentRepo.save(createComment));
         }
     }
     private StudentCommentVideoResponse updateCommentToVideo(StudentComment studentComment, String comment){
         studentComment.setComment(comment);
+        notificationArticleService.updateNotificationVideo(studentComment.getNotification());
         return studentCommentVideoMapper.toResponse(studentCommentRepo.save(studentComment));
 
     }

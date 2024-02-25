@@ -25,5 +25,7 @@ public class StudentComment {
     private Video video;
     @ManyToOne
     private Article article;
+    @OneToOne
+    private Notification notification;
 
 }

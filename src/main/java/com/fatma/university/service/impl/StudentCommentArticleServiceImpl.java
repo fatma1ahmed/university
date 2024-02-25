@@ -1,14 +1,13 @@
 package com.fatma.university.service.impl;
 
+import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.mapper.StudentCommentArticleMapper;
+import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentCommentArticleResponse;
 import com.fatma.university.model.entity.*;
 import com.fatma.university.reposity.NotificationRepo;
 import com.fatma.university.reposity.StudentCommentRepo;
-import com.fatma.university.service.ArticleService;
-import com.fatma.university.service.SourceService;
-import com.fatma.university.service.StudentCommentArticleService;
-import com.fatma.university.service.StudentService;
+import com.fatma.university.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,33 +26,48 @@ public class StudentCommentArticleServiceImpl implements StudentCommentArticleSe
     @Autowired
     private StudentCommentArticleMapper studentCommentArticleMapper;
     @Autowired
+    private NotificationCommentServiceImpl notificationArticleService;
+    @Autowired
     private NotificationRepo notificationRepo;
     @Override
-    public StudentCommentArticleResponse putCommentToEvent(long studentId, long articleId, String comment) {
+    public StudentCommentArticleResponse putCommentToArticle(long studentId, long articleId, String comment) {
         Student student = studentService.getById(studentId);
         Article article = articleService.getById(articleId);
         Source source=sourceService.getById(article.getSource().getId());
         Optional<StudentComment> studentComment = findCommentByStudentIdAndArticleId(studentId, articleId);
         if (studentComment.isPresent()) {
-           return updateCommentToArticle(studentComment.get(), comment);
+            return updateCommentToArticle(studentComment.get(), comment);
+
         } else {
             StudentComment createComment = new StudentComment();
             createComment.setArticle(article);
             createComment.setStudent(student);
             createComment.setComment(comment);
+
             Notification notification=new Notification();
             notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + articleId);
             notification.setSource(source);
+            notification.setArticleId(articleId);
+            notification.setStudentId(studentId);
+            notification.setNotificationType(NotificationType.ARTICLE);
             notificationRepo.save(notification);
+            createComment.setNotification(notification);
+
             return studentCommentArticleMapper.toResponse(studentCommentRepo.save(createComment));
         }
     }
     private StudentCommentArticleResponse updateCommentToArticle(StudentComment studentComment, String comment){
         studentComment.setComment(comment);
+            notificationArticleService.updateNotificationArticle(studentComment.getNotification());
         return studentCommentArticleMapper.toResponse(studentCommentRepo.save(studentComment));
 
     }
     private Optional<StudentComment> findCommentByStudentIdAndArticleId(long studentId,long articleId){
         return studentCommentRepo.findCommentByStudentIdAndArticleId(studentId,articleId);
+    }
+    public StudentComment getById(long id){
+        return studentCommentRepo.findById(id).orElseThrow(
+                () -> new RecordNotFoundException("this StudentComment with " + id + " not found")
+        );
     }
 }
