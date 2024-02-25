@@ -32,9 +32,6 @@ public class EventRequest {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private LocalDateTime date;
 
-    @JsonProperty("event_time")
-    @Pattern(regexp = "\\d{2}:\\d{2}", message = "Time format should be HH:mm ")
-    private String time;
 
     @JsonProperty("event_broadcast")
     private BroadCast isBroadcast;

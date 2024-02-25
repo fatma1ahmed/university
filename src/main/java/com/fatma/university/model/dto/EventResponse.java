@@ -19,19 +19,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventResponse {
+
     @JsonProperty("event_id")
     private long id;
+
     @JsonProperty("event_address")
-
     private String address;
-    @JsonProperty("event_place")
 
+    @JsonProperty("event_place")
     private String place;
 
     @JsonProperty("event_date")
     private LocalDateTime date;
-    @JsonProperty("event_time")
-    private String time;
 
     @JsonProperty("event_broadcast")
     private BroadCast isBroadcast;
