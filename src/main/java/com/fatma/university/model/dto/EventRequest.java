@@ -44,4 +44,7 @@ public class EventRequest {
 
     @JsonProperty("category_id")
     private long categoryId;
+
+    @JsonProperty("source_id")
+    private long sourceId;
 }

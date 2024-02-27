@@ -8,6 +8,7 @@ import com.fatma.university.service.CollegeService;
 import com.fatma.university.service.DepartmentCollegeService;
 import com.fatma.university.service.impl.CollegeServiceImpl;
 import com.fatma.university.service.impl.DepartmentCollegeServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/colleges")
-
 @CrossOrigin("*")
-
+@Tag(name = "College Endpoints")
 public class CollegeController {
     @Autowired
     private CollegeService collegeService;

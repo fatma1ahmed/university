@@ -25,4 +25,7 @@ public class College {
     @OneToMany(mappedBy = "college", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Department> departments;
+    @OneToOne(mappedBy = "college",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Student student;
 }

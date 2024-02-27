@@ -2,10 +2,13 @@ package com.fatma.university.service.impl;
 
 
 import com.fatma.university.mapper.StudentLikeEventMapper;
+import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentLikeEventResponse;
 import com.fatma.university.model.entity.Event;
+import com.fatma.university.model.entity.Notification;
 import com.fatma.university.model.entity.Student;
 import com.fatma.university.model.entity.StudentLike;
+import com.fatma.university.reposity.NotificationRepo;
 import com.fatma.university.reposity.StudentLikeRepo;
 import com.fatma.university.service.EventService;
 import com.fatma.university.service.StudentLikeEventService;
@@ -25,6 +28,10 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
     private EventService eventService;
     @Autowired
     private StudentLikeEventMapper studentLikeEventMapper;
+    @Autowired
+    private NotificationLikeServiceImpl notificationLikeService;
+    @Autowired
+    private NotificationRepo notificationRepo;
 
     @Override
     public StudentLikeEventResponse putLikeToEvent(long studentId, long eventId) {
@@ -39,12 +46,22 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
             studentLike.setLike(true);
             studentLike.setStudent(student);
             studentLike.setEvent(event);
+
+            Notification notification=new Notification();
+            notification.setMessage("Student By Id: " + studentId + " add like on Article By Id " + eventId);
+            notification.setEventId(eventId);
+            notification.setStudentId(studentId);
+            notification.setNotificationType(NotificationType.ARTICLE);
+            notificationRepo.save(notification);
+            studentLike.setNotification(notification);
+
             return studentLikeEventMapper.fromEntityToResponseDto(studentLikeRepo.save(studentLike));
         }
     }
 
     private StudentLikeEventResponse convertLikeAndSaveIt(StudentLike studentLike) {
         studentLike.setLike(!studentLike.isLike());
+        notificationLikeService.updateNotificationEvent(studentLike.getNotification());
         return studentLikeEventMapper.
                 fromEntityToResponseDto(studentLikeRepo.save(studentLike));
     }

@@ -5,6 +5,7 @@ import com.fatma.university.model.dto.VideoRequest;
 import com.fatma.university.model.dto.VideoResponse;
 import com.fatma.university.model.entity.Video;
 import com.fatma.university.service.VideoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/videos")
 @CrossOrigin("*")
+@Tag(name = "Video Endpoints")
 public class VideoController {
 
     @Autowired

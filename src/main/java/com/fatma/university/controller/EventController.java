@@ -4,6 +4,7 @@ import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
 import com.fatma.university.model.entity.Event;
 import com.fatma.university.service.EventService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/events")
 @CrossOrigin("*")
+@Tag(name = "Department Endpoints")
 public class EventController {
 
     @Autowired

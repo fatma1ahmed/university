@@ -27,5 +27,8 @@ public class Department {
     private College college;
 
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Source> sources;
+    @OneToOne(mappedBy = "department",cascade = CascadeType.ALL)
+    private Student student;
 }

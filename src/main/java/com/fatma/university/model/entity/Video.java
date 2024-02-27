@@ -1,5 +1,6 @@
 package com.fatma.university.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,8 +32,10 @@ public class Video {
     @ManyToOne
     private Source source;
     @OneToMany(mappedBy = "video",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentComment> studentComments;
     @OneToMany(mappedBy = "video",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentLike> studentLikes;
 
 

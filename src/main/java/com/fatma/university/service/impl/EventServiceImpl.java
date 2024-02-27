@@ -23,6 +23,8 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private EventMapper eventMapper;
     @Autowired
+    private ChannelSourceService channelSourceService;
+    @Autowired
     private ImageServiceImpl imageService;
     @Autowired
     private EventCategoryService eventCategoryService;
@@ -36,7 +38,7 @@ public class EventServiceImpl implements EventService {
 //            event.setImagePath(imageService.saveImage(imageBytes));
 //        }
         eventCategoryService.assignEventToCategory(event, categoryId);
-
+        channelSourceService.assignEventToSource(event , eventRequest.getSourceId());
         return eventMapper.toResponse(eventRepo.save(event));
     }
 
@@ -45,7 +47,8 @@ public class EventServiceImpl implements EventService {
         getById(id);
         long categoryId = eventRequest.getCategoryId();
         Event event = eventMapper.toEntity(eventRequest);
-        eventCategoryService.updateEvent(event, categoryId);
+        eventCategoryService.assignEventToCategory(event, categoryId);
+        channelSourceService.assignEventToSource(event , eventRequest.getSourceId());
         event.setId(id);
 
         return eventMapper.toResponse(eventRepo.save(event));

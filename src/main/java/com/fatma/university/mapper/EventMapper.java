@@ -10,5 +10,6 @@ import org.mapstruct.Mapping;
 public interface EventMapper {
     Event toEntity(EventRequest eventRequest);
     @Mapping(target = "categoryId" , source = "event.category.id")
+    @Mapping(target = "sourceId" , source = "event.source.id")
     EventResponse toResponse(Event event);
 }

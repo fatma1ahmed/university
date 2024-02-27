@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,5 +28,7 @@ public class StudentCommentEventResponse {
     private long studentId;
     @JsonProperty("event_id")
     private long eventId;
+    @JsonProperty("creation_date_time")
+    private LocalDateTime creationDate;
 
 }

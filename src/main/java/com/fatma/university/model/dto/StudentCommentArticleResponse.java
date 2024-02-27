@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,7 @@ public class StudentCommentArticleResponse {
     private long studentId;
     @JsonProperty("article_id")
     private long articleId;
+
+    @JsonProperty("creation_date_time")
+    private LocalDateTime creationDate;
 }

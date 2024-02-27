@@ -1,12 +1,12 @@
 package com.fatma.university.service.impl;
 
 import com.fatma.university.mapper.StudentLikeVideoMapper;
+import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentLikeVideoResponse;
-import com.fatma.university.model.entity.Post;
-import com.fatma.university.model.entity.Student;
-import com.fatma.university.model.entity.StudentLike;
-import com.fatma.university.model.entity.Video;
+import com.fatma.university.model.entity.*;
+import com.fatma.university.reposity.NotificationRepo;
 import com.fatma.university.reposity.StudentLikeRepo;
+import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentLikeVideoService;
 import com.fatma.university.service.StudentService;
 import com.fatma.university.service.VideoService;
@@ -24,12 +24,19 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
     @Autowired
     private VideoService videoService;
     @Autowired
+    private SourceService sourceService;
+    @Autowired
     private StudentLikeVideoMapper studentLikeVideoMapper;
+    @Autowired
+    private NotificationLikeServiceImpl notificationLikeService;
+    @Autowired
+    private NotificationRepo notificationRepo;
 
     @Override
     public StudentLikeVideoResponse putLikeToVideo(long studentId, long videoId) {
         Student student = studentService.getById(studentId);
         Video video = videoService.getById(videoId);
+        Source source=sourceService.getById(video.getSource().getId());
         Optional<StudentLike> studentLike=findIsLikeByStudentIdAndVideoId(studentId,videoId);
         if(studentLike.isPresent()) {
             return convertLikeAndSaveIt(studentLike.get());
@@ -39,11 +46,22 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
             studentLike1.setLike(true);
             studentLike1.setStudent(student);
             studentLike1.setVideo(video);
+
+
+            Notification notification=new Notification();
+            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
+            notification.setSource(source);
+            notification.setPostId(videoId);
+            notification.setStudentId(studentId);
+            notification.setNotificationType(NotificationType.ARTICLE);
+            notificationRepo.save(notification);
+            studentLike1.setNotification(notification);
             return studentLikeVideoMapper.toResponse(studentLikeRepo.save(studentLike1));
         }
     }
     private StudentLikeVideoResponse convertLikeAndSaveIt(StudentLike studentLike){
         studentLike.setLike(!studentLike.isLike());
+        notificationLikeService.updateNotificationVideo(studentLike.getNotification());
         return studentLikeVideoMapper.toResponse(studentLikeRepo.save(studentLike));
     }
 

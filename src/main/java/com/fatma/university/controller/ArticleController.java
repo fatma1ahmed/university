@@ -4,6 +4,7 @@ import com.fatma.university.model.dto.ArticleRequest;
 import com.fatma.university.model.dto.ArticleResponse;
 import com.fatma.university.model.entity.Article;
 import com.fatma.university.service.ArticleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/articles")
 @CrossOrigin("*")
-
+@Tag(name= "Article Endpoints")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;

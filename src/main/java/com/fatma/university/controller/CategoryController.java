@@ -8,6 +8,7 @@ import com.fatma.university.model.entity.Post;
 import com.fatma.university.model.entity.Video;
 import com.fatma.university.service.CategoryService;
 import com.fatma.university.service.impl.CategoryServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
-
 @CrossOrigin("*")
-
+@Tag(name = "Category Endpoints")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

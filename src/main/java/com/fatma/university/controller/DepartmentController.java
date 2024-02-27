@@ -6,6 +6,7 @@ import com.fatma.university.model.dto.DepartmentResponse;
 import com.fatma.university.service.DepartmentService;
 import com.fatma.university.service.impl.DepartmentCollegeServiceImpl;
 import com.fatma.university.service.impl.DepartmentServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping("/departments")
 
 @CrossOrigin("*")
-
+@Tag(name = "Department Endpoints")
 public class DepartmentController {
 
     @Autowired

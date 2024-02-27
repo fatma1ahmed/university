@@ -3,6 +3,7 @@ package com.fatma.university.controller;
 import com.fatma.university.model.dto.PostRequest;
 import com.fatma.university.model.dto.PostResponse;
 import com.fatma.university.service.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 @CrossOrigin("*")
+@Tag(name = "Post Endpoints")
 public class PostController {
 
     @Autowired

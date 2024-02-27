@@ -8,6 +8,7 @@ import com.fatma.university.model.entity.Source;
 import com.fatma.university.model.entity.Video;
 import com.fatma.university.service.SourceDepartmentService;
 import com.fatma.university.service.SourceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sources")
 @CrossOrigin("*")
+@Tag(name = "Source Endpoints")
 public class SourceController {
 
     @Autowired

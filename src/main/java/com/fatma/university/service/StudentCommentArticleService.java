@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface StudentCommentArticleService {
-    public StudentCommentArticleResponse putCommentToEvent(long studentId, long articleId, String comment);
+    public StudentCommentArticleResponse putCommentToArticle(long studentId, long articleId, String comment);
 }

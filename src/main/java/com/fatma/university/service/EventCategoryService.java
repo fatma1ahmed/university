@@ -7,9 +7,9 @@ import java.io.IOException;
 
 @Service
 public interface EventCategoryService {
-    public void assignEventToCategory(Event event,long categoryId) throws IOException;
+    public void assignEventToCategory(Event event,long categoryId) ;
 
-    public void updateEvent(Event event,long CategoryId) throws IOException;
+
 
 
 }
