@@ -23,6 +23,7 @@ public class Event {
     private String place;
     private LocalDateTime date;
     private BroadCast isBroadcast;
+    private String description;
     private String linkPath;
     private String imagePath;
     @ManyToOne

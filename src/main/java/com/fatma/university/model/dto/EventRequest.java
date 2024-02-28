@@ -23,7 +23,8 @@ public class EventRequest {
     @JsonProperty("event_address")
     @NotNull(message = "please,Enter address")
     private String address;
-
+    @JsonProperty("event_description")
+    private String description;
     @JsonProperty("event_place")
     @NotNull(message = "please,Enter place")
     private String place;

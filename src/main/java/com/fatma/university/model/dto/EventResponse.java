@@ -23,6 +23,9 @@ public class EventResponse {
     @JsonProperty("event_id")
     private long id;
 
+    @JsonProperty("event_description")
+    private String description;
+
     @JsonProperty("event_address")
     private String address;
 
