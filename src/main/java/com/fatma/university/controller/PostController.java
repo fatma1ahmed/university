@@ -48,7 +48,11 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
-        ResponseEntity<?> response = postService.deleteById(id);
-        return response;
+        return postService.deleteById(id);
+    }
+
+    @GetMapping("/getForDepartment/{departmentId}")
+    public ResponseEntity<?>getAllForDepartment(@PathVariable long departmentId){
+        return new ResponseEntity<>(postService.getAllForDepartment(departmentId) , HttpStatus.OK);
     }
 }

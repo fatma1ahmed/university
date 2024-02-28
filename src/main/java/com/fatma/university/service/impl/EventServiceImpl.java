@@ -6,6 +6,7 @@ import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
 import com.fatma.university.model.entity.Event;
 import com.fatma.university.reposity.EventRepo;
+import com.fatma.university.service.ChannelSourceService;
 import com.fatma.university.service.EventCategoryService;
 import com.fatma.university.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -38,7 +40,7 @@ public class EventServiceImpl implements EventService {
 //            event.setImagePath(imageService.saveImage(imageBytes));
 //        }
         eventCategoryService.assignEventToCategory(event, categoryId);
-        channelSourceService.assignEventToSource(event , eventRequest.getSourceId());
+        channelSourceService.assignEventToSource(event, eventRequest.getSourceId());
         return eventMapper.toResponse(eventRepo.save(event));
     }
 
@@ -48,7 +50,7 @@ public class EventServiceImpl implements EventService {
         long categoryId = eventRequest.getCategoryId();
         Event event = eventMapper.toEntity(eventRequest);
         eventCategoryService.assignEventToCategory(event, categoryId);
-        channelSourceService.assignEventToSource(event , eventRequest.getSourceId());
+        channelSourceService.assignEventToSource(event, eventRequest.getSourceId());
         event.setId(id);
 
         return eventMapper.toResponse(eventRepo.save(event));
@@ -63,10 +65,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventResponse getEntityById(long id) {
-      Event event = eventRepo.findById(id).orElseThrow(
+        Event event = eventRepo.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("this Event with " + id + " not found")
         );
-      return eventMapper.toResponse(event);
+        return eventMapper.toResponse(event);
     }
 
     @Override
@@ -84,4 +86,11 @@ public class EventServiceImpl implements EventService {
     }
 
 
+    @Override
+    public List<EventResponse> getAllForDepartment(long departmentId) {
+        return eventRepo.findAllBySourceDepartment_Id(departmentId)
+                .stream()
+                .map(eventMapper::toResponse)
+                .collect(Collectors.toList());
+    }
 }

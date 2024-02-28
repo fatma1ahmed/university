@@ -10,6 +10,7 @@ import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentCommentVideoService;
 import com.fatma.university.service.StudentService;
 import com.fatma.university.service.VideoService;
+import com.fatma.university.service.utils.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,7 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
     @Autowired
     private SourceService sourceService;
     @Autowired
-    private NotificationServiceImp notificationArticleService;
-    @Autowired
-    private NotificationRepo notificationRepo;
+    private NotificationServiceImp notificationServiceImp;
     @Autowired
     private StudentCommentVideoMapper studentCommentVideoMapper;
 
@@ -41,6 +40,13 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
         Source source=sourceService.getById(video.getSource().getId());
         Optional<StudentComment> studentComment = findCommentByStudentIdAndVideoId(studentId, videoId);
         if (studentComment.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(video.getSource(),
+                                    NotificationType.VIDEO,
+                                    "لقد قام الطالب " + student.getFullName() + "ب اعاده التعليق علي فيديو " ,
+                                    studentId,
+                                    videoId));
             return updateCommentToVideo(studentComment.get(), comment);
         } else {
             StudentComment createComment = new StudentComment();
@@ -48,20 +54,26 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
             createComment.setStudent(student);
             createComment.setComment(comment);
 
-            Notification notification=new Notification();
-            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
-            notification.setSource(source);
-            notification.setPostId(videoId);
-            notification.setStudentId(studentId);
-            notification.setNotificationType(NotificationType.ARTICLE);
-            notificationRepo.save(notification);
-            createComment.setNotification(notification);
+//            Notification notification=new Notification();
+//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
+//            notification.setSource(source);
+//            notification.setPostId(videoId);
+//            notification.setStudentId(studentId);
+//            notification.setNotificationType(NotificationType.ARTICLE);
+//            notificationRepo.save(notification);
+//            createComment.setNotification(notification);
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(video.getSource(),
+                                    NotificationType.VIDEO,
+                                    "لقد قام الطالب " + student.getFullName() + "ب التعليق علي فيديو " ,
+                                    studentId,
+                                    videoId));
             return studentCommentVideoMapper.toResponse(studentCommentRepo.save(createComment));
         }
     }
     private StudentCommentVideoResponse updateCommentToVideo(StudentComment studentComment, String comment){
         studentComment.setComment(comment);
-        notificationArticleService.updateNotificationVideo(studentComment.getNotification());
         return studentCommentVideoMapper.toResponse(studentCommentRepo.save(studentComment));
 
     }

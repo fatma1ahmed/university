@@ -21,6 +21,8 @@ public class VideoResponse {
 
     @JsonProperty("video_id")
     private long id;
+    @JsonProperty("video_title")
+    private String title;
     @JsonProperty("video_path")
     private String videoPath;
     @CreationTimestamp

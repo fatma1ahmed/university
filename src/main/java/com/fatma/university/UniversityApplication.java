@@ -44,7 +44,10 @@ public class UniversityApplication  implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       // collegeRepo.deleteAll();
+        if (!collegeRepo.findAll().isEmpty())
+            return;
+
+        collegeRepo.deleteAll();
         ArrayList<College> colleges = new ArrayList<>(Arrays.asList(
                 College.builder().id(1L)
                         .icon(convertToBase64("/college_icons/adab 1.png"))

@@ -2,7 +2,6 @@ package com.fatma.university.controller;
 
 import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
-import com.fatma.university.model.entity.Event;
 import com.fatma.university.service.EventService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/events")
 @CrossOrigin("*")
-@Tag(name = "Department Endpoints")
+@Tag(name = "Event Endpoints")
 public class EventController {
 
     @Autowired
@@ -49,7 +48,11 @@ public class EventController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id) {
-        ResponseEntity<?> response = eventService.deleteById(id);
-        return response;
+        return eventService.deleteById(id);
+    }
+
+    @GetMapping("/getForDeparment/{departmentId}")
+    public ResponseEntity<?>getAllForDepartment(@PathVariable long departmentId){
+        return new ResponseEntity<>(eventService.getAllForDepartment(departmentId) , HttpStatus.OK);
     }
 }

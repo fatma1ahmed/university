@@ -1,13 +1,14 @@
 package com.fatma.university.service.impl;
 
 import com.fatma.university.model.entity.*;
+import com.fatma.university.service.ChannelSourceService;
 import com.fatma.university.service.SourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ChannelSourceServiceImp implements ChannelSourceService{
+public class ChannelSourceServiceImp implements ChannelSourceService {
 
     private final SourceService sourceService;
 

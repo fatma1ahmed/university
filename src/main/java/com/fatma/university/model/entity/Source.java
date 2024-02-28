@@ -28,7 +28,7 @@ public class Source extends Person {
     @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Article> articles;
-    @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Notification> notifications;
 }

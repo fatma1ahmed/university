@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -65,10 +66,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponse getEntityById(long id) {
-      Post post=postRepo.findById(id).orElseThrow(
+        Post post = postRepo.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("this Post with " + id + " not found")
         );
-      return postMapper.toResponse(post);
+        return postMapper.toResponse(post);
     }
 
     @Override
@@ -83,5 +84,10 @@ public class PostServiceImpl implements PostService {
         getById(id);
         postRepo.deleteById(id);
         return new ResponseEntity<>("Post with " + id + " is deleted", HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public List<PostResponse> getAllForDepartment(long departmentId) {
+        return postRepo.findAllBySourceDepartmentId(departmentId).stream().map(postMapper::toResponse).collect(Collectors.toList());
     }
 }

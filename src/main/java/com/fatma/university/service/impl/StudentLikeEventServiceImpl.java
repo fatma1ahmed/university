@@ -13,6 +13,7 @@ import com.fatma.university.reposity.StudentLikeRepo;
 import com.fatma.university.service.EventService;
 import com.fatma.university.service.StudentLikeEventService;
 import com.fatma.university.service.StudentService;
+import com.fatma.university.service.utils.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
     @Autowired
     private NotificationLikeServiceImpl notificationLikeService;
     @Autowired
-    private NotificationRepo notificationRepo;
+    private NotificationServiceImp notificationServiceImp;
 
     @Override
     public StudentLikeEventResponse putLikeToEvent(long studentId, long eventId) {
@@ -40,6 +41,13 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
 
         Optional<StudentLike> optionalStudentLike = findLikeByStudentIdAndEventId(studentId, eventId);
         if (optionalStudentLike.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(event.getSource(),
+                                    NotificationType.EVENT,
+                                    "لقد قام الطالب " + student.getFullName() + " ب الغاء الاعجاب علي " + event.getAddress(),
+                                    studentId,
+                                    eventId));
             return convertLikeAndSaveIt(optionalStudentLike.get());
         } else {
             StudentLike studentLike = new StudentLike();
@@ -47,13 +55,20 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
             studentLike.setStudent(student);
             studentLike.setEvent(event);
 
-            Notification notification=new Notification();
-            notification.setMessage("Student By Id: " + studentId + " add like on Article By Id " + eventId);
-            notification.setEventId(eventId);
-            notification.setStudentId(studentId);
-            notification.setNotificationType(NotificationType.ARTICLE);
-            notificationRepo.save(notification);
-            studentLike.setNotification(notification);
+//            Notification notification=new Notification();
+//            notification.setMessage("Student By Id: " + studentId + " add like on Article By Id " + eventId);
+//            notification.setEventId(eventId);
+//            notification.setStudentId(studentId);
+//            notification.setNotificationType(NotificationType.ARTICLE);
+//            notificationRepo.save(notification);
+//            studentLike.setNotification(notification);
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(event.getSource(),
+                                    NotificationType.EVENT,
+                                    "لقد قام الطالب " + student.getFullName() + " ب  الاعجاب علي " + event.getAddress(),
+                                    studentId,
+                                    eventId));
 
             return studentLikeEventMapper.fromEntityToResponseDto(studentLikeRepo.save(studentLike));
         }

@@ -51,4 +51,9 @@ public class VideoController {
     public ResponseEntity<?> deleteById(@PathVariable long id) {
         return videoService.deleteById(id);
     }
+
+    @GetMapping("/getForDepartment/{departmentId}")
+    public ResponseEntity<?>getAllForDepartment(@PathVariable long departmentId){
+        return new ResponseEntity<>(videoService.getAllForDepartment(departmentId) , HttpStatus.OK);
+    }
 }

@@ -1,4 +1,4 @@
-package com.fatma.university.service.impl;
+package com.fatma.university.service;
 
 import com.fatma.university.model.Enum.ChannelType;
 import com.fatma.university.model.entity.Article;

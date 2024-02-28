@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -88,5 +89,10 @@ public class ArticleServiceImpl implements ArticleService {
         getById(id);
         articleRepo.deleteById(id);
         return new ResponseEntity<>("Article with " + id + " is deleted", HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public List<ArticleResponse> getAllForDepartment(long departmentId) {
+        return articleRepo.findAllBySourceDepartmentId(departmentId).stream().map(articleMapper::toResponse).collect(Collectors.toList());
     }
 }

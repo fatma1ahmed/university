@@ -38,6 +38,13 @@ public class StudentCommentEventServiceImpl implements StudentCommentEventServic
         Event event = eventService.getById(eventId);
         Optional<StudentComment> studentComment = findCommentByStudentIdAndEventId(studentId, eventId);
         if (studentComment.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(event.getSource(),
+                                    NotificationType.EVENT,
+                                    "لقد قام الطالب " + student.getFullName() + "ب تعديل التعليق علي الحدث ",
+                                    studentId,
+                                    eventId));
             return updateCommentToEvent(studentComment.get(), comment);
 
         } else {
@@ -57,7 +64,7 @@ public class StudentCommentEventServiceImpl implements StudentCommentEventServic
                     .saveNotification(NotificationBuilder
                             .buildNotification(event.getSource(),
                                     NotificationType.EVENT,
-                                    "لقد قام الطالب " + student.getFullName() + "ب التعليق علي الحدث " + event.getAddress(),
+                                    "لقد قام الطالب " + student.getFullName() + "ب التعليق علي الحدث ",
                                     studentId,
                                     eventId));
             return studentCommentEventMapper.toResponse(studentCommentRepo.save(createComment));
@@ -66,14 +73,6 @@ public class StudentCommentEventServiceImpl implements StudentCommentEventServic
 
     private StudentCommentEventResponse updateCommentToEvent(StudentComment studentComment, String comment) {
         studentComment.setComment(comment);
-        notificationServiceImp
-                .saveNotification(NotificationBuilder
-                        .buildNotification(studentComment.getEvent().getSource(),
-                                NotificationType.ARTICLE,
-                                "لقد قام الطالب " + studentComment.getStudent().getFullName() + "ب التعليق علي المقال " + studentComment.getEvent().getAddress(),
-                                studentComment.getStudent().getId(),
-                                studentComment.getEvent().getId()));
-//        notificationArticleService.updateNotificationEvent(studentComment.getNotification());
         return studentCommentEventMapper.toResponse(studentCommentRepo.save(studentComment));
 
     }

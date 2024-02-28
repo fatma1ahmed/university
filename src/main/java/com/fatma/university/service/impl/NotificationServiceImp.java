@@ -27,7 +27,6 @@ public class NotificationServiceImp {
         notificationRepo.save(notification);
     }
 
-
     public List<NotificationResponse> getAllForSource(long sourceId) {
         Source source = sourceService.getById(sourceId);
         return notificationRepo.findAllBySource(source).stream().map(notificationMapper::toResponse).collect(Collectors.toList());
@@ -49,37 +48,6 @@ public class NotificationServiceImp {
         return notificationRepo.findAllByVideoId(videoId).stream().map(notificationMapper::toResponse).collect(Collectors.toList());
     }
 
-    public Notification updateNotificationArticle(Notification notification) {
-        Notification exisitnotification = getById(notification.getId());
-        notification.setMessage("Student By Id: " + notification.getStudentId() + " update comment on Article By Id " + notification.getArticleId());
-        notification.setId(exisitnotification.getId());
-        notificationRepo.save(notification);
-        return null;
-    }
-
-    public Notification updateNotificationEvent(Notification notification) {
-        Notification exisitnotification = getById(notification.getId());
-        notification.setMessage("Student By Id: " + notification.getStudentId() + " update comment on Event By Id " + notification.getEventId());
-        notification.setId(exisitnotification.getId());
-        notificationRepo.save(notification);
-        return null;
-    }
-
-    public Notification updateNotificationPost(Notification notification) {
-        Notification exisitnotification = getById(notification.getId());
-        notification.setMessage("Student By Id: " + notification.getStudentId() + " update comment on Post By Id " + notification.getPostId());
-        notification.setId(exisitnotification.getId());
-        notificationRepo.save(notification);
-        return null;
-    }
-
-    public Notification updateNotificationVideo(Notification notification) {
-        Notification exisitnotification = getById(notification.getId());
-        notification.setMessage("Student By Id: " + notification.getStudentId() + " update comment on Video By Id " + notification.getVideoId());
-        notification.setId(exisitnotification.getId());
-        notificationRepo.save(notification);
-        return null;
-    }
 
     public Notification getById(long id) {
         return notificationRepo.findById(id).orElseThrow(

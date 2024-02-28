@@ -10,6 +10,7 @@ import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentLikeVideoService;
 import com.fatma.university.service.StudentService;
 import com.fatma.university.service.VideoService;
+import com.fatma.university.service.utils.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
     @Autowired
     private NotificationLikeServiceImpl notificationLikeService;
     @Autowired
-    private NotificationRepo notificationRepo;
+    private NotificationServiceImp  notificationServiceImp;
 
     @Override
     public StudentLikeVideoResponse putLikeToVideo(long studentId, long videoId) {
@@ -39,6 +40,13 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
         Source source=sourceService.getById(video.getSource().getId());
         Optional<StudentLike> studentLike=findIsLikeByStudentIdAndVideoId(studentId,videoId);
         if(studentLike.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(video.getSource(),
+                                    NotificationType.VIDEO,
+                                    "لقد قام الطالب " + student.getFullName() + " ب الغاء الاعجاب علي فيديو " ,
+                                    studentId,
+                                    videoId));
             return convertLikeAndSaveIt(studentLike.get());
         }
         else  {
@@ -48,14 +56,22 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
             studentLike1.setVideo(video);
 
 
-            Notification notification=new Notification();
-            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
-            notification.setSource(source);
-            notification.setPostId(videoId);
-            notification.setStudentId(studentId);
-            notification.setNotificationType(NotificationType.ARTICLE);
-            notificationRepo.save(notification);
-            studentLike1.setNotification(notification);
+//            Notification notification=new Notification();
+//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
+//            notification.setSource(source);
+//            notification.setPostId(videoId);
+//            notification.setStudentId(studentId);
+//            notification.setNotificationType(NotificationType.ARTICLE);
+//            notificationRepo.save(notification);
+//            studentLike1.setNotification(notification);
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(video.getSource(),
+                                    NotificationType.VIDEO,
+                                    "لقد قام الطالب " + student.getFullName() + " ب  الاعجاب علي فيديو " ,
+                                    studentId,
+                                    videoId));
+
             return studentLikeVideoMapper.toResponse(studentLikeRepo.save(studentLike1));
         }
     }

@@ -10,6 +10,7 @@ import com.fatma.university.service.PostService;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentCommentPostService;
 import com.fatma.university.service.StudentService;
+import com.fatma.university.service.utils.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,42 +31,49 @@ public class StudentCommentPostServiceImpl implements StudentCommentPostService 
     @Autowired
     private NotificationServiceImp notificationArticleService;
     @Autowired
-    private NotificationRepo notificationRepo;
+    private NotificationServiceImp notificationServiceImp;
+
     @Override
-    public StudentCommentPostResponse putCommentToPost(long studentId, long postId,String comment) {
-        Student student=studentService.getById(studentId);
-        Post post=postService.getById(postId);
-        Source source=sourceService.getById(post.getSource().getId());
+    public StudentCommentPostResponse putCommentToPost(long studentId, long postId, String comment) {
+        Student student = studentService.getById(studentId);
+        Post post = postService.getById(postId);
+        Source source = sourceService.getById(post.getSource().getId());
 
-        Optional<StudentComment> studentComment=findCommentByStudentIdAndPostId(studentId,postId);
-        if(studentComment.isPresent()){
-            return updateCommentToPost(studentComment.get(),comment);
+        Optional<StudentComment> studentComment = findCommentByStudentIdAndPostId(studentId, postId);
+        if (studentComment.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(post.getSource(),
+                                    NotificationType.POST,
+                                    "لقد قام الطالب " + student.getFullName() + "ب تعديل التعليق علي البوست ",
+                                    student.getId(),
+                                    post.getId()));
+            return updateCommentToPost(studentComment.get(), comment);
 
-        }else {
-            StudentComment createComment=new StudentComment();
+        } else {
+            StudentComment createComment = new StudentComment();
             createComment.setComment(comment);
             createComment.setStudent(student);
             createComment.setPost(post);
 
-            Notification notification=new Notification();
-            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + postId);
-            notification.setSource(source);
-            notification.setPostId(postId);
-            notification.setStudentId(studentId);
-            notification.setNotificationType(NotificationType.ARTICLE);
-            notificationRepo.save(notification);
-            createComment.setNotification(notification);
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(post.getSource(),
+                                    NotificationType.POST,
+                                    "لقد قام الطالب " + student.getFullName() + "ب التعليق علي منشور ",
+                                    studentId,
+                                    postId));
 
             return studentCommentPostMapper.toResponse(studentCommentRepo.save(createComment));
         }
     }
-    private StudentCommentPostResponse updateCommentToPost(StudentComment studentComment,String comment){
-        studentComment.setComment(comment);
-        notificationArticleService.updateNotificationPost(studentComment.getNotification());
 
+    private StudentCommentPostResponse updateCommentToPost(StudentComment studentComment, String comment) {
+        studentComment.setComment(comment);
         return studentCommentPostMapper.toResponse(studentCommentRepo.save(studentComment));
     }
+
     private Optional<StudentComment> findCommentByStudentIdAndPostId(long studentId, long postId) {
-        return studentCommentRepo.findCommentByStudentIdAndPostId(studentId,postId);
+        return studentCommentRepo.findCommentByStudentIdAndPostId(studentId, postId);
     }
 }

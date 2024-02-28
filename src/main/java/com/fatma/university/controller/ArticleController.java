@@ -48,4 +48,10 @@ public class ArticleController {
         return articleService.deleteById(id);
     }
 
+
+    @GetMapping("/getForDepartment/{departmentId}")
+    public ResponseEntity<?>getAllForDepartment(@PathVariable long departmentId){
+        return new ResponseEntity<>(articleService.getAllForDepartment(departmentId) , HttpStatus.OK);
+    }
+
 }

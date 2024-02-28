@@ -13,4 +13,5 @@ import java.util.List;
 public interface EventService extends CrudService<Event, EventRequest, EventResponse> {
 
 
+    List<EventResponse> getAllForDepartment(long departmentId);
 }

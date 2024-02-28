@@ -25,6 +25,7 @@ public class Notification {
     @Column(updatable = false)
     private LocalDateTime creationDate;
     @ManyToOne
+    @JoinColumn(name = "source_id")
     private Source source;
     private NotificationType notificationType;
     private long studentId;

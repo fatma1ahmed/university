@@ -10,6 +10,7 @@ import com.fatma.university.service.PostService;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentLikePostService;
 import com.fatma.university.service.StudentService;
+import com.fatma.university.service.utils.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
     @Autowired
     private NotificationLikeServiceImpl notificationLikeService;
     @Autowired
-    private NotificationRepo notificationRepo;
+    private NotificationServiceImp notificationServiceImp;
     @Override
     public StudentLikePostResponse putLikeToPost(long studentId, long postId) {
         Student student = studentService.getById(studentId);
@@ -38,6 +39,13 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
         Source source=sourceService.getById(post.getSource().getId());
         Optional<StudentLike> optionalStudentLike=findLikeByStudentIdAndPostId(studentId,postId);
         if(optionalStudentLike.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(post.getSource(),
+                                    NotificationType.POST,
+                                    "لقد قام الطالب " + student.getFullName() + " ب الغاء الاعجاب علي منشور " ,
+                                    studentId,
+                                    postId));
             return convertLikeAndSaveIt(optionalStudentLike.get());
         }
       else  {
@@ -46,14 +54,13 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
             studentLike.setStudent(student);
             studentLike.setPost(post);
 
-            Notification notification=new Notification();
-            notification.setMessage("Student By Id: " + studentId + " add Like on Article By Id " + postId);
-            notification.setSource(source);
-            notification.setPostId(postId);
-            notification.setStudentId(studentId);
-            notification.setNotificationType(NotificationType.ARTICLE);
-            notificationRepo.save(notification);
-            studentLike.setNotification(notification);
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(post.getSource(),
+                                    NotificationType.POST,
+                                    "لقد قام الطالب " + student.getFullName() + " ب  الاعجاب علي منشور" ,
+                                    studentId,
+                                    postId));
 
             return studentLikePostMapper.toResponse(studentLikeRepo.save(studentLike));
         }

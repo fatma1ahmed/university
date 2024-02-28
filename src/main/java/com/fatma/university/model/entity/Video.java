@@ -21,6 +21,8 @@ public class Video {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
+    private String title;
+
     @Lob
     private String videoPath;
     @CreationTimestamp

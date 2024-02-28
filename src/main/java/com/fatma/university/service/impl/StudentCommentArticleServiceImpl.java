@@ -40,6 +40,13 @@ public class StudentCommentArticleServiceImpl implements StudentCommentArticleSe
         Source source = sourceService.getById(article.getSource().getId());
         Optional<StudentComment> studentComment = findCommentByStudentIdAndArticleId(studentId, articleId);
         if (studentComment.isPresent()) {
+            notificationServiceImp
+                    .saveNotification(NotificationBuilder
+                            .buildNotification(source,
+                                    NotificationType.ARTICLE,
+                                    "لقد قام الطالب " + student.getFullName(),
+                                    studentId,
+                                    articleId));
             return updateCommentToArticle(studentComment.get(), comment);
 
         } else {
@@ -60,7 +67,7 @@ public class StudentCommentArticleServiceImpl implements StudentCommentArticleSe
                     .saveNotification(NotificationBuilder
                             .buildNotification(source,
                                     NotificationType.ARTICLE,
-                                    "لقد قام الطالب " + student.getFullName() + "ب التعليق علي المقال " + article.getAddress(),
+                                    "لقد قام الطالب " + student.getFullName() + "ب التعليق علي المقال ",
                                     studentId,
                                     articleId));
 
@@ -70,14 +77,7 @@ public class StudentCommentArticleServiceImpl implements StudentCommentArticleSe
 
     private StudentCommentArticleResponse updateCommentToArticle(StudentComment studentComment, String comment) {
         studentComment.setComment(comment);
-        notificationServiceImp
-                .saveNotification(NotificationBuilder
-                        .buildNotification(studentComment.getArticle().getSource(),
-                                NotificationType.ARTICLE,
-                                "لقد قام الطالب " + studentComment.getStudent().getFullName() + "بتعديل التعليق علي المقال " + studentComment.getArticle().getAddress(),
-                                studentComment.getStudent().getId(),
-                                studentComment.getArticle().getId()));
-//        notificationArticleService.updateNotificationArticle(studentComment.getNotification());
+
         return studentCommentArticleMapper.toResponse(studentCommentRepo.save(studentComment));
 
     }
