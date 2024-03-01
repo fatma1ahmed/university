@@ -31,10 +31,8 @@ public class SourceServiceImpl implements SourceService {
     public SourceResponse add(SourceRequest sourceRequest) throws IOException {
         long departmentId = sourceRequest.getDepartmentId();
         Source source = sourceMapper.toEntity(sourceRequest);
-//        if (source.getImagePath() != null && !source.getImagePath().isEmpty() && source.getImagePath() != "string") {
-//            byte[] imageBytes = imageService.decodeBase64(source.getImagePath());
-//            source.setImagePath(imageService.saveImage(imageBytes));
-//        }
+//        source.setImagePath(imageService.saveImageToBase64(source.getImagePath()));
+
         sourceDepartmentService.assignSourceToDepartment(source, departmentId);
 
         return sourceMapper.toResponse(sourceRepo.save(source));
@@ -47,7 +45,7 @@ public class SourceServiceImpl implements SourceService {
         Source source = sourceMapper.toEntity(sourceRequest);
         sourceDepartmentService.updateSource(source, departmentId);
         source.setId(id);
-
+//        source.setImagePath(imageService.saveImageToBase64(source.getImagePath()));
         return sourceMapper.toResponse(sourceRepo.save(source));
     }
 

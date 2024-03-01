@@ -53,13 +53,6 @@ public class StudentCommentEventServiceImpl implements StudentCommentEventServic
             createComment.setEvent(event);
             createComment.setComment(comment);
 
-//            Notification notification=new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + eventId);
-//            notification.setEventId(eventId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            createComment.setNotification(notification);
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(event.getSource(),

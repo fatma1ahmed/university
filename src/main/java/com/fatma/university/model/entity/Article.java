@@ -18,6 +18,8 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String address;
+    @Lob
+//   @Column(columnDefinition = "LONGTEXT")
     private String imagePath;
     @ManyToOne
     private Source source;

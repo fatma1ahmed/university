@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -26,5 +27,7 @@ public class Person {
     private String phone;
 
     @JsonProperty("image_path")
+    @Lob
+//    @Column(columnDefinition = "LONGTEXT")
     private String imagePath;
 }

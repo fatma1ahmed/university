@@ -28,11 +28,6 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse add(CategoryRequest categoryRequest) {
 
         return categoryMapper.toResponse(categoryRepo.save(categoryMapper.toEntity(categoryRequest)));
-//        Category category=categoryMapper.toEntity(categoryRequest);
-//        categoryRepo.save(category);
-//        CategoryResponse categoryResponse=categoryMapper.fromEntityToResponseDto(category);
-//        categoryResponse.setId(category.getId());
-//        return categoryResponse;
     }
 
     @Override

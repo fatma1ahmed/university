@@ -54,14 +54,7 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
             createComment.setStudent(student);
             createComment.setComment(comment);
 
-//            Notification notification=new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
-//            notification.setSource(source);
-//            notification.setPostId(videoId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            createComment.setNotification(notification);
+
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(video.getSource(),

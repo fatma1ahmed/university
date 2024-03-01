@@ -29,8 +29,6 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
     @Autowired
     private StudentLikePostMapper studentLikePostMapper;
     @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
-    @Autowired
     private NotificationServiceImp notificationServiceImp;
     @Override
     public StudentLikePostResponse putLikeToPost(long studentId, long postId) {
@@ -67,7 +65,6 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
     }
 private StudentLikePostResponse convertLikeAndSaveIt(StudentLike studentLike){
         studentLike.setLike(!studentLike.isLike());
-    notificationLikeService.updateNotificationPost(studentLike.getNotification());
     return studentLikePostMapper.toResponse(studentLikeRepo.save(studentLike));
 }
 

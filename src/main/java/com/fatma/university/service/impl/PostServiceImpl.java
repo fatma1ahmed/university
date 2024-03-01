@@ -33,10 +33,7 @@ public class PostServiceImpl implements PostService {
         long categoryId = postRequest.getCategoryId();
         long sourceId = postRequest.getSourceId();
         Post post = postMapper.toEntity(postRequest);
-//        if (post.getImagePath() != null && !post.getImagePath().isEmpty() && post.getImagePath() != "string") {
-//            byte[] imageBytes = imageService.decodeBase64(post.getImagePath());
-//            post.setImagePath(imageService.saveImage(imageBytes));
-//        }
+//        post.setImagePath(imageService.saveImageToBase64(post.getImagePath()));
         postCategorySourceService.assignPostToCategoryAndSource(post, categoryId, sourceId);
 
 
@@ -52,8 +49,7 @@ public class PostServiceImpl implements PostService {
         postCategorySourceService.updatePost(post, categoryId, sourceId);
         post.setId(id);
         post.setCreateDate(exisitPost.getCreateDate());
-
-
+//        post.setImagePath(imageService.saveImageToBase64(post.getImagePath()));
         return postMapper.toResponse(postRepo.save(post));
     }
 

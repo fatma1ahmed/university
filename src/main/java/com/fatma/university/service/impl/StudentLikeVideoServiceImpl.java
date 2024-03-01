@@ -29,8 +29,6 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
     @Autowired
     private StudentLikeVideoMapper studentLikeVideoMapper;
     @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
-    @Autowired
     private NotificationServiceImp  notificationServiceImp;
 
     @Override
@@ -56,14 +54,6 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
             studentLike1.setVideo(video);
 
 
-//            Notification notification=new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
-//            notification.setSource(source);
-//            notification.setPostId(videoId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            studentLike1.setNotification(notification);
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(video.getSource(),
@@ -77,7 +67,6 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
     }
     private StudentLikeVideoResponse convertLikeAndSaveIt(StudentLike studentLike){
         studentLike.setLike(!studentLike.isLike());
-        notificationLikeService.updateNotificationVideo(studentLike.getNotification());
         return studentLikeVideoMapper.toResponse(studentLikeRepo.save(studentLike));
     }
 

@@ -30,8 +30,6 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
     @Autowired
     private StudentLikeEventMapper studentLikeEventMapper;
     @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
-    @Autowired
     private NotificationServiceImp notificationServiceImp;
 
     @Override
@@ -55,13 +53,6 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
             studentLike.setStudent(student);
             studentLike.setEvent(event);
 
-//            Notification notification=new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add like on Article By Id " + eventId);
-//            notification.setEventId(eventId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            studentLike.setNotification(notification);
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(event.getSource(),
@@ -76,7 +67,6 @@ public class StudentLikeEventServiceImpl implements StudentLikeEventService {
 
     private StudentLikeEventResponse convertLikeAndSaveIt(StudentLike studentLike) {
         studentLike.setLike(!studentLike.isLike());
-        notificationLikeService.updateNotificationEvent(studentLike.getNotification());
         return studentLikeEventMapper.
                 fromEntityToResponseDto(studentLikeRepo.save(studentLike));
     }

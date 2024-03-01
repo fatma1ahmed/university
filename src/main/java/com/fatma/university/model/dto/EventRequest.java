@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fatma.university.model.Enum.BroadCast;
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Source;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -41,6 +42,7 @@ public class EventRequest {
     private String linkPath;
 
     @JsonProperty("event_image_path")
+    @Lob
     private String imagePath;
 
     @JsonProperty("category_id")

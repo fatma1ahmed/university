@@ -25,6 +25,7 @@ public class Post {
     private LocalDateTime createDate;
     @UpdateTimestamp
     private LocalDateTime updateDate;
+    @Lob
     private String imagePath;
     @ManyToOne
     private Category category;

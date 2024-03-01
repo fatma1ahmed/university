@@ -29,8 +29,6 @@ public class StudentLikeArticleServiceImpl implements StudentLikeArticleService 
     @Autowired
     private StudentLikeArticleMapper studentLikeArticleMapper;
     @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
-    @Autowired
     private NotificationServiceImp notificationServiceImp;
 
     @Override
