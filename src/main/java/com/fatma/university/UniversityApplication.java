@@ -1,7 +1,7 @@
 package com.fatma.university;
 
 import com.fatma.university.model.entity.College;
-import com.fatma.university.reposity.CollegeRepo;
+import com.fatma.university.repository.CollegeRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.StreamUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Source;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class VideoResponse {
     @JsonProperty("video_title")
     private String title;
     @JsonProperty("video_path")
+    @Lob 
     private String videoPath;
     @CreationTimestamp
     private LocalDateTime createDate;

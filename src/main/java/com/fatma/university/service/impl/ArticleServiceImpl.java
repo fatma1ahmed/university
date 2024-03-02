@@ -5,10 +5,9 @@ import com.fatma.university.mapper.ArticleMapper;
 import com.fatma.university.model.dto.ArticleRequest;
 import com.fatma.university.model.dto.ArticleResponse;
 import com.fatma.university.model.entity.Article;
-import com.fatma.university.reposity.ArticleRepo;
+import com.fatma.university.repository.ArticleRepo;
 import com.fatma.university.service.ArticleService;
 import com.fatma.university.service.ArticleSourceService;
-import com.fatma.university.service.ImagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,25 +26,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
     @Autowired
-    private ImagesService imagesService;
+    private ImageServiceImpl imagesService;
 
     @Override
     public ArticleResponse add(ArticleRequest articleRequest) throws IOException {
         Article article = articleMapper.toEntity(articleRequest);
         long sourceId = articleRequest.getSourceId();
-
-//        if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
-//            byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());
-//            article.setImagePath(imagesService.saveImage(imageBytes));
-//        }
-
-//        if (article.getImagePath() != null && !article.getImagePath().isEmpty() && article.getImagePath() != "string") {
-//            byte[] imageBytes = imagesService.decodeBase64(article.getImagePath());
-//            article.setImagePath(imagesService.saveImage(imageBytes));
-//        }
-
         articleSourceService.assignArticleToSource(article, sourceId);
-
+//        article.setImagePath(imagesService.saveImageToBase64(article.getImagePath()));
         return articleMapper.toResponse(articleRepo.save(article));
     }
 
@@ -55,7 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleMapper.toEntity(articleRequest);
         articleSourceService.updateSource(article, sourceId);
         article.setId(id);
-
+//        article.setImagePath(imagesService.saveImageToBase64(article.getImagePath()));
         return articleMapper.toResponse(articleRepo.save(article));
     }
 

@@ -1,4 +1,4 @@
-package com.fatma.university.reposity;
+package com.fatma.university.repository;
 
 import com.fatma.university.model.entity.College;
 import org.springframework.data.jpa.repository.JpaRepository;

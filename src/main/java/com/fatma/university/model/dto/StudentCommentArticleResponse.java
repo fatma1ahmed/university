@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class StudentCommentArticleResponse {
 
-    @JsonProperty("studentComment_id")
+    @JsonProperty("student_comment_id")
     private long id;
     @JsonProperty("student_comment")
     private String comment;

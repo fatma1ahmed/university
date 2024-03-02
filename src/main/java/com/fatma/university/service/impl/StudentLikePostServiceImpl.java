@@ -4,8 +4,7 @@ import com.fatma.university.mapper.StudentLikePostMapper;
 import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentLikePostResponse;
 import com.fatma.university.model.entity.*;
-import com.fatma.university.reposity.NotificationRepo;
-import com.fatma.university.reposity.StudentLikeRepo;
+import com.fatma.university.repository.StudentLikeRepo;
 import com.fatma.university.service.PostService;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentLikePostService;
@@ -28,8 +27,6 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
     private SourceService sourceService;
     @Autowired
     private StudentLikePostMapper studentLikePostMapper;
-    @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
     @Autowired
     private NotificationServiceImp notificationServiceImp;
     @Override
@@ -67,7 +64,6 @@ public class StudentLikePostServiceImpl implements StudentLikePostService {
     }
 private StudentLikePostResponse convertLikeAndSaveIt(StudentLike studentLike){
         studentLike.setLike(!studentLike.isLike());
-    notificationLikeService.updateNotificationPost(studentLike.getNotification());
     return studentLikePostMapper.toResponse(studentLikeRepo.save(studentLike));
 }
 

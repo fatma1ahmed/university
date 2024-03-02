@@ -26,5 +26,6 @@ public class CommentRequest {
 
     @NotNull(message = "comment can't be null")
     @NotEmpty(message = "comment can't be empty")
+    @JsonProperty("student_comment")
     private String comment;
 }

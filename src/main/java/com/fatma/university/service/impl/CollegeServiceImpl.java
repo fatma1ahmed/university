@@ -5,7 +5,7 @@ import com.fatma.university.mapper.CollegeMapper;
 import com.fatma.university.model.dto.CollegeRequest;
 import com.fatma.university.model.dto.CollegeResponse;
 import com.fatma.university.model.entity.College;
-import com.fatma.university.reposity.CollegeRepo;
+import com.fatma.university.repository.CollegeRepo;
 import com.fatma.university.service.CollegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

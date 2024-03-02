@@ -31,25 +31,25 @@ public class SourceController {
     private SourceDepartmentService sourceDepartmentService;
 
     @PostMapping
-    public ResponseEntity<?> assignSourceToDepartment(@RequestBody @Valid SourceRequest sourceRequest) throws IOException {
+    public ResponseEntity<SourceResponse> assignSourceToDepartment(@RequestBody @Valid SourceRequest sourceRequest) throws IOException {
         SourceResponse response = sourceService.add(sourceRequest);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateSource(@RequestBody @Valid SourceRequest sourceRequest, @PathVariable long id) throws IOException {
+    public ResponseEntity<SourceResponse> updateSource(@RequestBody @Valid SourceRequest sourceRequest, @PathVariable long id) throws IOException {
         SourceResponse response = sourceService.update(sourceRequest, id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEntityById(@PathVariable long id) {
+    public ResponseEntity<SourceResponse> getEntityById(@PathVariable long id) {
         SourceResponse response = sourceService.getEntityById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<List<SourceResponse>> getAll() {
         List<SourceResponse> response = sourceService.getAll();
         return ResponseEntity.ok(response);
     }

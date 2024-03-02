@@ -12,15 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArticleResponse {
-
-
     @JsonProperty("article_id")
     private long id;
     @JsonProperty("article_address")
     private String address;
-    @JsonProperty("article_image_path")
-    private String imagePath;
-
     @JsonProperty("source_id")
     private long sourceId;
 }

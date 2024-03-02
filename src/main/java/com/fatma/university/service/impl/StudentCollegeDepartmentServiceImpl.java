@@ -6,7 +6,7 @@ import com.fatma.university.model.dto.UpdateStudentResponse;
 import com.fatma.university.model.entity.College;
 import com.fatma.university.model.entity.Department;
 import com.fatma.university.model.entity.Student;
-import com.fatma.university.reposity.StudentRepo;
+import com.fatma.university.repository.StudentRepo;
 import com.fatma.university.service.CollegeService;
 import com.fatma.university.service.DepartmentService;
 import com.fatma.university.service.StudentCollegeDepartmentService;
@@ -26,6 +26,8 @@ public class StudentCollegeDepartmentServiceImpl implements StudentCollegeDepart
     private UpdateStudentMapper updateStudentMapper;
     @Autowired
     private StudentRepo studentRepo;
+    @Autowired
+    private ImageServiceImpl imageService;
 
     @Override
     public UpdateStudentResponse UpdateStudentData(UpdateStudentRequest updateStudentRequest, long studentId, long collegeId, long departmentId) {
@@ -36,6 +38,7 @@ public class StudentCollegeDepartmentServiceImpl implements StudentCollegeDepart
         student.setDepartment(department);
         student.setCollege(college);
         student.setId(studentId);
+//        student.setImagePath(imageService.saveImageToBase64(student.getImagePath()));
         return updateStudentMapper.toResponse(studentRepo.save(student));
     }
 }

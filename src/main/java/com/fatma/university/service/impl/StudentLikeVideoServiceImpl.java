@@ -4,8 +4,7 @@ import com.fatma.university.mapper.StudentLikeVideoMapper;
 import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentLikeVideoResponse;
 import com.fatma.university.model.entity.*;
-import com.fatma.university.reposity.NotificationRepo;
-import com.fatma.university.reposity.StudentLikeRepo;
+import com.fatma.university.repository.StudentLikeRepo;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentLikeVideoService;
 import com.fatma.university.service.StudentService;
@@ -28,8 +27,6 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
     private SourceService sourceService;
     @Autowired
     private StudentLikeVideoMapper studentLikeVideoMapper;
-    @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
     @Autowired
     private NotificationServiceImp  notificationServiceImp;
 
@@ -56,14 +53,6 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
             studentLike1.setVideo(video);
 
 
-//            Notification notification=new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
-//            notification.setSource(source);
-//            notification.setPostId(videoId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            studentLike1.setNotification(notification);
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(video.getSource(),
@@ -77,7 +66,6 @@ public class StudentLikeVideoServiceImpl implements StudentLikeVideoService {
     }
     private StudentLikeVideoResponse convertLikeAndSaveIt(StudentLike studentLike){
         studentLike.setLike(!studentLike.isLike());
-        notificationLikeService.updateNotificationVideo(studentLike.getNotification());
         return studentLikeVideoMapper.toResponse(studentLikeRepo.save(studentLike));
     }
 

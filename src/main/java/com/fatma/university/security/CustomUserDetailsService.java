@@ -3,23 +3,16 @@ package com.fatma.university.security;
 import com.fatma.university.model.Enum.UserRole;
 import com.fatma.university.model.entity.Source;
 import com.fatma.university.model.entity.Student;
-import com.fatma.university.reposity.SourceRepo;
-import com.fatma.university.reposity.StudentRepo;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.fatma.university.repository.SourceRepo;
+import com.fatma.university.repository.StudentRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,11 +45,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (isAdmin(username)) {
 
-            return CustomUserDetails.builder().email(adminEmail).password(adminPassword).userRole(UserRole.ADMIN).build();
+            return CustomUserDetails.builder().id(1L).email(adminEmail).password(adminPassword).userRole(UserRole.ADMIN).build();
         }
         if (isDeveloper(username)) {
 
             CustomUserDetails customUserDetails = CustomUserDetails.builder()
+                    .id(1L)
                     .email(developerEmail).password(developerPassword).userRole(UserRole.DEVELOPER).build();
             log.info("Developer {}", customUserDetails.toString());
             System.out.println(customUserDetails.isCredentialsNonExpired());
@@ -66,13 +60,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (student.isPresent()) {
             Student existingStudent = student.get();
 
-            return CustomUserDetails.builder().email(existingStudent.getEmail()).password(existingStudent.getEmail()).userRole(UserRole.STUDENT).build();
+            return CustomUserDetails.builder().id(existingStudent.getId()).email(existingStudent.getEmail()).password(existingStudent.getEmail()).userRole(UserRole.STUDENT).build();
         }
         Optional<Source> source = sourceRepo.findByEmail(username);
         if (source.isPresent()) {
             Source existingSource = source.get();
             System.out.println(existingSource.getEmail());
-            return CustomUserDetails.builder().email(existingSource.getEmail()).password(existingSource.getEmail()).userRole(UserRole.SOURCE).build();
+            return CustomUserDetails.builder().id(existingSource.getId()).email(existingSource.getEmail()).password(existingSource.getEmail()).userRole(UserRole.SOURCE).build();
         }
 
         throw new UsernameNotFoundException("Email Are Not Exist");

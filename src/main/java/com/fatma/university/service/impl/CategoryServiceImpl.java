@@ -8,7 +8,7 @@ import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Event;
 import com.fatma.university.model.entity.Post;
 import com.fatma.university.model.entity.Video;
-import com.fatma.university.reposity.CategoryRepo;
+import com.fatma.university.repository.CategoryRepo;
 import com.fatma.university.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +28,6 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse add(CategoryRequest categoryRequest) {
 
         return categoryMapper.toResponse(categoryRepo.save(categoryMapper.toEntity(categoryRequest)));
-//        Category category=categoryMapper.toEntity(categoryRequest);
-//        categoryRepo.save(category);
-//        CategoryResponse categoryResponse=categoryMapper.fromEntityToResponseDto(category);
-//        categoryResponse.setId(category.getId());
-//        return categoryResponse;
     }
 
     @Override

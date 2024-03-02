@@ -5,7 +5,7 @@ import com.fatma.university.mapper.EventMapper;
 import com.fatma.university.model.dto.EventRequest;
 import com.fatma.university.model.dto.EventResponse;
 import com.fatma.university.model.entity.Event;
-import com.fatma.university.reposity.EventRepo;
+import com.fatma.university.repository.EventRepo;
 import com.fatma.university.service.ChannelSourceService;
 import com.fatma.university.service.EventCategoryService;
 import com.fatma.university.service.EventService;
@@ -35,10 +35,7 @@ public class EventServiceImpl implements EventService {
     public EventResponse add(EventRequest eventRequest) throws IOException {
         long categoryId = eventRequest.getCategoryId();
         Event event = eventMapper.toEntity(eventRequest);
-//        if (event.getImagePath() != null && !event.getImagePath().isEmpty() && event.getImagePath() != "string") {
-//            byte[] imageBytes = imageService.decodeBase64(event.getImagePath());
-//            event.setImagePath(imageService.saveImage(imageBytes));
-//        }
+//       event.setImagePath(imageService.saveImageToBase64(event.getImagePath()));
         eventCategoryService.assignEventToCategory(event, categoryId);
         channelSourceService.assignEventToSource(event, eventRequest.getSourceId());
         return eventMapper.toResponse(eventRepo.save(event));
@@ -52,7 +49,7 @@ public class EventServiceImpl implements EventService {
         eventCategoryService.assignEventToCategory(event, categoryId);
         channelSourceService.assignEventToSource(event, eventRequest.getSourceId());
         event.setId(id);
-
+//        event.setImagePath(imageService.saveImageToBase64(event.getImagePath()));
         return eventMapper.toResponse(eventRepo.save(event));
     }
 

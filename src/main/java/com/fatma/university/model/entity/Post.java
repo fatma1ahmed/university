@@ -25,6 +25,7 @@ public class Post {
     private LocalDateTime createDate;
     @UpdateTimestamp
     private LocalDateTime updateDate;
+    @Lob
     private String imagePath;
     @ManyToOne
     private Category category;
@@ -36,6 +37,8 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<StudentLike> studentLikes;
+
+    private String sourceString;
 
 
 }

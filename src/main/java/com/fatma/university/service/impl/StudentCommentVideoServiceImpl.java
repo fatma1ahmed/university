@@ -4,8 +4,7 @@ import com.fatma.university.mapper.StudentCommentVideoMapper;
 import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentCommentVideoResponse;
 import com.fatma.university.model.entity.*;
-import com.fatma.university.reposity.NotificationRepo;
-import com.fatma.university.reposity.StudentCommentRepo;
+import com.fatma.university.repository.StudentCommentRepo;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentCommentVideoService;
 import com.fatma.university.service.StudentService;
@@ -54,14 +53,7 @@ public class StudentCommentVideoServiceImpl implements StudentCommentVideoServic
             createComment.setStudent(student);
             createComment.setComment(comment);
 
-//            Notification notification=new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + videoId);
-//            notification.setSource(source);
-//            notification.setPostId(videoId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            createComment.setNotification(notification);
+
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(video.getSource(),

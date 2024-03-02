@@ -5,8 +5,7 @@ import com.fatma.university.mapper.StudentMapper;
 import com.fatma.university.model.dto.StudentRequest;
 import com.fatma.university.model.dto.StudentResponse;
 import com.fatma.university.model.entity.Student;
-import com.fatma.university.reposity.StudentRepo;
-import com.fatma.university.service.ImagesService;
+import com.fatma.university.repository.StudentRepo;
 import com.fatma.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,23 +22,12 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentMapper studentMapper;
     @Autowired
-    private ImagesService imagesService;
+    private ImageServiceImpl imagesService;
 
     @Override
     public StudentResponse add(StudentRequest studentRequest) throws IOException {
         Student student = studentMapper.toEntity(studentRequest);
-
-//        if (student.getImagePath() != null && !student.getImagePath().isEmpty() && student.getImagePath() != "string") {
-//            byte[] imageBytes = imagesService.decodeBase64(student.getImagePath());
-//            student.setImagePath(imagesService.saveImage(imageBytes));
-//        }
-
-
-//        if(student.getImagePath()!=null &&!student.getImagePath().isEmpty() && student.getImagePath()!="string") {
-//            byte[] imageBytes = imagesService.decodeBase64(student.getImagePath());
-//            student.setImagePath(imagesService.saveImage(imageBytes));
-//        }
-
+       student.setImagePath(imagesService.saveImageToBase64(student.getImagePath()));
         return studentMapper.toResponse(studentRepo.save(student));
 
     }
@@ -49,6 +37,7 @@ public class StudentServiceImpl implements StudentService {
         getById(id);
         Student student = studentMapper.toEntity(studentRequest);
         student.setId(id);
+       // student.setImagePath(imagesService.saveImageToBase64(student.getImagePath()));
 
         return studentMapper.toResponse(studentRepo.save(student));
 

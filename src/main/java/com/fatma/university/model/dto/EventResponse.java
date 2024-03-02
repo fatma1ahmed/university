@@ -40,10 +40,6 @@ public class EventResponse {
 
     @JsonProperty("event_link_path")
     private String linkPath;
-
-    @JsonProperty("event_image_path")
-    private String imagePath;
-
     @JsonProperty("category_id")
     private long categoryId;
 

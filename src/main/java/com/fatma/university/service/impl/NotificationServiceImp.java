@@ -4,10 +4,9 @@ import com.fatma.university.exception.RecordNotFoundException;
 import com.fatma.university.mapper.NotificationMapper;
 import com.fatma.university.model.dto.NotificationResponse;
 import com.fatma.university.model.entity.*;
-import com.fatma.university.reposity.NotificationRepo;
+import com.fatma.university.repository.NotificationRepo;
 import com.fatma.university.service.SourceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

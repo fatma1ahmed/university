@@ -21,10 +21,11 @@ public class PostResponse {
     private long id;
     @JsonProperty("post_content")
     private String content;
-    @JsonProperty("post_image_path")
-    private String imagePath;
     @JsonProperty("category_id")
     private long categoryId;
     @JsonProperty("source_id")
     private long sourceId;
+
+    @JsonProperty("source_string")
+    private String sourceString;
 }

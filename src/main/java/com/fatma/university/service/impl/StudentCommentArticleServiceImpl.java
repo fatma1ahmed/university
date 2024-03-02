@@ -5,8 +5,8 @@ import com.fatma.university.mapper.StudentCommentArticleMapper;
 import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentCommentArticleResponse;
 import com.fatma.university.model.entity.*;
-import com.fatma.university.reposity.NotificationRepo;
-import com.fatma.university.reposity.StudentCommentRepo;
+import com.fatma.university.repository.NotificationRepo;
+import com.fatma.university.repository.StudentCommentRepo;
 import com.fatma.university.service.*;
 import com.fatma.university.service.utils.NotificationBuilder;
 import jakarta.transaction.Transactional;
@@ -55,14 +55,6 @@ public class StudentCommentArticleServiceImpl implements StudentCommentArticleSe
             createComment.setStudent(student);
             createComment.setComment(comment);
 
-//            Notification notification = new Notification();
-//            notification.setMessage("Student By Id: " + studentId + " add comment on Article By Id " + articleId);
-//            notification.setSource(source);
-//            notification.setArticleId(articleId);
-//            notification.setStudentId(studentId);
-//            notification.setNotificationType(NotificationType.ARTICLE);
-//            notificationRepo.save(notification);
-//            createComment.setNotification(notification);
             notificationServiceImp
                     .saveNotification(NotificationBuilder
                             .buildNotification(source,

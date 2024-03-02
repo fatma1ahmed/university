@@ -4,8 +4,7 @@ import com.fatma.university.mapper.StudentLikeArticleMapper;
 import com.fatma.university.model.Enum.NotificationType;
 import com.fatma.university.model.dto.StudentLikeArticleResponse;
 import com.fatma.university.model.entity.*;
-import com.fatma.university.reposity.NotificationRepo;
-import com.fatma.university.reposity.StudentLikeRepo;
+import com.fatma.university.repository.StudentLikeRepo;
 import com.fatma.university.service.ArticleService;
 import com.fatma.university.service.SourceService;
 import com.fatma.university.service.StudentLikeArticleService;
@@ -28,8 +27,6 @@ public class StudentLikeArticleServiceImpl implements StudentLikeArticleService 
     private SourceService sourceService;
     @Autowired
     private StudentLikeArticleMapper studentLikeArticleMapper;
-    @Autowired
-    private NotificationLikeServiceImpl notificationLikeService;
     @Autowired
     private NotificationServiceImp notificationServiceImp;
 

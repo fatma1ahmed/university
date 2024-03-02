@@ -5,7 +5,7 @@ import com.fatma.university.mapper.ChatBotMapper;
 import com.fatma.university.model.dto.ChatBotRequest;
 import com.fatma.university.model.dto.ChatBotResponse;
 import com.fatma.university.model.entity.ChatBot;
-import com.fatma.university.reposity.ChatBotRepository;
+import com.fatma.university.repository.ChatBotRepository;
 import com.fatma.university.service.ChatBotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

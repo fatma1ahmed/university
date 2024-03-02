@@ -5,7 +5,7 @@ import com.fatma.university.mapper.DepartmentMapper;
 import com.fatma.university.model.dto.DepartmentRequest;
 import com.fatma.university.model.dto.DepartmentResponse;
 import com.fatma.university.model.entity.Department;
-import com.fatma.university.reposity.DepartmentRepo;
+import com.fatma.university.repository.DepartmentRepo;
 import com.fatma.university.service.DepartmentCollegeService;
 import com.fatma.university.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;

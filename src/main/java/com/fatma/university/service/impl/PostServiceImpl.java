@@ -5,7 +5,7 @@ import com.fatma.university.mapper.PostMapper;
 import com.fatma.university.model.dto.PostRequest;
 import com.fatma.university.model.dto.PostResponse;
 import com.fatma.university.model.entity.Post;
-import com.fatma.university.reposity.PostRepo;
+import com.fatma.university.repository.PostRepo;
 import com.fatma.university.service.PostCategorySourceService;
 import com.fatma.university.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +33,7 @@ public class PostServiceImpl implements PostService {
         long categoryId = postRequest.getCategoryId();
         long sourceId = postRequest.getSourceId();
         Post post = postMapper.toEntity(postRequest);
-//        if (post.getImagePath() != null && !post.getImagePath().isEmpty() && post.getImagePath() != "string") {
-//            byte[] imageBytes = imageService.decodeBase64(post.getImagePath());
-//            post.setImagePath(imageService.saveImage(imageBytes));
-//        }
+//        post.setImagePath(imageService.saveImageToBase64(post.getImagePath()));
         postCategorySourceService.assignPostToCategoryAndSource(post, categoryId, sourceId);
 
 
@@ -52,8 +49,7 @@ public class PostServiceImpl implements PostService {
         postCategorySourceService.updatePost(post, categoryId, sourceId);
         post.setId(id);
         post.setCreateDate(exisitPost.getCreateDate());
-
-
+//        post.setImagePath(imageService.saveImageToBase64(post.getImagePath()));
         return postMapper.toResponse(postRepo.save(post));
     }
 
