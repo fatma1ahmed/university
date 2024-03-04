@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @SpringBootApplication
-@Slf4j
+
 public class UniversityApplication  implements CommandLineRunner {
 
     @Autowired
@@ -26,17 +26,16 @@ public class UniversityApplication  implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(UniversityApplication.class, args);
-        log.info("Running Successfully By Moaaz And Fatma...");
     }
 
     public String convertToBase64(String imagePath) {
-        File file =  new File("test");
+
         try {
             Resource resource = new ClassPathResource(imagePath);
             byte[] imageData = StreamUtils.copyToByteArray(resource.getInputStream());
             return Base64.getEncoder().encodeToString(imageData);
         } catch (IOException e) {
-            log.error("Error reading image file: {}", e.getMessage());
+
             return null;
         }
     }

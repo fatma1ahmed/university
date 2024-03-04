@@ -1,0 +1,65 @@
+package com.fatma.university.AI;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
+@Service
+public class ChatBotServiceImp implements ChatBotService {
+
+    private String JSON_FILE_PATH = "AI/ChatBot.json";
+
+
+    @Override
+    public String getResponseForQuestion(String question) {
+        List<ChatBot> chatBots = readChatBotsFromJsonFile();
+        ChatBot chatBotThatHasThisQuestion = getChatBotThatHasThisQuestion(chatBots, question);
+        return getRandomAnswerFromChatBot(chatBotThatHasThisQuestion);
+
+
+    }
+    private String getRandomAnswerFromChatBot(ChatBot chatBotToExtractRandomAnswerFromIt) {
+        Random random = new Random();
+        int index = random.nextInt(chatBotToExtractRandomAnswerFromIt.getResponses().size());
+        return chatBotToExtractRandomAnswerFromIt.getResponses().get(index);
+    }
+
+    public List<ChatBot> readChatBotsFromJsonFile() {
+        try {
+
+            // Create an ObjectMapper instance
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Get the input stream of the JSON file from the resources directory
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(JSON_FILE_PATH);
+
+            // Read the JSON file and deserialize it into a list of ChatBot objects
+            List<ChatBot> chatBots = objectMapper.readValue(inputStream, new TypeReference<List<ChatBot>>() {
+            });
+            // Close the input stream
+            inputStream.close();
+            return chatBots;
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    private ChatBot getChatBotThatHasThisQuestion(List<ChatBot> chatBots, String question) {
+
+        for (ChatBot chatBot : chatBots) {
+            List<String> questions = chatBot.getPatterns();
+            Optional<String> any = questions.stream().filter(q -> q.contains(question)).findAny();
+            if (any.isPresent()) {
+                return chatBot;
+            }
+        }
+        throw new RuntimeException("This Question Is Not Supported...");
+    }
+}
