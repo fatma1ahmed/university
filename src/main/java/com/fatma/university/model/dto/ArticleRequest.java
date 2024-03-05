@@ -20,6 +20,8 @@ public class ArticleRequest {
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
+    @JsonProperty("article_content")
+    private String content;
     @JsonProperty("source_id")
     private long sourceId;
 }

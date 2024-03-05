@@ -21,6 +21,7 @@ public class Article {
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
+    private String content;
     @ManyToOne
     private Source source;
     @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
