@@ -22,8 +22,8 @@ public class Video {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private String title;
-//    @Column(columnDefinition = "LONGTEXT")
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private String videoPath;
     @CreationTimestamp
     private LocalDateTime createDate;

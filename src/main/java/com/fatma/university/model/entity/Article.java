@@ -19,7 +19,7 @@ public class Article {
     private long id;
     private String address;
     @Lob
-//   @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
     @ManyToOne
     private Source source;
