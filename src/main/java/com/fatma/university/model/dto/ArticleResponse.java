@@ -20,4 +20,6 @@ public class ArticleResponse {
     private String content;
     @JsonProperty("source_id")
     private long sourceId;
+    @JsonProperty("source_string")
+    private String sourceString;
 }

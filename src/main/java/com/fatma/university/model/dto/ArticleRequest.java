@@ -24,4 +24,6 @@ public class ArticleRequest {
     private String content;
     @JsonProperty("source_id")
     private long sourceId;
+    @JsonProperty("source_string")
+    private String sourceString;
 }
