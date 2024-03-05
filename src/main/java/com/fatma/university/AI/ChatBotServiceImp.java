@@ -33,24 +33,16 @@ public class ChatBotServiceImp implements ChatBotService {
     public List<ChatBot> readChatBotsFromJsonFile() {
         try {
 
-            // Create an ObjectMapper instance
             ObjectMapper objectMapper = new ObjectMapper();
-
-            // Get the input stream of the JSON file from the resources directory
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(JSON_FILE_PATH);
-
-            // Read the JSON file and deserialize it into a list of ChatBot objects
             List<ChatBot> chatBots = objectMapper.readValue(inputStream, new TypeReference<List<ChatBot>>() {
             });
-            // Close the input stream
             inputStream.close();
             return chatBots;
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-
     }
-
     private ChatBot getChatBotThatHasThisQuestion(List<ChatBot> chatBots, String question) {
 
         for (ChatBot chatBot : chatBots) {

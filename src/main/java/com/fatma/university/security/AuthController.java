@@ -18,6 +18,10 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private ForgetPasswordService forgetPasswordService;
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
@@ -26,13 +30,22 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        LoginResponse loginResponse =  new LoginResponse();
+        LoginResponse loginResponse = new LoginResponse();
         loginResponse.setId(userDetails.getId());
         loginResponse.setEmail(userDetails.getEmail());
         loginResponse.setUserRole(userDetails.getUserRole());
         return new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/sendOtp")
+    public ResponseEntity<?> sendOtp(@RequestParam String email) {
+        return new ResponseEntity<>(forgetPasswordService.sendOtp(email), HttpStatus.OK);
+    }
+
+    @PostMapping("/updatePassword")
+    public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto) {
+        return new ResponseEntity<>(forgetPasswordService.forgetPassword(updatePasswordDto), HttpStatus.ACCEPTED);
+    }
 
 
 }

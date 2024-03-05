@@ -30,4 +30,8 @@ public class Person {
     @Lob
 //    @Column(columnDefinition = "LONGTEXT")
     private String imagePath;
+
+    private String otp;
+
+
 }

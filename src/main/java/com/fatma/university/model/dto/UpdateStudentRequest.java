@@ -43,6 +43,6 @@ public class UpdateStudentRequest {
     private String category;
     @JsonProperty("college_id")
     private long collegeId;
-    @JsonProperty("college_id")
+    @JsonProperty("department_id")
     private long departmentId;
 }
