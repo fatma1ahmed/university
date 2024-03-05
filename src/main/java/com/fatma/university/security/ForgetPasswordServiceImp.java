@@ -1,10 +1,10 @@
 package com.fatma.university.security;
 
-import com.fatma.university.model.entity.Person;
 import com.fatma.university.model.entity.Source;
 import com.fatma.university.model.entity.Student;
 import com.fatma.university.repository.SourceRepo;
 import com.fatma.university.repository.StudentRepo;
+import com.fatma.university.security.dto.UpdatePasswordDto;
 import com.fatma.university.service.utils.MailService;
 import org.springframework.stereotype.Service;
 

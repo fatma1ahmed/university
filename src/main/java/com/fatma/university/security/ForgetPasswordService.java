@@ -1,5 +1,6 @@
 package com.fatma.university.security;
 
+import com.fatma.university.security.dto.UpdatePasswordDto;
 import org.springframework.stereotype.Service;
 
 @Service

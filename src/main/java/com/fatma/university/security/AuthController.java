@@ -1,5 +1,8 @@
 package com.fatma.university.security;
 
+import com.fatma.university.security.dto.LoginRequest;
+import com.fatma.university.security.dto.LoginResponse;
+import com.fatma.university.security.dto.UpdatePasswordDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +30,17 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
+        System.out.println("After Auth");
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        System.out.println("Before Response");
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setId(userDetails.getId());
         loginResponse.setEmail(userDetails.getEmail());
         loginResponse.setUserRole(userDetails.getUserRole());
         return new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
+//        return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/sendOtp")

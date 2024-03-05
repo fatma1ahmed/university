@@ -29,8 +29,11 @@ public class CustomUserDetails implements UserDetails {
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.toString()));
-        return grantedAuthorities;
+//        return grantedAuthorities;
+        return null;
     }
+
+
 
     @Override
     public String getPassword() {

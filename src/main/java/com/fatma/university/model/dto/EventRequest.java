@@ -42,7 +42,6 @@ public class EventRequest {
     private String linkPath;
 
     @JsonProperty("event_image_path")
-    @Lob
     private String imagePath;
 
     @JsonProperty("category_id")

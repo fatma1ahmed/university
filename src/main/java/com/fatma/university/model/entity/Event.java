@@ -25,8 +25,8 @@ public class Event {
     private BroadCast isBroadcast;
     private String description;
     private String linkPath;
-//    @Column(columnDefinition = "LONGTEXT")
-    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+//    @Lob
     private String imagePath;
     @ManyToOne
     private Source source;

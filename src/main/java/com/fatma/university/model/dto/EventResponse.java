@@ -46,4 +46,7 @@ public class EventResponse {
     @JsonProperty("source_id")
     private long sourceId;
 
+    @JsonProperty("event_image_path")
+    private String imagePath;
+
 }

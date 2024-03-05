@@ -1,4 +1,4 @@
-package com.fatma.university.security;
+package com.fatma.university.security.dto;
 
 import com.fatma.university.model.Enum.UserRole;
 import lombok.AllArgsConstructor;

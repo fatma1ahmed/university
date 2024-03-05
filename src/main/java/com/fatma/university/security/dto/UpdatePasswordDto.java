@@ -1,4 +1,4 @@
-package com.fatma.university.security;
+package com.fatma.university.security.dto;
 
 
 import lombok.AllArgsConstructor;

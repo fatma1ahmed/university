@@ -7,6 +7,8 @@ import com.fatma.university.repository.SourceRepo;
 import com.fatma.university.repository.StudentRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,24 +51,19 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         if (isDeveloper(username)) {
 
-            CustomUserDetails customUserDetails = CustomUserDetails.builder()
+            return CustomUserDetails.builder()
                     .id(1L)
                     .email(developerEmail).password(developerPassword).userRole(UserRole.DEVELOPER).build();
-            log.info("Developer {}", customUserDetails.toString());
-            System.out.println(customUserDetails.isCredentialsNonExpired());
-            return customUserDetails;
         }
         Optional<Student> student = studentRepo.findByEmail(username);
         if (student.isPresent()) {
             Student existingStudent = student.get();
-
-            return CustomUserDetails.builder().id(existingStudent.getId()).email(existingStudent.getEmail()).password(existingStudent.getEmail()).userRole(UserRole.STUDENT).build();
+            return CustomUserDetails.builder().id(existingStudent.getId()).email(existingStudent.getEmail()).password(existingStudent.getPassword()).userRole(UserRole.STUDENT).build();
         }
         Optional<Source> source = sourceRepo.findByEmail(username);
         if (source.isPresent()) {
             Source existingSource = source.get();
-            System.out.println(existingSource.getEmail());
-            return CustomUserDetails.builder().id(existingSource.getId()).email(existingSource.getEmail()).password(existingSource.getEmail()).userRole(UserRole.SOURCE).build();
+            return CustomUserDetails.builder().id(existingSource.getId()).email(existingSource.getEmail()).password(existingSource.getPassword()).userRole(UserRole.SOURCE).build();
         }
 
         throw new UsernameNotFoundException("Email Are Not Exist");
