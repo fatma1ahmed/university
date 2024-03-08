@@ -35,10 +35,13 @@ public class StudentRequest {
     @JsonProperty("student_password")
     private String password;
 
-    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Invalid phone number format. Please use ###-###-#### format.")
+    @Pattern(regexp = "\\d{4}-\\d{3}-\\d{4}", message = "Invalid phone number format. Please use ###-###-#### format.")
     @JsonProperty("student_phone")
     private String phone;
 
-    @JsonProperty("student_image_path")
-    private String imagePath;
+
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private  String imagePath;
+
 }

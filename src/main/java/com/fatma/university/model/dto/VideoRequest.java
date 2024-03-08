@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.fatma.university.model.entity.Category;
 import com.fatma.university.model.entity.Source;
+import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class VideoRequest {
     private String title;
     @JsonProperty("video_path")
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private String videoPath;
     @JsonProperty("category_id")
     private long categoryId;

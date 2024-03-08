@@ -19,8 +19,10 @@ public class Article {
     private long id;
     private String address;
     @Lob
-//   @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
+    private String content;
+    private String sourceString;
     @ManyToOne
     private Source source;
     @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)

@@ -26,6 +26,7 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updateDate;
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
     @ManyToOne
     private Category category;

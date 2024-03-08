@@ -42,7 +42,7 @@ public class SpringSecurityConfig {
 //
 //            authRequest.requestMatchers("/sources/**").hasRole("ADMIN");
 //            authRequest.requestMatchers("/departments/**").hasRole("ADMIN");
-
+//
 //            authRequest.anyRequest().permitAll();
         });
         http.cors(AbstractHttpConfigurer::disable);

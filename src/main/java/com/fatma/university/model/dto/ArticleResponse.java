@@ -16,6 +16,10 @@ public class ArticleResponse {
     private long id;
     @JsonProperty("article_address")
     private String address;
+    @JsonProperty("article_content")
+    private String content;
     @JsonProperty("source_id")
     private long sourceId;
+    @JsonProperty("source_string")
+    private String sourceString;
 }
