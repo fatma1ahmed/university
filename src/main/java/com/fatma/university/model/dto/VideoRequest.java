@@ -22,6 +22,8 @@ public class VideoRequest {
 
     @JsonProperty("video_title")
     private String title;
+    @JsonProperty("video_description")
+    private String description;
     @JsonProperty("video_path")
     @Lob
     @Column(columnDefinition = "LONGBLOB")
