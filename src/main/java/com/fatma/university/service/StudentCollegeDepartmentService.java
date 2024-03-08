@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface StudentCollegeDepartmentService {
-    public UpdateStudentResponse UpdateStudentData(UpdateStudentRequest updateStudentRequest, long studentId, long collegeId, long departmentId);
+     UpdateStudentResponse UpdateStudentData(UpdateStudentRequest updateStudentRequest, long studentId, long collegeId, long departmentId);
 }

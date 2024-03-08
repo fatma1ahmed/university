@@ -26,8 +26,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse add(StudentRequest studentRequest) throws IOException {
+
         Student student = studentMapper.toEntity(studentRequest);
-       student.setImagePath(imagesService.saveImageToBase64(student.getImagePath()));
         return studentMapper.toResponse(studentRepo.save(student));
 
     }
@@ -37,8 +37,6 @@ public class StudentServiceImpl implements StudentService {
         getById(id);
         Student student = studentMapper.toEntity(studentRequest);
         student.setId(id);
-       // student.setImagePath(imagesService.saveImageToBase64(student.getImagePath()));
-
         return studentMapper.toResponse(studentRepo.save(student));
 
     }
@@ -54,10 +52,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse getEntityById(long id) {
-     Student student=studentRepo.findById(id).orElseThrow(
+        Student student = studentRepo.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("this student with " + id + " not found")
         );
-     return studentMapper.toResponse(student);
+        return studentMapper.toResponse(student);
     }
 
     @Override

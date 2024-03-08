@@ -19,13 +19,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostRequest {
+
     @JsonProperty("post_content")
     private String content;
+
     @JsonProperty("post_image_path")
-    @Lob
     private String imagePath;
     @JsonProperty("category_id")
     private long categoryId;
+
     @JsonProperty("source_id")
     private long sourceId;
 

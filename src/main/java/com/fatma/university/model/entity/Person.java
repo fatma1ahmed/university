@@ -28,9 +28,10 @@ public class Person {
 
     @JsonProperty("image_path")
     @Lob
-//    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
 
+    @JsonIgnore
     private String otp;
 
 

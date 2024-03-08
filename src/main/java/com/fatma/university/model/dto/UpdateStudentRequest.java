@@ -36,13 +36,11 @@ public class UpdateStudentRequest {
 
     @JsonProperty("student_image_path")
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
     @JsonProperty("student_brand")
     private String brand;
     @JsonProperty("student_academic_category")
     private String category;
-    @JsonProperty("college_id")
-    private long collegeId;
-    @JsonProperty("department_id")
-    private long departmentId;
+
 }

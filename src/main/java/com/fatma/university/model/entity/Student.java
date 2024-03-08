@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ManyToAny;
 
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class Student extends Person{
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<StudentLike> studentLikes;
-    @OneToOne
+    @ManyToOne
     private College college;
-    @OneToOne
+    @ManyToOne
     private Department department;
 
 

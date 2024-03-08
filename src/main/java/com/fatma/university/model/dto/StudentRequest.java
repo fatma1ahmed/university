@@ -27,20 +27,18 @@ public class StudentRequest {
     @NotNull(message = "please,Enter Your Email")
     @Email(message = "This is Email, you should be more smart.")
     @JsonProperty("student_email")
-    private  String email;
+    private String email;
 
     @NotNull(message = "please,Enter Your password")
-    @Size(min = 8,max = 18,message = "should enter your password between 8 and 18")
+    @Size(min = 8, max = 18, message = "should enter your password between 8 and 18")
     @Column(unique = true)
     @JsonProperty("student_password")
-    private  String password;
+    private String password;
 
     @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Invalid phone number format. Please use ###-###-#### format.")
     @JsonProperty("student_phone")
-    private  String phone;
+    private String phone;
 
     @JsonProperty("student_image_path")
-//    @Column(columnDefinition = "LONGTEXT")
-    @Lob
-    private  String imagePath;
+    private String imagePath;
 }

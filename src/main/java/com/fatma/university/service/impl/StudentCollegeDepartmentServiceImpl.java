@@ -31,14 +31,14 @@ public class StudentCollegeDepartmentServiceImpl implements StudentCollegeDepart
 
     @Override
     public UpdateStudentResponse UpdateStudentData(UpdateStudentRequest updateStudentRequest, long studentId, long collegeId, long departmentId) {
-        College college=collegeService.getById(collegeId);
-        Department department=departmentService.getById(departmentId);
-        Student exsistStudent=studentService.getById(studentId);
-        Student student=updateStudentMapper.toEntity(updateStudentRequest);
-        student.setDepartment(department);
-        student.setCollege(college);
-        student.setId(studentId);
+        College college = collegeService.getById(collegeId);
+        Department department = departmentService.getById(departmentId);
+        Student exsistStudent = studentService.getById(studentId);
+        exsistStudent = updateStudentMapper.toEntity(updateStudentRequest);
+        exsistStudent.setDepartment(department);
+        exsistStudent.setCollege(college);
+        exsistStudent.setId(studentId);
 //        student.setImagePath(imageService.saveImageToBase64(student.getImagePath()));
-        return updateStudentMapper.toResponse(studentRepo.save(student));
+        return updateStudentMapper.toResponse(studentRepo.save(exsistStudent));
     }
 }
