@@ -11,7 +11,7 @@ public interface StudentMapper {
     Student toEntity(StudentRequest studentRequest);
 
 
-    @Mapping(target = "collegeId" , source = "student.college.id")
+//    @Mapping(target = "collegeId" , source = "student.college.id")
     @Mapping(target = "departmentId" , source = "student.department.id")
     StudentResponse toResponse(Student student);
 

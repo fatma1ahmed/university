@@ -24,7 +24,6 @@ public class PostRequest {
     private String content;
 
     @JsonProperty("post_image_path")
-
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private String imagePath;

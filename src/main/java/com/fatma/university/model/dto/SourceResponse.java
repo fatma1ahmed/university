@@ -17,6 +17,8 @@ public class SourceResponse extends Person {
     private long id;
     @JsonProperty("department_id")
     private long departmentId;
+    @JsonProperty("college_id")
+    private long collegeId;
 
 
 }

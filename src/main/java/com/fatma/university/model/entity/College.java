@@ -25,7 +25,9 @@ public class College {
     @OneToMany(mappedBy = "college", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Department> departments;
-
+    @OneToMany(mappedBy = "college", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Source> sources;
     @OneToMany(mappedBy = "college",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Student> students;

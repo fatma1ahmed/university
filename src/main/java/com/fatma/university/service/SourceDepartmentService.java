@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service
 public interface SourceDepartmentService {
-    public void assignSourceToDepartment(Source source, long departmentId) throws IOException ;
+    public void assignSourceToDepartmentAndCollege(Source source,long departmentId,long collegeId);
 
-    public void updateSource(Source source, long departmentId) throws IOException;
+    public void updateSource(Source source, long departmentId,long collegeId) ;
 
     public  List<Source> getSourcesByDepartmentId(long departmentId) ;
 }

@@ -23,14 +23,6 @@ public class Person {
     @JsonProperty("password")
     private String password;
 
-    @JsonProperty("phone")
-    private String phone;
-
-    @JsonProperty("image_path")
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private String imagePath;
-
     @JsonIgnore
     private String otp;
 

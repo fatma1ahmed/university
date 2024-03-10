@@ -29,13 +29,8 @@ public class SourceRequest {
     @Size(min = 8, max = 18, message = "should enter your password between 8 and 18")
     @JsonProperty("source_password")
     private String password;
-    @Pattern(regexp = "\\d{4}-\\d{3}-\\d{4}", message = "Invalid phone number format. Please use ###-###-#### format.")
-    @JsonProperty("source_phone")
-    private String phone;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    @JsonProperty("source_image_path")
-    private String imagePath;
     @JsonProperty("source_department_id")
     private long departmentId;
+    @JsonProperty("college_id")
+    private long collegeId;
 }

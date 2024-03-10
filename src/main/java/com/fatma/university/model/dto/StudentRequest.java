@@ -39,7 +39,7 @@ public class StudentRequest {
     @JsonProperty("student_phone")
     private String phone;
 
-
+    @JsonProperty("student_image_path")
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private  String imagePath;

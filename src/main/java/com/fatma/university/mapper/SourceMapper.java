@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SourceMapper {
     Source toEntity(SourceRequest sourceRequest);
-
+    @Mapping(target = "collegeId" , source = "source.college.id")
     @Mapping(target = "departmentId" , source = "source.department.id")
     SourceResponse toResponse(Source source);
 }

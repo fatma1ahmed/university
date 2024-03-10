@@ -1,16 +1,14 @@
 package com.fatma.university.controller;
 
-import com.fatma.university.exception.RecordNotFoundException;
+
 import com.fatma.university.model.dto.StudentRequest;
 import com.fatma.university.model.dto.StudentResponse;
 import com.fatma.university.model.dto.UpdateStudentRequest;
 import com.fatma.university.model.dto.UpdateStudentResponse;
-import com.fatma.university.model.entity.Student;
 import com.fatma.university.service.StudentCollegeDepartmentService;
 import com.fatma.university.service.StudentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -42,5 +42,7 @@ public class UpdateStudentRequest {
     private String brand;
     @JsonProperty("student_academic_category")
     private String category;
+    @JsonProperty("college_id")
+    private long collegeId;
 
 }

@@ -19,10 +19,6 @@ public class StudentResponse extends Person {
 
     private String brand;
     private String category;
-
-    @JsonProperty("college_id")
-    private long collegeId;
-
     @JsonProperty("department_id")
     private long departmentId;
 }

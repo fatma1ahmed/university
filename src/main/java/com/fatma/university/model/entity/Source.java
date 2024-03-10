@@ -31,5 +31,6 @@ public class Source extends Person {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Notification> notifications;
-
+    @ManyToOne
+    private College college;
 }
