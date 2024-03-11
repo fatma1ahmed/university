@@ -25,7 +25,6 @@ public class PostResponse {
     private String content;
     @JsonProperty("post_image_path")
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
     private String imagePath;
     @JsonProperty("category_id")
     private long categoryId;
