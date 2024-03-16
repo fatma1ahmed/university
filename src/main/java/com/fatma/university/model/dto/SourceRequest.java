@@ -29,6 +29,8 @@ public class SourceRequest {
     @Size(min = 8, max = 18, message = "should enter your password between 8 and 18")
     @JsonProperty("source_password")
     private String password;
+    @JsonProperty("source_responsible_for")
+    private  String responsibleFor;
     @JsonProperty("source_department_id")
     private long departmentId;
     @JsonProperty("college_id")

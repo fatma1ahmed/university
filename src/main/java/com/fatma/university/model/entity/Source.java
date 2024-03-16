@@ -17,6 +17,7 @@ public class Source extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private  String responsibleFor;
     @ManyToOne
     private Department department;
     @OneToMany(mappedBy = "source",cascade = CascadeType.ALL)

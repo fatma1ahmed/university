@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class SourceResponse extends Person {
     @JsonProperty("source_id")
     private long id;
+    @JsonProperty("source_responsible_for")
+    private  String responsibleFor;
     @JsonProperty("department_id")
     private long departmentId;
     @JsonProperty("college_id")
